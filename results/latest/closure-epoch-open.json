@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784482491-2a4e4ee2dbdc",
+  "epoch_id": "closure-1784487526-7d9933746a2f",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -92,9 +92,9 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T17:34:55.874141Z",
+  "opened_at": "2026-07-19T18:58:52.717906Z",
   "phase": "OPEN",
-  "program_commit": "c3addb899ebfaa33a82f1924c6f615fd22216a25",
+  "program_commit": "80496cdf5bdc31da655b72b8ee77f999093aa2c7",
   "target_observations": [
     {
       "archive": {
@@ -109,16 +109,16 @@
       "clean": false,
       "head": "f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462",
       "metadata": {
-        "git_entry_count": 8720,
-        "git_metadata_sha256": "ab8dbca69d95584df86dda672f689a2c36134c89f8f23c61a8130e0fecabfdac",
+        "git_entry_count": 8721,
+        "git_metadata_sha256": "e268a6385f60d727f390112fa2bb3a8d8908262a19b02be3489827d835c98c7a",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 232358429,
           "mtime_ns": 1784479253892045674,
           "size": 11904
         },
-        "worktree_entry_count": 8720,
-        "worktree_metadata_sha256": "ab8dbca69d95584df86dda672f689a2c36134c89f8f23c61a8130e0fecabfdac"
+        "worktree_entry_count": 8721,
+        "worktree_metadata_sha256": "e268a6385f60d727f390112fa2bb3a8d8908262a19b02be3489827d835c98c7a"
       },
       "name": "mcp-trust",
       "owner_activity": {
@@ -141,7 +141,7 @@
         "file_count": 61,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784482491-2a4e4ee2dbdc/archives/PortfolioCommandCenter-772be25eed8554defa55505cadd23e7fc61df982.zip",
+        "path": "results/closure-epochs/closure-1784487526-7d9933746a2f/archives/PortfolioCommandCenter-772be25eed8554defa55505cadd23e7fc61df982.zip",
         "sha256": "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9",
         "tree_manifest_sha256": "2bec1f601543958368fb3c6e0b5a33b1ab54b9afa73077b3b233bfd676dab620"
       },
@@ -154,7 +154,7 @@
       "head": "772be25eed8554defa55505cadd23e7fc61df982",
       "metadata": {
         "git_entry_count": 8131,
-        "git_metadata_sha256": "1f9b56075e723d07a02e47930b3247a8d6c5c4621a47d80486851e1c580ce640",
+        "git_metadata_sha256": "e8a0028bf10eb5fc3b579696801eb575348477ecfecff59f92b207e2606126a7",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 225864915,
@@ -162,7 +162,7 @@
           "size": 5907
         },
         "worktree_entry_count": 8131,
-        "worktree_metadata_sha256": "1f9b56075e723d07a02e47930b3247a8d6c5c4621a47d80486851e1c580ce640"
+        "worktree_metadata_sha256": "e8a0028bf10eb5fc3b579696801eb575348477ecfecff59f92b207e2606126a7"
       },
       "name": "PortfolioCommandCenter",
       "owner_activity": {
@@ -185,7 +185,7 @@
         "file_count": 254,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784482491-2a4e4ee2dbdc/archives/AIGCCore-09c3aa435a608d03c002782e6268c10f5bb7fe94.zip",
+        "path": "results/closure-epochs/closure-1784487526-7d9933746a2f/archives/AIGCCore-09c3aa435a608d03c002782e6268c10f5bb7fe94.zip",
         "sha256": "18b71db9ee9b2c01c25e87f60c1396fb11fa39a21a9b352d2a0c5203c7992ae2",
         "tree_manifest_sha256": "d68bd64b48584fb4a7dc6af24c9e99e9cf86da9ab380e334653f5d2d59a90dce"
       },
@@ -197,7 +197,7 @@
       "head": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
       "metadata": {
         "git_entry_count": 762,
-        "git_metadata_sha256": "d82a75f85bac6be124d27add30fb2115ca9275746f689ba6d92ebcbc6b52e65b",
+        "git_metadata_sha256": "a53ceaf2b31ee66398d4f111d3102ab47df20aa8f9272be89e900746c53ff9a7",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 225269680,
@@ -205,7 +205,7 @@
           "size": 26693
         },
         "worktree_entry_count": 762,
-        "worktree_metadata_sha256": "d82a75f85bac6be124d27add30fb2115ca9275746f689ba6d92ebcbc6b52e65b"
+        "worktree_metadata_sha256": "a53ceaf2b31ee66398d4f111d3102ab47df20aa8f9272be89e900746c53ff9a7"
       },
       "name": "AIGCCore",
       "owner_activity": {
@@ -232,32 +232,32 @@
         "LP-009"
       ],
       "clean": false,
-      "head": "b2d6d3a82e240f24207139caa323297b97d218f8",
+      "head": "e28c9d12849dd3b27454e64f90e8a54cd3608807",
       "metadata": {
         "git_entry_count": 11,
-        "git_metadata_sha256": "513db8fa439437b32f8258234d18d8be4c90a41b2f753d9e475d6225b43e85b2",
+        "git_metadata_sha256": "44d10e235835427709e83382ea71d434611e60e8bc2dc9dd92cbe5b03a21ef7e",
         "git_scope": "linked-worktree-gitdir",
         "index": {
-          "inode": 231387990,
-          "mtime_ns": 1784473896899289378,
+          "inode": 234768819,
+          "mtime_ns": 1784486682435331567,
           "size": 93443
         },
         "worktree_entry_count": 997,
-        "worktree_metadata_sha256": "055970f03fa4ac24f1c5962aeb94a36f10a4253c08c87cb005cf8e063e0f907c"
+        "worktree_metadata_sha256": "deb7adeea7d2addac45778fac572e7b1d47a0f209202b34769b6ec339d3499fa"
       },
       "name": "portfolio-index",
       "owner_activity": {
-        "clear": true,
-        "cwd_process_count": 0,
-        "detail": "no Git lock and no process with cwd inside the worktree",
+        "clear": false,
+        "cwd_process_count": 1,
+        "detail": "a Git lock or process cwd indicates active ownership",
         "git_lock_count": 0,
-        "status": "CLEAR"
+        "status": "ACTIVE"
       },
-      "ownership": "CLEAR",
-      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found the prior owner lifecycle ended and no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
+      "ownership": "ACTIVE",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found the prior owner lifecycle ended and no pending handoff. Exact open-time evidence: a Git lock or process cwd indicates active ownership.",
       "read_mutation_free": true,
       "status_sha256": "15b51694bb8c55eb67a0791e5b4d95232247b71dcfd3d8ef51537b77d6df95fe",
-      "tree": "583624f86bdb057b5af22c30c91d20148f7c33cc"
+      "tree": "583be14d52b60883b892c8aae615dffb91047080"
     }
   ]
 }

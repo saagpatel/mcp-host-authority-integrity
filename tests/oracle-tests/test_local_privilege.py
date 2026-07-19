@@ -116,6 +116,42 @@ class LocalPrivilegeOracleTests(unittest.TestCase):
         self.assertIn("ownership check was CLEAR", evaluation.blocked_detail or "")
         self.assertNotIn("active owner", evaluation.blocked_detail or "")
 
+    def test_portfolio_index_archive_blocker_is_not_network_sensor_blocker(self) -> None:
+        receipt = synthetic_closure_epoch()
+        target = next(
+            item
+            for item in receipt["target_observations"]
+            if item["name"] == "portfolio-index"
+        )
+        target["ownership"] = "CLEAR"
+        target["owner_activity"]["clear"] = True
+        target["owner_activity"]["status"] = "CLEAR"
+        target["archive"] = {
+            "created": True,
+            "fidelity_proven": True,
+            "sha256": "a" * 64,
+        }
+        context = RunContext(
+            "local-copy-portfolio-index-archive-blocker",
+            ROOT / "work/unused-local-copy-portfolio-index-archive-blocker",
+            "BROWSER_DISABLED",
+            "0" * 64,
+            closure_epoch_id=receipt["epoch_id"],
+            closure_epoch_digest=canonical_digest(receipt),
+            closure_epoch_receipt_json=json.dumps(
+                receipt,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+        )
+        evaluation = evaluate(self.cases["LP-009"], context.for_case("LP-009"))
+        self.assertEqual(
+            deterministic_declared_result(evaluation),
+            "BLOCKED_BY_ACCESS",
+        )
+        self.assertIn("public-leakage", evaluation.blocked_detail or "")
+        self.assertNotIn("network-attempt sensor", evaluation.blocked_detail or "")
+
 
 if __name__ == "__main__":
     unittest.main()

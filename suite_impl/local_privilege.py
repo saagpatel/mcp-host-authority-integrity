@@ -172,11 +172,18 @@ def _blocked_copy(
         archive.get("created") and archive.get("fidelity_proven")
     )
     if archive_available:
-        detail = (
-            f"An exact read-only {target_name} archive is available, but no "
-            "qualified target executor with a proven network-attempt sensor can "
-            "exercise the full UI, command, adapter, and dependency paths."
-        )
+        if case["case_id"] == "LP-007":
+            detail = (
+                f"An exact read-only {target_name} archive is available, but no "
+                "qualified target executor with a proven network-attempt sensor "
+                "can exercise the full UI, command, adapter, and dependency paths."
+            )
+        else:
+            detail = (
+                f"An exact read-only {target_name} archive is available, but no "
+                "qualified target executor can exercise the case's public-leakage "
+                "and local-privilege containment path."
+            )
     elif not frozen["clean"]:
         detail = (
             f"{target_name} is {cleanliness} at the frozen epoch identity; "
