@@ -13,8 +13,9 @@ lookalike for exact Go or cross-SDK execution, so those cases fail closed as
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 from urllib.parse import unquote
 
 from harness.execution import Evaluation, RunContext

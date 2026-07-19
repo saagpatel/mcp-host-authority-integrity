@@ -1,0 +1,359 @@
+{
+  "browser_mode": "BROWSER_DISABLED",
+  "checks": [
+    {
+      "check_id": "CQ-001",
+      "observations": [
+        {
+          "negative_absent": true,
+          "positive_detected": true,
+          "tamper_detected": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-002",
+      "observations": [
+        {
+          "directory_descriptor_pinned": true,
+          "outside_unchanged": true,
+          "rejected": [
+            "..",
+            "../escape",
+            "/absolute",
+            "hardlink",
+            "nested/name",
+            "post-validation-root-race",
+            "root-swap",
+            "symlink"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-003",
+      "observations": [
+        {
+          "denied": {
+            "dns": false,
+            "metadata": false,
+            "other_loopback": false,
+            "public_ip": false,
+            "unrelated_loopback": false
+          },
+          "internal_nonce_exchange": true,
+          "outside_hit": false
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-004",
+      "observations": [
+        {
+          "controller_mode": "death",
+          "delayed_canary_absent": true,
+          "delayed_window_seconds": 3,
+          "emergency_stop_seconds": null,
+          "immutable_container_identity": "5b53a2e31a7390c61a407659766cd1d823f08a5436bc23c8560867342ddddf41",
+          "pid_reuse_probe_started_after_controller_loss": true,
+          "unrelated_process_survived": true,
+          "watchdog": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-005",
+      "observations": [
+        {
+          "controller_mode": "emergency-stop",
+          "delayed_canary_absent": true,
+          "delayed_window_seconds": 3,
+          "emergency_stop_seconds": 0.39397479200852104,
+          "immutable_container_identity": "b51a10d75f64d546656bc27616a7bd3259be04ec31d0c5ac66f14f8f3c9447bf",
+          "pid_reuse_probe_started_after_controller_loss": true,
+          "unrelated_process_survived": true,
+          "watchdog": "PASS"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-006",
+      "observations": [
+        {
+          "contained_fixture_write": true,
+          "contained_trusted_write": false,
+          "fixture_result_accepted": false,
+          "forged_evidence_pointer_rejected": true,
+          "trusted_result_count": 1
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-007",
+      "observations": [
+        {
+          "control_characters_removed": true,
+          "encoded_patterns_redacted": true,
+          "fail_closed": 3,
+          "ordinary_preserved": true,
+          "synthetic_patterns_redacted": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-008",
+      "observations": [
+        {
+          "byte_boundaries": {
+            "decompressed": [
+              true,
+              true,
+              false
+            ],
+            "request": [
+              true,
+              true,
+              false
+            ],
+            "response": [
+              true,
+              true,
+              false
+            ]
+          },
+          "file_size": {
+            "at_limit": true,
+            "over_limit_rejected": true
+          },
+          "redirect_boundaries": [
+            true,
+            true,
+            false
+          ],
+          "runtime_flags": {
+            "caps_dropped": true,
+            "cpu_half": true,
+            "fsize_8m": true,
+            "memory_256m": true,
+            "network_none": true,
+            "no_new_privileges": true,
+            "nofile_64": true,
+            "non_root": true,
+            "only_declared_bind": true,
+            "pids_16": true,
+            "readonly_root": true
+          },
+          "schema_depth_boundaries": [
+            true,
+            true,
+            false
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-009",
+      "observations": [
+        {
+          "clean": true,
+          "containers_mounts_namespaces_clean": true,
+          "containers_removed": 0,
+          "delayed_action_clean": true,
+          "descriptor_clean": true,
+          "descriptor_detected": true,
+          "listener_clean": true,
+          "listener_detected": true,
+          "networks_clean": true,
+          "process_clean": true,
+          "process_detected": true,
+          "profile_clean": true,
+          "profile_detected": true,
+          "retained_artifact_detected": true,
+          "temporary_paths_clean": true,
+          "volumes_clean": true
+        },
+        {
+          "containers_removed": 0,
+          "final_cleanup_verified_before_publication": true,
+          "labels_verified": 8,
+          "temporary_root_absent": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-010",
+      "observations": [
+        {
+          "current_binding_accepted": true,
+          "duplicate_rejected": true,
+          "replay_rejected": true,
+          "stale_digest_rejected": true,
+          "stale_runtime_rejected": true
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-011",
+      "observations": [
+        {
+          "cwd": "/tmp",
+          "descriptor_allowlist_passed": true,
+          "descriptor_inventory": [
+            {
+              "fd": 0,
+              "target": "/dev/null"
+            },
+            {
+              "fd": 1,
+              "target": "pipe:[13340]"
+            },
+            {
+              "fd": 2,
+              "target": "pipe:[13341]"
+            },
+            {
+              "fd": 3,
+              "target": "anon_inode:[eventpoll]"
+            },
+            {
+              "fd": 4,
+              "target": "pipe:[13452]"
+            },
+            {
+              "fd": 5,
+              "target": "pipe:[13452]"
+            },
+            {
+              "fd": 6,
+              "target": "pipe:[13453]"
+            },
+            {
+              "fd": 7,
+              "target": "pipe:[13453]"
+            },
+            {
+              "fd": 8,
+              "target": "anon_inode:[eventfd]"
+            },
+            {
+              "fd": 9,
+              "target": "anon_inode:[eventpoll]"
+            },
+            {
+              "fd": 10,
+              "target": "pipe:[13149]"
+            },
+            {
+              "fd": 11,
+              "target": "pipe:[13149]"
+            },
+            {
+              "fd": 12,
+              "target": "anon_inode:[eventfd]"
+            },
+            {
+              "fd": 13,
+              "target": "anon_inode:[eventpoll]"
+            },
+            {
+              "fd": 14,
+              "target": "pipe:[13150]"
+            },
+            {
+              "fd": 15,
+              "target": "pipe:[13150]"
+            },
+            {
+              "fd": 16,
+              "target": "anon_inode:[eventfd]"
+            },
+            {
+              "fd": 17,
+              "target": "closed-during-inventory"
+            }
+          ],
+          "forbidden_key_names": [],
+          "gid": 65534,
+          "groups": [
+            65534
+          ],
+          "positive_control_detected": true,
+          "process_limit_checks": {
+            "cpu_half": true,
+            "memory_256m": true,
+            "nofile_64": true,
+            "pids_16": true
+          },
+          "safe_key_names": [
+            "HOME",
+            "HOSTNAME",
+            "NODE_VERSION",
+            "PATH",
+            "PWD",
+            "TMPDIR",
+            "XDG_CACHE_HOME",
+            "XDG_CONFIG_HOME",
+            "XDG_STATE_HOME",
+            "YARN_VERSION"
+          ],
+          "uid": 65534,
+          "umask": "77"
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "check_id": "CQ-012",
+      "observations": [
+        {
+          "all_browser_cases_refused": true,
+          "browser_case_ids": [
+            "HC-001",
+            "HC-005",
+            "HC-006",
+            "HC-009",
+            "HC-011",
+            "OA-004",
+            "OA-005",
+            "OA-006"
+          ],
+          "browser_cases_must_block": true,
+          "contained_browser_candidates": [],
+          "non_browser_cases_refused": [],
+          "normal_profile_names_considered": [
+            "Chrome",
+            "Firefox"
+          ],
+          "normal_profiles_read": false
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "finished_at": "2026-07-19T09:55:31.844207Z",
+  "harness_digest": "6b4652257d892851acdbf7964420faebe6bd9198d1d763d8961ade7d3898a7cd",
+  "limitations": [
+    "The browser launcher is disabled unless CQ-012 records QUALIFIED.",
+    "Qualification proves this exact harness and cached runtime identity only."
+  ],
+  "qualification_version": "MHAI-CONTAINMENT-1",
+  "result": "PASS",
+  "run_id": "cq-1784454917-a00af0e58d20",
+  "runtime": {
+    "container_image": "sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3 [node@sha256:6c74791e557ce11fc957704f6d4fe134a7bc8d6f5ca4403205b2966bd488f6b3]",
+    "container_server": "29.5.2",
+    "os": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.6"
+  },
+  "started_at": "2026-07-19T09:55:17.434649Z"
+}

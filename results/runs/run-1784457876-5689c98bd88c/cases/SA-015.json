@@ -1,0 +1,52 @@
+{
+  "blocked_reason": {
+    "detail": "Exact official cross-SDK parser execution is unavailable under the no-network, no-package-manager boundary.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "8f07fadd6cfa7d39250d15d78decd970df4bda22caf9d1a7d9d71a9a76d3d7b4",
+  "case_id": "SA-015",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "OFFICIAL_SDK",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "0189e7d6bdf2ecd571cf23dac8b06b66988909655f69719f9e5a206df8ff6eb0",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.777791Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No OFFICIAL_SDK behavior was simulated or inferred from the in-memory fixture model."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-015",
+      "coverage_level": "OFFICIAL_SDK",
+      "evidence_basis": "OFFICIAL_SDK evidence requires exact isolated SDK parsers, not Python lookalikes.",
+      "exact_official_sdk_available": false,
+      "fail_oracle": "Available SDKs disagree in a way that can change authorization or execution.",
+      "pass_oracle": "Duplicate keys, mixed case, confusables, unknown fields, and conflicts yield identical safe decisions.",
+      "protocol_status": "OFFICIAL_GUIDANCE",
+      "simulated_official_sdk_refused": true,
+      "synthetic_negative_control_executed": false,
+      "synthetic_positive_control_executed": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.777442Z",
+  "subject": "Available exact-version official SDKs interpret adversarial JSON without authority-relevant disagreement.",
+  "subject_version": "package:github.com/modelcontextprotocol/go-sdk@unavailable",
+  "target_verdict": "BLOCKED"
+}

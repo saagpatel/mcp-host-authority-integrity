@@ -8,9 +8,9 @@ import shutil
 import signal
 import subprocess
 import time
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Mapping, Sequence
 
 
 class ProcessControlError(RuntimeError):

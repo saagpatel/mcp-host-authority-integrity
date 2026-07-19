@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "45bc748adb19e247f158bb50d520100cde68abc78843b14265f0cb1a1fcff2fe",
+  "case_id": "OA-006",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "2fd188a5d438f5d01dcdf9c3f14aa19dd326022be9f7e6c389df2b8761ae490e",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:36.493926Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No browser or embedded-webview behavior was executed."
+  ],
+  "observations": [
+    {
+      "browser_mode": "BROWSER_DISABLED",
+      "browser_required": true,
+      "unsafe_fallback_refused": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:36.493607Z",
+  "subject": "URL elicitation completion remains bound to the initiating synthetic user and client across redirects and tampering.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "BLOCKED"
+}

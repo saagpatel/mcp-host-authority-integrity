@@ -53,3 +53,21 @@ but several Git facts had already drifted. The live Git read therefore controls.
 - LP-007 may use only a pinned clean AIGCCore archive.
 - LP-001 remains a faithful synthetic fixture because the live personal-ops
   checkout and session state are excluded.
+
+## Post-run readback
+
+The baseline above is historical and intentionally unchanged. Live identities
+drifted while other owners worked, so the execution receipts record their exact
+observation-time identities rather than silently reusing the original pins.
+That drift blocked RT-012, HC-012, LP-007, and LP-009 from target or
+isolated-copy execution. No target source was copied, built, or executed for
+those blocked cases.
+
+After the completed run, the program-owned temporary run root was absent and no
+program-labelled container remained. Read-only Git checks found no
+program-attributable content or ref change.
+
+A later closeout inventory failed to disable Git optional locks and refreshed
+the `portfolio-index` shared worktree's index stat cache. That incidental
+metadata write violates the strict target no-write contract even though no
+target content, ref, or worktree file changed. See `SAFETY-EXCEPTION.md`.

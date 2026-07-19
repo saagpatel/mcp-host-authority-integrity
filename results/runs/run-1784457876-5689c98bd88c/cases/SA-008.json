@@ -1,0 +1,68 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "5405441d54f87ec2b91dcf09a047a2aa59e38f12097ab1d11b7333a173d8d3b4",
+  "case_id": "SA-008",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a7d7508124d90d8e5b091fc14ca14ca936505eb7b3ade388e58da0a9105829dd",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.764254Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Capability negotiation is released-experimental Tasks behavior."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-008",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-008-negative",
+          "facts": {
+            "first_response": "task",
+            "omitting_request_response": "synchronous",
+            "task_count": 1,
+            "unadvertised_task_created": false
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-008-positive",
+          "facts": {
+            "first_response": "task",
+            "omitting_request_response": "task",
+            "task_count": 2
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "Capability negotiation is released-experimental Tasks behavior.",
+      "fail_oracle": "Stale capability state causes an unadvertised task response.",
+      "pass_oracle": "A request omitting Tasks is handled synchronously or rejected without task creation.",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_EXPERIMENTAL",
+  "result": "PASS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.763767Z",
+  "subject": "Task behavior follows the current request capability rather than stale remembered support.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:0a01c75ccc63999079bdce56bc4b32be6fbcd945fbc64216dc86dd1f75a8b734",
+  "target_verdict": "PASS"
+}

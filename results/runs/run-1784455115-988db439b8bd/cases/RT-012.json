@@ -1,0 +1,50 @@
+{
+  "blocked_reason": {
+    "detail": "Live mcp-trust code cannot execute outside the qualified containment and effect boundary; no immutable isolated copy was approved.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "48d64fdb02b479301f572baf49e6af9acb4b8d74ed054ae59af5069d9f59100b",
+  "case_id": "RT-012",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "LIVE_TARGET",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "77df685fc9b095adf1e2c654afc0ae6ea0d3eb0a51b49ca06a1e029ab441bb55",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.530813Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No public annotation or observable live read behavior was exercised.",
+    "The LIVE_TARGET claim remains unproven until an approved immutable contained copy exists."
+  ],
+  "observations": [
+    {
+      "blocked_boundary_digest": "27764ee5c28d189a343f2b51367ce6e83013aa74b5aefbbc085a0d3dadc28474",
+      "effect_broker_bypassed": false,
+      "isolated_copy_created": false,
+      "live_target": "/<HOME>/Projects/mcp-trust",
+      "overclaim_refused": true,
+      "target_code_executed": false,
+      "target_head": "7b1a66bd5e1aef33962ca814bac3062753f5e84a"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.433640Z",
+  "subject": "The exact pinned mcp-trust read-only interface claim is compared with only behavior observable without mutation.",
+  "subject_version": "git:7b1a66bd5e1aef33962ca814bac3062753f5e84a",
+  "target_verdict": "BLOCKED"
+}

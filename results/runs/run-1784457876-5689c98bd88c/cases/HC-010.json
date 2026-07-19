@@ -1,0 +1,52 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "7331535d2bd1e1f28f109528d8b96298945f4493859fb155016a7971f010b30c",
+  "case_id": "HC-010",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a850047761f6c9ae8b10596865c64ad80de52b3ff78bce50e903eac0b78a617d",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.794232Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "filesystem_access_performed": false,
+      "kind": "canonical-root-matrix",
+      "safe_attack_authorizations": "[REDACTED_SYNTHETIC_SECRET]",
+      "safe_legitimate_authorization": "[REDACTED_SYNTHETIC_SECRET]",
+      "vulnerable_attack_authorizations": "[REDACTED_SYNTHETIC_SECRET]"
+    },
+    {
+      "case_id": "HC-010",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.793648Z",
+  "subject": "The fixture client canonicalizes every filesystem access against the current authorized roots.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:0a01c75ccc63999079bdce56bc4b32be6fbcd945fbc64216dc86dd1f75a8b734",
+  "target_verdict": "PASS"
+}

@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "The pinned isolated PortfolioCommandCenter source drifted and no approved program-owned copy exists; target access and substitute reproduction are refused.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "4d0e778468c088191f5472149f845426843c39a856c98be971620d885e911360",
+  "case_id": "HC-012",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a29b52b64344018187aacb507d907e65197a372c60731080abcd11a512f080fe",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.834117Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No target source was read, copied, built, or executed for this evaluation."
+  ],
+  "observations": [
+    {
+      "isolated_copy_available": false,
+      "substitute_fixture_claimed": false,
+      "target_repository_accessed": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.815227Z",
+  "subject": "In an exact isolated source copy, command identity, evidence paths, and approval inputs do not follow untrusted ambient state.",
+  "subject_version": "git:772be25eed8554defa55505cadd23e7fc61df982+deviations:9248f2f3fbe78b71167d3ba4b4a5aebf4003ff45e7eda6cdc4ad6a0fec89e555",
+  "target_verdict": "BLOCKED"
+}

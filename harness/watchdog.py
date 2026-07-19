@@ -6,8 +6,8 @@ import argparse
 import json
 import os
 import time
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 from harness.process_control import (
     Completed,

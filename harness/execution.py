@@ -11,9 +11,12 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from harness.qualification import qualification_is_current
 from harness.browser_policy import browser_refusal
 from harness.ledger import write_once
+from harness.qualification import (
+    qualification_receipt_is_current,
+    validate_qualification_contract,
+)
 from harness.redaction import redact
 from harness.schema_validation import (
     canonical_digest,
@@ -47,6 +50,9 @@ class RunContext:
     browser_mode: str
     qualification_digest: str
     case_id: str | None = None
+    qualification_run_id: str = ""
+    qualification_receipt_json: str = "{}"
+    fixture_digest: str = ""
 
     @property
     def case_root(self) -> Path:
@@ -54,14 +60,27 @@ class RunContext:
             return self.run_root
         return self.run_root / self.case_id.lower()
 
-    def for_case(self, case_id: str) -> "RunContext":
+    def for_case(self, case_id: str) -> RunContext:
         return RunContext(
             run_id=self.run_id,
             run_root=self.run_root,
             browser_mode=self.browser_mode,
             qualification_digest=self.qualification_digest,
             case_id=case_id,
+            qualification_run_id=self.qualification_run_id,
+            qualification_receipt_json=self.qualification_receipt_json,
+            fixture_digest=self.fixture_digest,
         )
+
+    def bound_qualification(self) -> dict[str, Any]:
+        receipt = json.loads(self.qualification_receipt_json)
+        validate_qualification_contract(receipt)
+        if (
+            canonical_digest(receipt) != self.qualification_digest
+            or receipt["run_id"] != self.qualification_run_id
+        ):
+            raise RuntimeError("qualification snapshot no longer matches the run binding")
+        return receipt
 
 
 def utc_now() -> str:
@@ -112,7 +131,11 @@ def git_head(path: Path) -> str:
     return value
 
 
-def subject_version(case: dict[str, Any], evaluation: Evaluation) -> str:
+def subject_version(
+    case: dict[str, Any],
+    evaluation: Evaluation,
+    context: RunContext,
+) -> str:
     if evaluation.subject_version is not None:
         return evaluation.subject_version
     coverage = case["coverage_level"]
@@ -138,7 +161,8 @@ def subject_version(case: dict[str, Any], evaluation: Evaluation) -> str:
             f"{case['case_id']}:{case['exact_subject_claim']}".encode()
         ).hexdigest()
         return f"snapshot:sha256:{digest}"
-    return f"fixture:MHAI-{case['execution_family']}-1@sha256:{fixture_digest()}"
+    digest = context.fixture_digest or fixture_digest()
+    return f"fixture:MHAI-{case['execution_family']}-1@sha256:{digest}"
 
 
 def deterministic_declared_result(evaluation: Evaluation) -> str:
@@ -183,7 +207,7 @@ def build_result(
         "case_definition_digest": canonical_digest(case),
         "oracle_version": "MHAI-ORACLE-1",
         "subject": case["exact_subject_claim"],
-        "subject_version": subject_version(case, evaluation),
+        "subject_version": subject_version(case, evaluation, context),
         "coverage_level": case["coverage_level"],
         "protocol_status": case["protocol_status"],
         "started_at": started_at,
@@ -223,10 +247,28 @@ def atomic_result(path: Path, value: Any) -> None:
 
 
 def new_context() -> RunContext:
-    current, browser_mode = qualification_is_current()
+    qualification_path = ROOT / "results" / "latest" / "containment-qualification.json"
+    qualification = load_json(qualification_path)
+    current, browser_mode = qualification_receipt_is_current(qualification)
     if not current:
         raise RuntimeError(f"containment qualification is not current: {browser_mode}")
-    qualification = load_json(ROOT / "results" / "latest" / "containment-qualification.json")
+    qualification_digest = canonical_digest(qualification)
+    immutable_path = (
+        ROOT
+        / "results"
+        / "runs"
+        / qualification["run_id"]
+        / "containment-qualification.json"
+    )
+    immutable = load_json(immutable_path)
+    if canonical_digest(immutable) != qualification_digest:
+        raise RuntimeError("latest qualification differs from its per-run receipt")
+    qualification_json = json.dumps(
+        qualification,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    )
     run_id = f"run-{int(datetime.now(UTC).timestamp())}-{secrets.token_hex(6)}"
     run_root = ROOT / "work" / "temporary-state" / run_id
     run_root.mkdir(parents=True, mode=0o700)
@@ -234,7 +276,10 @@ def new_context() -> RunContext:
         run_id=run_id,
         run_root=run_root,
         browser_mode=browser_mode,
-        qualification_digest=canonical_digest(qualification),
+        qualification_digest=qualification_digest,
+        qualification_run_id=qualification["run_id"],
+        qualification_receipt_json=qualification_json,
+        fixture_digest=fixture_digest(),
     )
 
 

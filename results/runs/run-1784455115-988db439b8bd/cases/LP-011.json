@@ -1,0 +1,92 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "164485a9f9269cecfb9157a30c9ca098e93a47fa0671478aa160091b6de7c8b2",
+  "case_id": "LP-011",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "553a95b039967925046538ad894e46899fb4998d39a78fa5824346399f6a35ac",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:36.456613Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "over-depth",
+        "recursive-shape",
+        "oversized-branch",
+        "many-errors"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-011",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "bounded validator rejects before its configured ceiling",
+          "variant": "over-depth"
+        },
+        {
+          "accepted": false,
+          "reason": "bounded validator rejects before its configured ceiling",
+          "variant": "recursive-shape"
+        },
+        {
+          "accepted": false,
+          "reason": "bounded validator rejects before its configured ceiling",
+          "variant": "oversized-branch"
+        },
+        {
+          "accepted": false,
+          "reason": "bounded validator rejects before its configured ceiling",
+          "variant": "many-errors"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "many-errors",
+        "over-depth",
+        "oversized-branch",
+        "recursive-shape"
+      ]
+    },
+    {
+      "over_depth_stopped": true,
+      "valid_follow_up_completed": true,
+      "worker_survived": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:36.444845Z",
+  "subject": "Hostile recursive, deep, alternating, and pattern schemas are rejected within strict time and memory limits.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "PASS"
+}

@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+import base64
 import json
 import re
-import base64
-from urllib.parse import unquote
 from typing import Any
+from urllib.parse import unquote
 
 MAX_EVIDENCE_BYTES = 256 * 1024
 MAX_DEPTH = 32

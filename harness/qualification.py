@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import base64
+import contextlib
 import hashlib
 import json
 import os
 import platform
 import re
-import base64
 import secrets
 import shutil
 import signal
@@ -16,12 +17,13 @@ import subprocess
 import sys
 import threading
 import time
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
-from harness.canary_store import CanaryError, CanaryStore
 from harness.browser_policy import browser_refusal
+from harness.canary_store import CanaryError, CanaryStore
 from harness.ledger import DuplicateExecutionError, ExecutionLedger, write_once
 from harness.limits import (
     DECOMPRESSED_BYTES,
@@ -74,15 +76,23 @@ def digest_paths(paths: list[Path]) -> str:
 def harness_digest() -> str:
     paths = [
         path
-        for directory in (ROOT / "harness", ROOT / "fixtures" / "processes")
+        for directory in (
+            ROOT / "harness",
+            ROOT / "suite_impl",
+            ROOT / "fixtures" / "processes",
+        )
         for path in directory.rglob("*")
         if path.is_file() and "__pycache__" not in path.parts and not path.name.endswith(".pyc")
     ]
     paths.extend(
         [
+            ROOT / "cases.json",
             ROOT / "SAFETY-BOUNDARY.md",
             ROOT / "CONTAINMENT-QUALIFICATION.md",
             ROOT / "schemas" / "qualification.schema.json",
+            ROOT / "schemas" / "result.schema.json",
+            ROOT / "schemas" / "run-manifest.schema.json",
+            ROOT / "schemas" / "test-case.schema.json",
         ]
     )
     return digest_paths(paths)
@@ -341,7 +351,7 @@ class _NonceListener:
         except TimeoutError:
             pass
 
-    def __enter__(self) -> "_NonceListener":
+    def __enter__(self) -> _NonceListener:
         self.thread.start()
         return self
 
@@ -535,10 +545,8 @@ def _watchdog_trial(root: Path, run_id: str, image: str, *, controller_death: bo
     finally:
         for process in (controller, watchdog, unrelated):
             if process is not None and process.poll() is None:
-                try:
+                with contextlib.suppress(ProcessLookupError):
                     os.killpg(process.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
                 process.wait(timeout=2)
         cleanup_labeled_containers(run_id, root)
 
@@ -1260,10 +1268,8 @@ def qualify() -> tuple[dict[str, Any], Path]:
         return receipt, latest_path
     finally:
         if not cleanup_verified and run_root.exists():
-            try:
+            with contextlib.suppress(Exception):
                 verify_qualification_cleanup(run_id, run_root)
-            except Exception:
-                pass
             shutil.rmtree(run_root, ignore_errors=True)
 
 
@@ -1273,6 +1279,13 @@ def qualification_is_current(path: Path | None = None) -> tuple[bool, str]:
         return False, "qualification receipt missing"
     try:
         receipt = load_json(target)
+    except Exception as exc:
+        return False, f"qualification receipt unreadable: {exc}"
+    return qualification_receipt_is_current(receipt)
+
+
+def qualification_receipt_is_current(receipt: dict[str, Any]) -> tuple[bool, str]:
+    try:
         validate_qualification_contract(receipt)
     except Exception as exc:
         return False, f"qualification receipt invalid: {exc}"

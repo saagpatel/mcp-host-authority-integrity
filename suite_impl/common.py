@@ -29,7 +29,10 @@ def controlled_evaluation(
 ) -> Evaluation:
     """Exercise a real canary sensor around explicit safe and vulnerable models."""
     expected_variants = set(attack_variants)
-    safe_by_variant = {variant: decision for variant, decision in zip(attack_variants, safe_decisions)}
+    safe_by_variant = {
+        variant: decision
+        for variant, decision in zip(attack_variants, safe_decisions, strict=False)
+    }
     if len(safe_decisions) != len(attack_variants) or set(safe_by_variant) != expected_variants:
         return Evaluation(
             target_verdict="UNKNOWN",

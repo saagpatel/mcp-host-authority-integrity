@@ -1,14 +1,14 @@
 from __future__ import annotations
 
+import base64
 import json
 import os
 import tempfile
 import unittest
-import base64
 from pathlib import Path
 
-from harness.canary_store import CanaryError, CanaryStore
 from harness.browser_policy import browser_refusal
+from harness.canary_store import CanaryError, CanaryStore
 from harness.ledger import DuplicateExecutionError, ExecutionLedger, write_once
 from harness.limits import (
     REQUEST_BYTES,
@@ -181,13 +181,15 @@ class SafetyControlTests(unittest.TestCase):
                 return completed(arguments, stdout=b"container-1\n")
             return completed(arguments, returncode=1, stderr=b"synthetic remove failure")
 
-        with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaises(ProcessControlError):
-                cleanup_labeled_containers(
-                    "run-1",
-                    Path(temporary),
-                    docker_call=failed_removal,
-                )
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            self.assertRaises(ProcessControlError),
+        ):
+            cleanup_labeled_containers(
+                "run-1",
+                Path(temporary),
+                docker_call=failed_removal,
+            )
 
     def test_cleanup_fails_when_final_container_listing_has_residue(self) -> None:
         calls = 0
@@ -199,13 +201,15 @@ class SafetyControlTests(unittest.TestCase):
                 return completed(arguments)
             return completed(arguments, stdout=b"late-container\n")
 
-        with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaises(ProcessControlError):
-                cleanup_labeled_containers(
-                    "run-1",
-                    Path(temporary),
-                    docker_call=stale_final_listing,
-                )
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            self.assertRaises(ProcessControlError),
+        ):
+            cleanup_labeled_containers(
+                "run-1",
+                Path(temporary),
+                docker_call=stale_final_listing,
+            )
 
     def test_cq009_fails_when_post_cleanup_enumeration_fails(self) -> None:
         calls = 0
@@ -217,13 +221,15 @@ class SafetyControlTests(unittest.TestCase):
                 return completed(arguments, returncode=125, stderr=b"synthetic CQ009 failure")
             return completed(arguments)
 
-        with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaises(ProcessControlError):
-                cq_009(
-                    Path(temporary) / "cq009",
-                    "run-1",
-                    docker_call=failed_post_cleanup_list,
-                )
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            self.assertRaises(ProcessControlError),
+        ):
+            cq_009(
+                Path(temporary) / "cq009",
+                "run-1",
+                docker_call=failed_post_cleanup_list,
+            )
 
     def test_watchdog_fails_when_cleanup_enumeration_fails(self) -> None:
         calls = 0
@@ -235,14 +241,16 @@ class SafetyControlTests(unittest.TestCase):
                 return completed(arguments)
             return completed(arguments, returncode=125, stderr=b"synthetic watchdog failure")
 
-        with tempfile.TemporaryDirectory() as temporary:
-            with self.assertRaises(ProcessControlError):
-                revoke_container(
-                    "container-1",
-                    "run-1",
-                    Path(temporary),
-                    docker_call=failed_watchdog_list,
-                )
+        with (
+            tempfile.TemporaryDirectory() as temporary,
+            self.assertRaises(ProcessControlError),
+        ):
+            revoke_container(
+                "container-1",
+                "run-1",
+                Path(temporary),
+                docker_call=failed_watchdog_list,
+            )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "2744828c16fa7a9580e2b79edbd96febbdcb0542e7a647002e4b47af886b6b26",
+  "case_id": "HC-006",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "2fd188a5d438f5d01dcdf9c3f14aa19dd326022be9f7e6c389df2b8761ae490e",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.787595Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No browser or embedded-webview behavior was executed."
+  ],
+  "observations": [
+    {
+      "browser_mode": "BROWSER_DISABLED",
+      "browser_required": true,
+      "unsafe_fallback_refused": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.787218Z",
+  "subject": "Consequential consent remains in trusted host chrome and binds server, tool, arguments, and effect to a relevant gesture.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:0a01c75ccc63999079bdce56bc4b32be6fbcd945fbc64216dc86dd1f75a8b734",
+  "target_verdict": "BLOCKED"
+}

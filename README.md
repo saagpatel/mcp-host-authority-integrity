@@ -65,3 +65,8 @@ Fixture evidence never proves behavior in an installed or live target.
 
 See [DESIGN.md](DESIGN.md), [THREAT-MODEL.md](THREAT-MODEL.md), and
 [SAFETY-BOUNDARY.md](SAFETY-BOUNDARY.md) before execution.
+
+The completed evidence overlay is in [EXECUTION-SUMMARY.md](EXECUTION-SUMMARY.md)
+and [EXECUTION-COVERAGE.md](EXECUTION-COVERAGE.md). `COVERAGE-MATRIX.md` remains
+the immutable pre-execution catalog view. [SAFETY-EXCEPTION.md](SAFETY-EXCEPTION.md)
+records the Gate 7 closeout boundary violation.

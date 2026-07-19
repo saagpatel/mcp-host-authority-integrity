@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 import os
@@ -41,17 +42,15 @@ class CanaryStore:
             os.close(descriptor)
             self._root_descriptor = -1
 
-    def __enter__(self) -> "CanaryStore":
+    def __enter__(self) -> CanaryStore:
         return self
 
     def __exit__(self, *_args: object) -> None:
         self.close()
 
     def __del__(self) -> None:
-        try:
+        with contextlib.suppress(OSError):
             self.close()
-        except OSError:
-            pass
 
     def _validate_name(self, name: str) -> None:
         if not name or name in {".", ".."} or "/" in name or "\0" in name:

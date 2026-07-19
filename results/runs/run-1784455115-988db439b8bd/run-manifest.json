@@ -1,0 +1,420 @@
+{
+  "abort_reason": null,
+  "case_count": 57,
+  "case_ids": [
+    "RT-001",
+    "RT-002",
+    "RT-003",
+    "RT-004",
+    "RT-005",
+    "RT-006",
+    "RT-007",
+    "RT-008",
+    "RT-009",
+    "RT-010",
+    "RT-011",
+    "RT-012",
+    "SA-001",
+    "SA-002",
+    "SA-003",
+    "SA-004",
+    "SA-005",
+    "SA-006",
+    "SA-007",
+    "SA-008",
+    "SA-009",
+    "SA-010",
+    "SA-011",
+    "SA-012",
+    "SA-013",
+    "SA-014",
+    "SA-015",
+    "HC-001",
+    "HC-002",
+    "HC-003",
+    "HC-004",
+    "HC-005",
+    "HC-006",
+    "HC-007",
+    "HC-008",
+    "HC-009",
+    "HC-010",
+    "HC-011",
+    "HC-012",
+    "LP-001",
+    "LP-002",
+    "LP-003",
+    "LP-004",
+    "LP-005",
+    "LP-006",
+    "LP-007",
+    "LP-008",
+    "LP-009",
+    "LP-010",
+    "LP-011",
+    "OA-001",
+    "OA-002",
+    "OA-003",
+    "OA-004",
+    "OA-005",
+    "OA-006",
+    "CHAIN-001"
+  ],
+  "cleanup_result": "PASS",
+  "complete": true,
+  "finished_at": "2026-07-19T09:58:37.022116Z",
+  "fixture_digest": "4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "program": "MCP Host Authority Integrity Program",
+  "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd",
+  "qualification_run_id": "cq-1784454917-a00af0e58d20",
+  "result_counts": {
+    "BLOCKED_BY_ACCESS": 14,
+    "PASS": 43
+  },
+  "results": [
+    {
+      "case_id": "RT-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-001.json",
+      "result": "PASS",
+      "sha256": "6eb39c9322d6791668955bed114117264608ba77e3082f2b69050bd0ecc583c3"
+    },
+    {
+      "case_id": "RT-002",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-002.json",
+      "result": "PASS",
+      "sha256": "d8db790dfb75bcba2960e6aa294da4f757d97ca6e79ce43f89daa7b817362133"
+    },
+    {
+      "case_id": "RT-003",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-003.json",
+      "result": "PASS",
+      "sha256": "072ce7a294049c6cdd836829a05fd661c852678e03f4c408d0b9ace3190f9457"
+    },
+    {
+      "case_id": "RT-004",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-004.json",
+      "result": "PASS",
+      "sha256": "f5d1d0eb9ee2b17eb32f11ee5a359c52c088c95a4448801141624b0d41b6ae9a"
+    },
+    {
+      "case_id": "RT-005",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-005.json",
+      "result": "PASS",
+      "sha256": "f915328f643968301d6ccc282e17c14e9fd0da1a52f911844d2b0d1f4220d00e"
+    },
+    {
+      "case_id": "RT-006",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-006.json",
+      "result": "PASS",
+      "sha256": "6f47fa9ed29bfad4133cab3f294aecd4b59e17ae1175b51e781ed362b70ae2d3"
+    },
+    {
+      "case_id": "RT-007",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-007.json",
+      "result": "PASS",
+      "sha256": "74f7b5e5c2d9b128296decf6511ac63b4c9642b4ae9b52c0d25e0c5024fe0e1b"
+    },
+    {
+      "case_id": "RT-008",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-008.json",
+      "result": "PASS",
+      "sha256": "23f71f55b6be7850d0cc7de1db7c9d438d983918e2112ae3cb8733777d34a3a4"
+    },
+    {
+      "case_id": "RT-009",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-009.json",
+      "result": "PASS",
+      "sha256": "180182ebda8a03df004f85eb383d9bb6d581ff71dce28ffa7f23f931826b40a6"
+    },
+    {
+      "case_id": "RT-010",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-010.json",
+      "result": "PASS",
+      "sha256": "c3c9abcd3a3572ce1bc5597d087d75a9efd40db454fb3a8aaa4ccc89a6c03793"
+    },
+    {
+      "case_id": "RT-011",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-011.json",
+      "result": "PASS",
+      "sha256": "25fcbae90d3474d782b2d510719b93b126042d80aa7e5ea8f0ea8760e0a1714b"
+    },
+    {
+      "case_id": "RT-012",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/RT-012.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "e50e84e160ccf70590d7c02b725658041bef84ae3e4ddb590edfc4cc0faeff52"
+    },
+    {
+      "case_id": "SA-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-001.json",
+      "result": "PASS",
+      "sha256": "9b798c33a05520870abee38d79ec1d95de0bfda3a186cdef72ccbdae02972152"
+    },
+    {
+      "case_id": "SA-002",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-002.json",
+      "result": "PASS",
+      "sha256": "9bc1d0c0b5449c32529f3392dde12ce65fd03f5a920dc3598885fcf4e1c4b94e"
+    },
+    {
+      "case_id": "SA-003",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-003.json",
+      "result": "PASS",
+      "sha256": "8212e268f0d349ad3b67932b82bd6f4b347566d24a90752744f4bf517e597b0c"
+    },
+    {
+      "case_id": "SA-004",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-004.json",
+      "result": "PASS",
+      "sha256": "a021eb8a2a9e41cf38f12025f8f3321c76b3ad01c3ba8199372b70fdabe29797"
+    },
+    {
+      "case_id": "SA-005",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-005.json",
+      "result": "PASS",
+      "sha256": "dca6d337b1688a39576c27af8da6cb932bbc6ba6bc1a343c27df76a271af0257"
+    },
+    {
+      "case_id": "SA-006",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-006.json",
+      "result": "PASS",
+      "sha256": "6c1dd990a5c1201502eff4dbea43e0bf4101e39d0959b8a5d7b3762788d781f7"
+    },
+    {
+      "case_id": "SA-007",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-007.json",
+      "result": "PASS",
+      "sha256": "c98784675b7ebf8e783dbae8b3ac33cc7702b5f0d6c0bfa82f73cbe498bc7cc3"
+    },
+    {
+      "case_id": "SA-008",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-008.json",
+      "result": "PASS",
+      "sha256": "468545ec2a2673bfb1d0ce4509675b34c32e4e900311941206294070d292d005"
+    },
+    {
+      "case_id": "SA-009",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-009.json",
+      "result": "PASS",
+      "sha256": "72b9644e6cd5f90e4c660c27b0b31243856b5cd885fbf41c43cf40b3b6076519"
+    },
+    {
+      "case_id": "SA-010",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-010.json",
+      "result": "PASS",
+      "sha256": "e09b7485b4d129582e3db3a628bf8d6e3e3ca84dd3446c68ad6ceb1c5008b6f5"
+    },
+    {
+      "case_id": "SA-011",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-011.json",
+      "result": "PASS",
+      "sha256": "21fefae31937d4d3e4ebb49a963028258612c0db127a556ff4ff36e19030f4d4"
+    },
+    {
+      "case_id": "SA-012",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-012.json",
+      "result": "PASS",
+      "sha256": "fece0e33f552a705f6e8e0053ebbc4ccebc7d2f9330c4348dd3caeb364662268"
+    },
+    {
+      "case_id": "SA-013",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-013.json",
+      "result": "PASS",
+      "sha256": "d3fd5ddc8577d9df1ad2f08be8e6617cabe223e2c5b76a6588c855baf108a7d0"
+    },
+    {
+      "case_id": "SA-014",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-014.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "184657f28b5a176dcd675536d8d5d6d96f751bdea3195d1f09f95c2356add2b8"
+    },
+    {
+      "case_id": "SA-015",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/SA-015.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "2e82b13559dbc44af08bfadf86f5d55f2aeae2a498138b51aeb1c16718df1330"
+    },
+    {
+      "case_id": "HC-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-001.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "b001265352d5ca28e5b916cda8843f9bcb35a2656d8970cc845c4b6be3035d3c"
+    },
+    {
+      "case_id": "HC-002",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-002.json",
+      "result": "PASS",
+      "sha256": "04193a94716fb4d7304df57429d566f902ec1af263e1d482bd29bb829d7c2d00"
+    },
+    {
+      "case_id": "HC-003",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-003.json",
+      "result": "PASS",
+      "sha256": "e90479177fa8141a15d11e4b38a054304d7a8a256530b9d11b2cb46851e5202b"
+    },
+    {
+      "case_id": "HC-004",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-004.json",
+      "result": "PASS",
+      "sha256": "d3fc2de8bfb8ea0c434212b9e4c8c19c18a0284566dff484358910057a735874"
+    },
+    {
+      "case_id": "HC-005",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-005.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "c6ad9f00241f9a6af62e30f589770285875a4f38e22c3be84bf9e65237a86ed0"
+    },
+    {
+      "case_id": "HC-006",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-006.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "d4c1a65acc9d2ebc350d9a759f21cf42100fe6bf6b6fb87ec44df3cfdb46eab6"
+    },
+    {
+      "case_id": "HC-007",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-007.json",
+      "result": "PASS",
+      "sha256": "677598840197c14dd8219d4e09ced4d69eb209140a3ce871363a8f1ebb1f3ae0"
+    },
+    {
+      "case_id": "HC-008",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-008.json",
+      "result": "PASS",
+      "sha256": "eca823bf3ea70ce0c8d7914c0507582a3a2c7b3046043ee587572a0a8e028487"
+    },
+    {
+      "case_id": "HC-009",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-009.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "e61b9895ff826f01a2b3738119d5cdd503a00d343778292f47358767420244cc"
+    },
+    {
+      "case_id": "HC-010",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-010.json",
+      "result": "PASS",
+      "sha256": "17bd5903b48f86e5377562a77685cdf80760ca1e9f752995039d7353fbc286e8"
+    },
+    {
+      "case_id": "HC-011",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-011.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "0da80a9256a154fe871c607fdb4042574fa2a2d588aff84d2f25ee7ee459be32"
+    },
+    {
+      "case_id": "HC-012",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/HC-012.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "5c827bcd6915a6e2b5c87c372a758a86c06fe93db84d38c1bb7f0417b064d60e"
+    },
+    {
+      "case_id": "LP-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-001.json",
+      "result": "PASS",
+      "sha256": "6850d4c0d8ca384dccab60f845c91f954eaa093f4708d1376f31d7c9231c1d66"
+    },
+    {
+      "case_id": "LP-002",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-002.json",
+      "result": "PASS",
+      "sha256": "ad31f58d76c9316557f119c33aa9daf0937fb154cf92f5b11c0302a09021d514"
+    },
+    {
+      "case_id": "LP-003",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-003.json",
+      "result": "PASS",
+      "sha256": "c6e4fc32615bb6ce3be21a65b3d7799f05010a92017540dbeef4d07ae8d8d1af"
+    },
+    {
+      "case_id": "LP-004",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-004.json",
+      "result": "PASS",
+      "sha256": "8966ea94a871c7ac8a8c4305d40f199fd3f2d08a2764d601a3982f31d10c4cf3"
+    },
+    {
+      "case_id": "LP-005",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-005.json",
+      "result": "PASS",
+      "sha256": "38628f62136937659b27614d1765e12a533bfe01d1807d81bf2d784a966158cc"
+    },
+    {
+      "case_id": "LP-006",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-006.json",
+      "result": "PASS",
+      "sha256": "743940a92d5525ee320ef7d9a60c553159350edc51717cae22204760982873df"
+    },
+    {
+      "case_id": "LP-007",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-007.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "19d58dacd75aed92a01d3945d5ce29ea07236aff945aae1484bcfa07f18e743b"
+    },
+    {
+      "case_id": "LP-008",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-008.json",
+      "result": "PASS",
+      "sha256": "eadac9f78148d48e5750cf859cf13cb0e8daeaba1e0ea033ddf11282665f3ff4"
+    },
+    {
+      "case_id": "LP-009",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-009.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "b6de5827d40a05f7b26671e0a3344880e89f482dc6925985d82f73309dafe156"
+    },
+    {
+      "case_id": "LP-010",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-010.json",
+      "result": "PASS",
+      "sha256": "1dc589408dcfd8bb29ab35445e8dfed93efcf850e0fe1c2586abee389f212298"
+    },
+    {
+      "case_id": "LP-011",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/LP-011.json",
+      "result": "PASS",
+      "sha256": "a415d37425c037ea59d5f65c2a67bb051011e491d7f37643982e0037d68ec7ab"
+    },
+    {
+      "case_id": "OA-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-001.json",
+      "result": "PASS",
+      "sha256": "7915be4f093651aeaf5c666bb7a71ed26a04de804a6c953e6d58fcdf8224b42c"
+    },
+    {
+      "case_id": "OA-002",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-002.json",
+      "result": "PASS",
+      "sha256": "0a354600fe358ad799932a02de061761f7d6cf70fdd1486620e63ebdf09c6682"
+    },
+    {
+      "case_id": "OA-003",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-003.json",
+      "result": "PASS",
+      "sha256": "31364c658f679c93d7eccf756bbb692b7e13913e2ee546f0b7143880793f4de3"
+    },
+    {
+      "case_id": "OA-004",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-004.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "0370bd4c76db898d20a8c17549d7aa2409ee610bf144abb815abf3bc616cc808"
+    },
+    {
+      "case_id": "OA-005",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-005.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "2b1f7c57f00eb25d823c14b512d469b205fdc56e288fe24fde596e9cebd91422"
+    },
+    {
+      "case_id": "OA-006",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/OA-006.json",
+      "result": "BLOCKED_BY_ACCESS",
+      "sha256": "92fd9a7fc4c5a847fedc87c13f977e8e9053ec9dcf468ac5ed3f9222f5e0015c"
+    },
+    {
+      "case_id": "CHAIN-001",
+      "path": "results/runs/run-1784455115-988db439b8bd/cases/CHAIN-001.json",
+      "result": "PASS",
+      "sha256": "f6a91202d3062a906aaf3bce1898dc3c72bbe9baa8d792608acf94b42974c566"
+    }
+  ],
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.311986Z"
+}

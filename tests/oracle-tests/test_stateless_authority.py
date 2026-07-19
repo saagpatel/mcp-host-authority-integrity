@@ -7,7 +7,6 @@ from pathlib import Path
 from harness.execution import RunContext, deterministic_declared_result
 from suite_impl.stateless_authority import evaluate
 
-
 ROOT = Path(__file__).resolve().parents[2]
 
 

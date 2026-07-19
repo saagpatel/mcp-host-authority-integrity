@@ -1,0 +1,52 @@
+{
+  "blocked_reason": {
+    "detail": "Exact official Go MCP SDK execution is unavailable under the no-network, no-package-manager boundary.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "d0e706f8da9379ab8e4126c395a56a830300cf554e7b7f58d3ab9b2ea9a43d04",
+  "case_id": "SA-014",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "OFFICIAL_SDK",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "42f87b0b8feaea909854fd301c3b94d274c489193f74deefbb5048c480a475cd",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.728987Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No OFFICIAL_SDK behavior was simulated or inferred from the in-memory fixture model."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-014",
+      "coverage_level": "OFFICIAL_SDK",
+      "evidence_basis": "OFFICIAL_SDK evidence requires an exact isolated Go SDK, not a simulated implementation.",
+      "exact_official_sdk_available": false,
+      "fail_oracle": "Any hostile input reaches the handler or the version/configuration is not exact.",
+      "pass_oracle": "The exact version and configuration reject every hostile request while accepting the valid control.",
+      "protocol_status": "OFFICIAL_GUIDANCE",
+      "simulated_official_sdk_refused": true,
+      "synthetic_negative_control_executed": false,
+      "synthetic_positive_control_executed": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.726227Z",
+  "subject": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+  "subject_version": "package:github.com/modelcontextprotocol/go-sdk@unavailable",
+  "target_verdict": "BLOCKED"
+}

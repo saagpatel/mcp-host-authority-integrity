@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "b2a06c86e70dc1952a3c797f0be0c17d1691dc6568fbc29bcc01c47d4ccdd142",
+  "case_id": "HC-011",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "2fd188a5d438f5d01dcdf9c3f14aa19dd326022be9f7e6c389df2b8761ae490e",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.813425Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No browser or embedded-webview behavior was executed."
+  ],
+  "observations": [
+    {
+      "browser_mode": "BROWSER_DISABLED",
+      "browser_required": true,
+      "unsafe_fallback_refused": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.795444Z",
+  "subject": "In an exact isolated source copy, hostile webview content cannot reach proposal-approval or external-apply-shaped commands.",
+  "subject_version": "git:772be25eed8554defa55505cadd23e7fc61df982+deviations:080bc3480ce23d66dd4e6d25e7045a8d5cf1bc3c63502aa53ea67d3f5138ed34",
+  "target_verdict": "BLOCKED"
+}

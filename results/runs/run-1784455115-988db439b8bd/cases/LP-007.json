@@ -1,0 +1,46 @@
+{
+  "blocked_reason": {
+    "detail": "No approved isolated AIGCCore copy exists at a stable Gate 0 pin.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "0a9c4234d9de4872fbc3e5c4d03b71f6dd122f554c582101e627a21f8f4ca3d8",
+  "case_id": "LP-007",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "ec48c91c6ff5e99f63731e64b8d03da3c35a23af3c249ed050b80027a0308f85",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:36.209955Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "source_candidate_head": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
+      "target_access": "read-only Git identity only"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:36.141251Z",
+  "subject": "An exact isolated AIGCCore source copy performs no network action across the exercised UI, command, adapter, and dependency paths.",
+  "subject_version": "git:09c3aa435a608d03c002782e6268c10f5bb7fe94+deviations:4b2cb9dfbf59b1af59c272fa77a732f65a52733bd866929c710724e14e955763",
+  "target_verdict": "BLOCKED"
+}

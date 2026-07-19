@@ -1,0 +1,76 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "ed8d1e48401041b84b52c3cf00bc53d8cce275e7f90a4a9bd6baea95825ac1d3",
+  "case_id": "SA-001",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "db599940d59e9f65afac2077a56232db4308f0c607883d2dc97f073cb09bc887",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.535043Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "SEP-2567 is a final proposal; this result is fixture evidence, not released-core conformance."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-001",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-001-negative",
+          "facts": {
+            "disclosure": false,
+            "rejected_variants": [
+              "cross_principal",
+              "cross_tool",
+              "expired",
+              "neighboring",
+              "revoked"
+            ],
+            "uniform_denial": true
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-001-positive",
+          "facts": {
+            "granted_variants": [
+              "cross_principal",
+              "cross_tool",
+              "expired",
+              "revoked"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "SEP-2567 is a final proposal; this result is fixture evidence, not released-core conformance.",
+      "fail_oracle": "Possession of any tested invalid-authority handle grants continuation or data.",
+      "pass_oracle": "Cross-principal, cross-tool, neighboring, expired, and revoked handles are rejected without disclosure.",
+      "protocol_status": "FINAL_PROPOSAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FINAL_PROPOSAL",
+  "result": "PASS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.533152Z",
+  "subject": "Fixture authorization is checked independently of state-handle possession.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "PASS"
+}

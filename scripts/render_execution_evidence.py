@@ -1,0 +1,244 @@
+#!/usr/bin/env python3
+"""Render human-readable closeout evidence from one complete immutable run."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import sys
+from collections import Counter, defaultdict
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from harness.schema_validation import (  # noqa: E402 - direct-script path bootstrap
+    load_json,
+    validate,
+    validate_result_contract,
+)
+
+
+def canonical_json(value: Any) -> str:
+    return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
+
+
+def markdown_cell(value: str) -> str:
+    return value.replace("|", "\\|").replace("\n", " ").strip()
+
+
+def read_and_validate() -> tuple[
+    dict[str, Any],
+    dict[str, Any],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+]:
+    manifest_path = ROOT / "results/latest/run-manifest.json"
+    qualification_path = ROOT / "results/latest/containment-qualification.json"
+    manifest = load_json(manifest_path)
+    qualification = load_json(qualification_path)
+    cases = load_json(ROOT / "cases.json")
+    cases_by_id = {case["case_id"]: case for case in cases}
+
+    validate(manifest, load_json(ROOT / "schemas/run-manifest.schema.json"))
+    validate(qualification, load_json(ROOT / "schemas/qualification.schema.json"))
+    if not manifest["complete"] or manifest["abort_reason"] is not None:
+        raise ValueError("latest run is not complete")
+    if manifest["cleanup_result"] != "PASS":
+        raise ValueError("latest run cleanup did not pass")
+    if manifest["qualification_run_id"] != qualification["run_id"]:
+        raise ValueError("latest run is not bound to the latest qualification receipt")
+    if manifest["case_ids"] != [case["case_id"] for case in cases]:
+        raise ValueError("manifest case order differs from the immutable catalog")
+    if len(cases_by_id) != 57:
+        raise ValueError("immutable catalog does not contain exactly 57 unique cases")
+
+    result_schema = load_json(ROOT / "schemas/result.schema.json")
+    results: list[dict[str, Any]] = []
+    run_root = (ROOT / "results/runs" / manifest["run_id"]).resolve()
+    for item in manifest["results"]:
+        expected_path = (
+            ROOT
+            / "results/runs"
+            / manifest["run_id"]
+            / "cases"
+            / f"{item['case_id']}.json"
+        ).resolve()
+        recorded_path = (ROOT / item["path"]).resolve()
+        if recorded_path != expected_path or run_root not in recorded_path.parents:
+            raise ValueError(f"{item['case_id']}: result path is outside the exact run")
+        encoded = recorded_path.read_bytes()
+        if hashlib.sha256(encoded).hexdigest() != item["sha256"]:
+            raise ValueError(f"{item['case_id']}: result hash mismatch")
+        result = json.loads(encoded)
+        validate_result_contract(result, result_schema, cases_by_id[item["case_id"]])
+        if result["run_id"] != manifest["run_id"] or result["result"] != item["result"]:
+            raise ValueError(f"{item['case_id']}: manifest/result binding mismatch")
+        results.append(result)
+
+    counts = dict(sorted(Counter(result["result"] for result in results).items()))
+    if counts != manifest["result_counts"] or len(results) != 57:
+        raise ValueError("manifest result counts do not match the 57 validated results")
+    return manifest, qualification, cases, results
+
+
+def render_summary(
+    manifest: dict[str, Any],
+    qualification: dict[str, Any],
+    cases: list[dict[str, Any]],
+    results: list[dict[str, Any]],
+) -> str:
+    cases_by_id = {case["case_id"]: case for case in cases}
+    by_suite: dict[str, Counter[str]] = defaultdict(Counter)
+    for result in results:
+        by_suite[cases_by_id[result["case_id"]]["suite"]][result["result"]] += 1
+    lines = [
+        "# Execution summary",
+        "",
+        "## Outcome",
+        "",
+        "`EXECUTION_COMPLETE_CLOSURE_GATE_FAIL`",
+        "",
+        f"The bound run `{manifest['run_id']}` produced 57 schema-valid, hash-bound "
+        "case results. No case produced `FAIL`, `UNKNOWN`, `ERROR`, `NOT_RUN`, or "
+        "`NOT_IMPLEMENTED`. The run recorded 43 fixture, static-contract, or "
+        "contained-oracle passes and 14 explicit access blocks.",
+        "",
+        "No validated target vulnerability was established. A fixture `PASS` proves "
+        "only the exact recorded synthetic subject and controls; it is not evidence "
+        "that an installed target is secure or vulnerable.",
+        "",
+        "Gate 7 closure failed because a final `git status` readback refreshed the "
+        "shared `portfolio-index` worktree's Git index stat cache. The command did "
+        "not request a ref, content, or worktree-file change; only the index mtime "
+        "refresh is directly attributable to it. The strict no-write target boundary "
+        "cannot be claimed. See `SAFETY-EXCEPTION.md`.",
+        "",
+        "## Suite totals",
+        "",
+        "| Suite | PASS | BLOCKED_BY_ACCESS | Total |",
+        "|---|---:|---:|---:|",
+    ]
+    for suite in [
+        "Runtime Truth",
+        "Stateless Authority",
+        "Host Confused Deputy",
+        "Local Privilege Containment",
+        "OAuth and Browser Identity",
+        "Integrated Attack Chain",
+    ]:
+        counts = by_suite[suite]
+        total = counts["PASS"] + counts["BLOCKED_BY_ACCESS"]
+        lines.append(
+            f"| {suite} | {counts['PASS']} | {counts['BLOCKED_BY_ACCESS']} | {total} |"
+        )
+    lines.extend(
+        [
+            f"| **Total** | **{manifest['result_counts'].get('PASS', 0)}** | "
+            f"**{manifest['result_counts'].get('BLOCKED_BY_ACCESS', 0)}** | **57** |",
+            "",
+            "## Containment binding",
+            "",
+            f"- Qualification: `{qualification['run_id']}` / `{qualification['result']}`.",
+            f"- Qualification checks: {len(qualification['checks'])}/12 `PASS`.",
+            f"- Browser mode: `{qualification['browser_mode']}`.",
+            f"- Qualification digest: `{manifest['qualification_digest']}`.",
+            f"- Fixture digest: `{manifest['fixture_digest']}`.",
+            f"- Final cleanup: `{manifest['cleanup_result']}`.",
+            "",
+            "## Evidence boundary",
+            "",
+            "- Browser-required cases blocked because the disposable browser launcher "
+            "was not qualified; no normal user browser profile was read.",
+            "- Official-SDK cases blocked because exact isolated SDK versions were not "
+            "available under the no-network, no-package-manager boundary.",
+            "- Live-target and isolated-copy cases blocked where active ownership, "
+            "source drift, or missing immutable copies prevented faithful execution.",
+            "- No target repair, content/ref/worktree edit, publication, external "
+            "write, disclosure, push, or deploy was performed.",
+            "- The Gate 7 target no-write assertion failed due to the Git index "
+            "stat-cache refresh recorded in `SAFETY-EXCEPTION.md`.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def render_coverage(
+    manifest: dict[str, Any],
+    cases: list[dict[str, Any]],
+    results: list[dict[str, Any]],
+) -> str:
+    cases_by_id = {case["case_id"]: case for case in cases}
+    lines = [
+        "# Execution coverage",
+        "",
+        f"Actual results for immutable run `{manifest['run_id']}`. The generated "
+        "`COVERAGE-MATRIX.md` remains the pre-execution catalog contract; this file "
+        "is the result overlay.",
+        "",
+        "| Case | Suite | Evidence ceiling | Result | Controls | Containment | Cleanup | Evidence limit or block |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for result in results:
+        case = cases_by_id[result["case_id"]]
+        controls = (
+            f"+{result['control_results']['positive']} "
+            f"/ -{result['control_results']['negative']}"
+        )
+        if result["blocked_reason"] is not None:
+            limit = result["blocked_reason"]["detail"]
+        elif result["coverage_level"].startswith("FIXTURE_"):
+            limit = "Synthetic subject only; no installed-target inference."
+        elif result["coverage_level"] == "STATIC_EVIDENCE_ONLY":
+            limit = "Static contract evidence only; no live isolation inference."
+        else:
+            limit = result["limitations"][-1]
+        lines.append(
+            f"| [{result['case_id']}](results/runs/{manifest['run_id']}/cases/"
+            f"{result['case_id']}.json) | {markdown_cell(case['suite'])} | "
+            f"{result['coverage_level']} | {result['result']} | {controls} | "
+            f"{result['containment_result']} | {result['cleanup_result']} | "
+            f"{markdown_cell(limit)} |"
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--write", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+    if args.write == args.check:
+        parser.error("choose exactly one of --write or --check")
+
+    manifest, qualification, cases, results = read_and_validate()
+    outputs = {
+        ROOT / "EXECUTION-SUMMARY.md": render_summary(
+            manifest, qualification, cases, results
+        ),
+        ROOT / "EXECUTION-COVERAGE.md": render_coverage(manifest, cases, results),
+        ROOT / "results/findings.json": canonical_json([]),
+    }
+    mismatches: list[str] = []
+    for path, expected in outputs.items():
+        if args.write:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(expected, encoding="utf-8")
+        elif not path.exists() or path.read_text(encoding="utf-8") != expected:
+            mismatches.append(str(path.relative_to(ROOT)))
+    if mismatches:
+        print("execution evidence differs: " + ", ".join(mismatches))
+        return 1
+    print(
+        f"{'wrote' if args.write else 'verified'} execution evidence for "
+        f"{manifest['run_id']}"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

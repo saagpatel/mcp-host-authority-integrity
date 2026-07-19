@@ -1,0 +1,54 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "9cd3016fb9b3705d5e6fcf2666280ab51fea4ea5ad99ad0872a87f0c21d59f9e",
+  "case_id": "HC-008",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "527e9436cfd3d9cb4c5442a7cf584c0967dc401c0e748d4459f7a3bd411bc556",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.828154Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "kind": "unsupported-app-fallback",
+      "payload_sha256": "d25ce56ecf185cac4e6daef3ac332abff4d2534a6bb551341b6555e8ed3fc23d",
+      "safe_mode": "inert_text",
+      "safe_preserved_text": true,
+      "safe_sensor_hits": 0,
+      "vulnerable_mode": "executed",
+      "vulnerable_sensor_hits": 1
+    },
+    {
+      "case_id": "HC-008",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.822614Z",
+  "subject": "A client without App support treats hostile-looking App HTML as inert text or rejects it.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "PASS"
+}

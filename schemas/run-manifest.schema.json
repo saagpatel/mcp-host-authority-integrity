@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/run-manifest.schema.json",
+  "title": "MHAI complete run manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "program",
+    "run_id",
+    "started_at",
+    "finished_at",
+    "qualification_digest",
+    "qualification_run_id",
+    "fixture_digest",
+    "case_count",
+    "case_ids",
+    "result_counts",
+    "results",
+    "cleanup_result",
+    "complete",
+    "abort_reason"
+  ],
+  "properties": {
+    "program": {"const": "MCP Host Authority Integrity Program"},
+    "run_id": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string", "minLength": 1},
+    "finished_at": {"type": "string", "minLength": 1},
+    "qualification_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "qualification_run_id": {"type": "string", "minLength": 1},
+    "fixture_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "case_count": {"const": 57},
+    "case_ids": {
+      "type": "array",
+      "minItems": 57,
+      "maxItems": 57,
+      "items": {"type": "string"}
+    },
+    "result_counts": {"type": "object"},
+    "results": {
+      "type": "array",
+      "minItems": 57,
+      "maxItems": 57,
+      "items": {
+        "type": "object",
+        "required": ["case_id", "result", "sha256", "path"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "result": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "path": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "cleanup_result": {"enum": ["PASS", "FAIL"]},
+    "complete": {"type": "boolean"},
+    "abort_reason": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "string", "minLength": 1}
+      ]
+    }
+  }
+}

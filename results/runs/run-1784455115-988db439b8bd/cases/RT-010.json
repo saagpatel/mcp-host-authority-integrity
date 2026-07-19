@@ -1,0 +1,115 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "9a64ba9409701429515ef77fcee5f983d51beb85ee9edd9bdf18f84574927c54",
+  "case_id": "RT-010",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "13d1bceb44123f98457a019cd48d7ac9cced7f4ec118614dbd4476c092db9d4d",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.419517Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "The case reuses active probes from the exact current containment qualification."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "controller-death",
+        "emergency-stop",
+        "delayed-process-action"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-010",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "controller-death"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "emergency-stop"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "delayed-process-action"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "controller-death",
+        "delayed-process-action",
+        "emergency-stop"
+      ]
+    },
+    {
+      "cleanup": {
+        "containers_removed": 0,
+        "final_cleanup_verified_before_publication": true,
+        "labels_verified": 8,
+        "temporary_root_absent": true
+      },
+      "controller_death": {
+        "controller_mode": "death",
+        "delayed_canary_absent": true,
+        "delayed_window_seconds": 3,
+        "emergency_stop_seconds": null,
+        "immutable_container_identity": "5b53a2e31a7390c61a407659766cd1d823f08a5436bc23c8560867342ddddf41",
+        "pid_reuse_probe_started_after_controller_loss": true,
+        "unrelated_process_survived": true,
+        "watchdog": "PASS"
+      },
+      "emergency_stop": {
+        "controller_mode": "emergency-stop",
+        "delayed_canary_absent": true,
+        "delayed_window_seconds": 3,
+        "emergency_stop_seconds": 0.39397479200852104,
+        "immutable_container_identity": "b51a10d75f64d546656bc27616a7bd3259be04ec31d0c5ac66f14f8f3c9447bf",
+        "pid_reuse_probe_started_after_controller_loss": true,
+        "unrelated_process_survived": true,
+        "watchdog": "PASS"
+      },
+      "qualification_checks": {
+        "CQ-004": "PASS",
+        "CQ-005": "PASS",
+        "CQ-009": "PASS"
+      },
+      "qualification_run_id": "cq-1784454917-a00af0e58d20"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.414212Z",
+  "subject": "An independent containment supervisor prevents a timed-out child or grandchild from acting later.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "PASS"
+}

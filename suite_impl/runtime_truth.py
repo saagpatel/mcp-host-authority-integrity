@@ -2,16 +2,11 @@
 
 from __future__ import annotations
 
-import json
-import subprocess
-import sys
+import hashlib
 from pathlib import Path
 from typing import Any
 
 from harness.execution import Evaluation, RunContext, git_head
-from harness.process_control import run_argv, scrubbed_environment
-from harness.qualification import ROOT
-from harness.schema_validation import load_json
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
 
 MCP_TRUST = Path("/Users/d/Projects/mcp-trust")
@@ -97,7 +92,7 @@ def _fixture_matrix(case: dict[str, Any], context: RunContext) -> Evaluation:
 
 
 def _qualified_runtime_case(case: dict[str, Any], context: RunContext) -> Evaluation:
-    receipt = load_json(ROOT / "results" / "latest" / "containment-qualification.json")
+    receipt = context.bound_qualification()
     checks = {item["check_id"]: item for item in receipt["checks"]}
     if case["case_id"] == "RT-010":
         required = ["CQ-004", "CQ-005", "CQ-009"]
@@ -147,132 +142,39 @@ def _qualified_runtime_case(case: dict[str, Any], context: RunContext) -> Evalua
     )
 
 
-def _git_status(path: Path) -> list[str]:
-    completed = subprocess.run(
-        ["git", "--no-optional-locks", "-C", str(path), "status", "--porcelain=v1"],
-        check=False,
-        capture_output=True,
-        env={
-            "PATH": "/usr/local/bin:/usr/bin:/bin",
-            "HOME": str(ROOT / "work" / "temporary-state"),
-            "GIT_OPTIONAL_LOCKS": "0",
-            "LANG": "C.UTF-8",
-            "LC_ALL": "C.UTF-8",
-        },
-        timeout=5,
-    )
-    if completed.returncode != 0:
-        raise RuntimeError(completed.stderr.decode(errors="replace"))
-    return completed.stdout.decode().splitlines()
-
-
 def _registry_self_scan(case: dict[str, Any], context: RunContext) -> Evaluation:
-    before_head = git_head(MCP_TRUST)
-    before_status = _git_status(MCP_TRUST)
-    environment = scrubbed_environment(
-        context.case_root / "target-environment",
-        {
-            "PYTHONPATH": str(MCP_TRUST / "src"),
-            "PYTHONDONTWRITEBYTECODE": "1",
-        },
-    )
-    code = """
-import json
-from mcp_trust.mcp_server import (
-    _METHODOLOGY,
-    check_server_payload,
-    list_servers_payload,
-)
-listed = json.loads(list_servers_payload())
-slug = listed["servers"][0]["slug"]
-record = json.loads(check_server_payload(slug))
-methodology = _METHODOLOGY
-print(json.dumps({
-    "server_count": listed["server_count"],
-    "sample_slug": slug,
-    "sample_grade": record["grade"],
-    "sample_transparency": record["transparency"],
-    "scan_mode": record.get("scan_mode"),
-    "sandbox_applies": record.get("sandbox_applies"),
-    "methodology_disclaims_endorsement": "not an endorsement" in methodology.lower(),
-    "methodology_limits_runtime_claim": (
-        "none of these modes proves runtime behavior" in methodology.lower()
-    ),
-    "observable_read_functions": [
-        "list_servers_payload",
-        "check_server_payload",
-        "get_methodology",
-    ],
-}, sort_keys=True))
-"""
-    completed = run_argv(
-        [sys.executable, "-B", "-c", code],
-        cwd=context.case_root,
-        environment=environment,
-        timeout_seconds=case["timeout_seconds"],
-        apply_resource_limits=False,
-    )
-    after_head = git_head(MCP_TRUST)
-    after_status = _git_status(MCP_TRUST)
-    if completed.returncode != 0:
-        return Evaluation(
-            target_verdict="UNKNOWN",
-            observations=[
-                {
-                    "returncode": completed.returncode,
-                    "stderr": completed.stderr.decode(errors="replace"),
-                }
-            ],
-            positive_control="FAIL",
-            negative_control="NOT_RUN",
-            subject_version=f"git:{before_head}",
-            limitations=["The live read-only target observation did not execute successfully."],
-        )
-    payload = json.loads(completed.stdout)
-    target_ok = (
-        before_head == after_head
-        and before_status == after_status
-        and payload["server_count"] > 0
-        and payload["methodology_disclaims_endorsement"]
-        and payload["methodology_limits_runtime_claim"]
-    )
-    control = controlled_evaluation(
-        case,
-        context,
-        attack_variants=["registry-membership-treated-as-runtime-safety-proof"],
-        safe_decisions=[
-            ScenarioDecision(
-                False,
-                "live read APIs were reported with explicit non-endorsement and runtime limits",
-            )
-        ],
-        vulnerable_accepts=["registry-membership-treated-as-runtime-safety-proof"],
-    )
-    control.subject_version = f"git:{before_head}"
-    control.observations.extend(
-        [
+    head = git_head(MCP_TRUST)
+    boundary_digest = hashlib.sha256(
+        f"{case['case_id']}:{head}:live-target-code-not-executed".encode()
+    ).hexdigest()
+    return Evaluation(
+        target_verdict="BLOCKED",
+        blocked_kind="ACCESS",
+        blocked_detail=(
+            "Live mcp-trust code cannot execute outside the qualified containment and "
+            "effect boundary; no immutable isolated copy was approved."
+        ),
+        observations=[
             {
                 "live_target": str(MCP_TRUST),
-                "target_head_before": before_head,
-                "target_head_after": after_head,
-                "target_status_unchanged": before_status == after_status,
-                "runtime_observation": payload,
-                "mcp_transport_exercised": False,
-                "public_annotations_observed": False,
-                "evidence_ceiling": "read-only payload behavior only; mutation and isolation unexercised",
+                "target_head": head,
+                "target_code_executed": False,
+                "isolated_copy_created": False,
+                "effect_broker_bypassed": False,
+                "blocked_boundary_digest": boundary_digest,
+                "overclaim_refused": True,
             }
-        ]
+        ],
+        positive_control="NOT_RUN",
+        negative_control="NOT_RUN",
+        containment_result="NOT_APPLICABLE",
+        cleanup_result="NOT_APPLICABLE",
+        subject_version=f"git:{head}",
+        limitations=[
+            "No public annotation or observable live read behavior was exercised.",
+            "The LIVE_TARGET claim remains unproven until an approved immutable contained copy exists.",
+        ],
     )
-    control.limitations.extend(
-        [
-            "The MCP transport and FastMCP annotation objects were not available without installing a dependency.",
-            "The live call exercised baked read payload functions only and does not prove mutation or isolation behavior.",
-        ]
-    )
-    if not target_ok:
-        control.target_verdict = "UNKNOWN"
-        control.contradictions.append("live target identity, cleanliness, or honesty-limit control changed")
-    return control
 
 
 def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:

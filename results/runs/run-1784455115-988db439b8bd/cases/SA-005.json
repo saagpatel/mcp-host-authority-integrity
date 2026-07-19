@@ -1,0 +1,80 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "43cb8d6fb9352f1cd2fe08b8c3f7546c6e2064a826f6f4521d47e1e1d3f5405a",
+  "case_id": "SA-005",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a6c7866fb674b5a9e6adfa5ef2f450a16d100b874fb61aedfd4c7787392614e3",
+      "qualification_digest": "178b80812039fbfd5ef679534da7912cf551688eb42dafc2352c57fa845d52bd"
+    }
+  ],
+  "finished_at": "2026-07-19T09:58:35.584931Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "MCP Tasks shipped in 2025-11-25 but remain explicitly experimental."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-005",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-005-negative",
+          "facts": {
+            "denied_operations": [
+              "cancel",
+              "get",
+              "list",
+              "result",
+              "update"
+            ],
+            "indistinguishable_denial": true
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-005-positive",
+          "facts": {
+            "b_changed": [
+              "cancel",
+              "update"
+            ],
+            "b_observed": [
+              "cancel",
+              "get",
+              "list",
+              "result",
+              "update"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "MCP Tasks shipped in 2025-11-25 but remain explicitly experimental.",
+      "fail_oracle": "B observes task details or changes A's task.",
+      "pass_oracle": "Principal B receives indistinguishable denial for every operation on A's task.",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_EXPERIMENTAL",
+  "result": "PASS",
+  "run_id": "run-1784455115-988db439b8bd",
+  "started_at": "2026-07-19T09:58:35.584350Z",
+  "subject": "Task get, update, cancel, list, and result access are tenant-bound.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:4349d8970fe32869d9991846a867bce950ae215e1e8d2d46fa5f04eebadbbd10",
+  "target_verdict": "PASS"
+}

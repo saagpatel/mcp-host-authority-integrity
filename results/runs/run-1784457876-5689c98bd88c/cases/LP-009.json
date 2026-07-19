@@ -1,0 +1,46 @@
+{
+  "blocked_reason": {
+    "detail": "No approved clean portfolio-index source worktree was pinned for an isolated copy.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "1bab0b23603d999676bf769b6da9736dd1172fad6a21045b91d39fe94ccce3d8",
+  "case_id": "LP-009",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "335964ef8d52c324d27cef5fa7a9dde3d05eade18e78cac13b1de5dc6bb41328",
+      "qualification_digest": "46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893"
+    }
+  ],
+  "finished_at": "2026-07-19T10:44:36.898608Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "source_candidate_head": "432aaefeb613e8c908d73dacd86c93568bcc783e",
+      "target_access": "read-only Git identity only"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784457876-5689c98bd88c",
+  "started_at": "2026-07-19T10:44:36.879026Z",
+  "subject": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+  "subject_version": "git:432aaefeb613e8c908d73dacd86c93568bcc783e+deviations:0127ec1471a0411f28c2753dfaae5d7ec27cbbec487df0d5cc48a43fb65f7479",
+  "target_verdict": "BLOCKED"
+}

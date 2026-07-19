@@ -9,8 +9,6 @@ from typing import Any
 
 from harness.execution import Evaluation, RunContext, git_head
 from harness.limits import SCHEMA_DEPTH, LimitExceeded, enforce_schema_depth
-from harness.qualification import ROOT
-from harness.schema_validation import load_json
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
 
 BRIDGE_DB = Path("/Users/d/Projects/bridge-db")
@@ -82,7 +80,7 @@ def _matrix_case(case: dict[str, Any], context: RunContext) -> Evaluation:
 
 
 def _environment_case(case: dict[str, Any], context: RunContext) -> Evaluation:
-    receipt = load_json(ROOT / "results/latest/containment-qualification.json")
+    receipt = context.bound_qualification()
     cq11 = next(item for item in receipt["checks"] if item["check_id"] == "CQ-011")
     variants = [
         "secret-shaped-environment-key",

@@ -191,7 +191,19 @@ def validate_result_contract(
             raise SchemaValidationError(
                 f"$.{key}: result binding {result[key]!r} does not equal case {expected!r}"
             )
-    if re.fullmatch(case["evidence_ceiling"]["version_pattern"], result["subject_version"]) is None:
+    version_required = result["result"] not in {
+        "ERROR",
+        "NOT_IMPLEMENTED",
+        "NOT_RUN",
+    }
+    if (
+        version_required
+        and re.fullmatch(
+            case["evidence_ceiling"]["version_pattern"],
+            result["subject_version"],
+        )
+        is None
+    ):
         raise SchemaValidationError(
             "$.subject_version: does not satisfy the case evidence-ceiling version_pattern"
         )
