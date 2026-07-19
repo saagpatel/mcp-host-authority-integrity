@@ -236,22 +236,47 @@ def prepare_source_only(target: dict) -> dict:
 def main() -> int:
     epoch = load_json(ROOT / "results" / "latest" / "closure-epoch-open.json")
     targets = {item["name"]: item for item in epoch["target_observations"]}
-    receipts = [
-        prepare_rust_target(
+    preparations = [
+        (
             targets["PortfolioCommandCenter"],
-            manifest="src-tauri/Cargo.toml",
-            executable_glob="src-tauri/target/debug/deps/portfolio_command_center_lib-*",
-            required_tests={*PCC_HC011_TESTS.values(), PCC_HC012_TEST},
+            lambda: prepare_rust_target(
+                targets["PortfolioCommandCenter"],
+                manifest="src-tauri/Cargo.toml",
+                executable_glob=(
+                    "src-tauri/target/debug/deps/portfolio_command_center_lib-*"
+                ),
+                required_tests={*PCC_HC011_TESTS.values(), PCC_HC012_TEST},
+            ),
         ),
-        prepare_rust_target(
+        (
             targets["AIGCCore"],
-            manifest="src-tauri/Cargo.toml",
-            executable_glob="target/debug/deps/aigc_core_tauri-*",
-            required_tests=set(AIGC_LP007_TESTS.values()),
-            feature="authority-integrity-test-hooks",
+            lambda: prepare_rust_target(
+                targets["AIGCCore"],
+                manifest="src-tauri/Cargo.toml",
+                executable_glob="target/debug/deps/aigc_core_tauri-*",
+                required_tests=set(AIGC_LP007_TESTS.values()),
+                feature="authority-integrity-test-hooks",
+            ),
         ),
-        prepare_source_only(targets["portfolio-index"]),
+        (
+            targets["portfolio-index"],
+            lambda: prepare_source_only(targets["portfolio-index"]),
+        ),
     ]
+    receipts = []
+    skipped = []
+    for target, prepare in preparations:
+        archive = target["archive"]
+        if not (archive.get("created") and archive.get("fidelity_proven")):
+            skipped.append(
+                {
+                    "target": target["name"],
+                    "head": target["head"],
+                    "reason": archive.get("reason", "exact archive unavailable"),
+                }
+            )
+            continue
+        receipts.append(prepare())
     print(
         json.dumps(
             {
@@ -264,6 +289,7 @@ def main() -> int:
                     }
                     for receipt in receipts
                 ],
+                "skipped": skipped,
             },
             sort_keys=True,
         )
