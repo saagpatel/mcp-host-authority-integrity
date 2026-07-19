@@ -1,0 +1,139 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "f412ed49186462e37a366366fd9e0bc8802d20706cab49ef01f363cf4c3e23b8",
+  "case_id": "SA-015",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "OFFICIAL_SDK",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "8ba96c23f2fafa6519b1714780c9ae36b0de0e5dc026044c4620e471a10ef3ef",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:27:56.470089Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "The result is limited to the exact request-dispatch parsers and versions recorded.",
+    "It does not establish an authorization bypass in a particular downstream host.",
+    "Different language SDKs use independent release version sequences."
+  ],
+  "observations": [
+    {
+      "authority_relevant_disagreement": true,
+      "case_id": "SA-015",
+      "comparisons": {
+        "conflicting_top_level_name": {
+          "python": {
+            "decision": "ACCEPT",
+            "method": "tools/call",
+            "tool_name": "danger"
+          },
+          "same_authority_decision": false,
+          "typescript": {
+            "decision": "REJECT",
+            "error_type": "ZodError"
+          }
+        },
+        "confusable": {
+          "python": {
+            "decision": "REJECT",
+            "error_type": "ValidationError"
+          },
+          "same_authority_decision": true,
+          "typescript": {
+            "decision": "REJECT",
+            "error_type": "ZodError"
+          }
+        },
+        "duplicate_keys": {
+          "python": {
+            "decision": "REJECT",
+            "error_type": "ValidationError"
+          },
+          "same_authority_decision": true,
+          "typescript": {
+            "decision": "REJECT",
+            "error_type": "ZodError"
+          }
+        },
+        "mixed_case": {
+          "python": {
+            "decision": "REJECT",
+            "error_type": "ValidationError"
+          },
+          "same_authority_decision": true,
+          "typescript": {
+            "decision": "REJECT",
+            "error_type": "ZodError"
+          }
+        },
+        "unknown_field": {
+          "python": {
+            "decision": "ACCEPT",
+            "method": "tools/call",
+            "tool_name": "safe"
+          },
+          "same_authority_decision": true,
+          "typescript": {
+            "decision": "ACCEPT",
+            "method": "tools/call",
+            "tool_name": "safe"
+          }
+        },
+        "valid": {
+          "python": {
+            "decision": "ACCEPT",
+            "method": "tools/call",
+            "tool_name": "safe"
+          },
+          "same_authority_decision": true,
+          "typescript": {
+            "decision": "ACCEPT",
+            "method": "tools/call",
+            "tool_name": "safe"
+          }
+        }
+      },
+      "coverage_level": "OFFICIAL_SDK",
+      "disagreements": [
+        "conflicting_top_level_name"
+      ],
+      "network_mode": "none",
+      "package_versions": {
+        "python": "mcp@1.28.1",
+        "typescript": "@modelcontextprotocol/sdk@1.29.0"
+      },
+      "parser_pipelines": {
+        "python": [
+          "JSONRPCMessage.model_validate_json",
+          "ClientRequest.model_validate"
+        ],
+        "typescript": [
+          "JSONRPCMessageSchema.parse",
+          "CallToolRequestSchema.parse"
+        ]
+      },
+      "protocol_status": "OFFICIAL_GUIDANCE",
+      "qualified_container_image": "sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5 [mcp-trust-live-batch@sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5]",
+      "synthetic_positive_control_detected": true,
+      "valid_negative_control_agreed": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "FAIL",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:55.067905Z",
+  "subject": "Available exact-version official SDKs interpret adversarial JSON without authority-relevant disagreement.",
+  "subject_version": "package:python-mcp+typescript-sdk@1.28.1+1.29.0",
+  "target_verdict": "FAIL"
+}

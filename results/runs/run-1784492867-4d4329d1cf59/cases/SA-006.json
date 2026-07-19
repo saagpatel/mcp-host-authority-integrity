@@ -1,0 +1,65 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "32449a52dcf6fb33c956cd3bcb9eec944811221af67d1ee33d1f7f141924baf2",
+  "case_id": "SA-006",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "eecf694ee7b52a1e8e8e5cb111c112a6702db27008d991710284f506b906066b",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:27:47.394497Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Current-authority rechecking is a fixture strengthening of released-experimental Tasks."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-006",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-006-negative",
+          "facts": {
+            "pending_side_effects_completed": 0,
+            "retrieved_after_revocation": false
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-006-positive",
+          "facts": {
+            "pending_side_effects_completed": 1,
+            "retrieved_after_revocation": true
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "Current-authority rechecking is a fixture strengthening of released-experimental Tasks.",
+      "fail_oracle": "Previously held authority remains sufficient after revocation.",
+      "pass_oracle": "Revoked principal A cannot retrieve delayed results or complete a pending side effect.",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_EXPERIMENTAL",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:47.394088Z",
+  "subject": "Task result retrieval rechecks current authority after revocation.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

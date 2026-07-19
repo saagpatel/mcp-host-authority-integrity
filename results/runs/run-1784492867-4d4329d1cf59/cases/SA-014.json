@@ -1,0 +1,78 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "d0e706f8da9379ab8e4126c395a56a830300cf554e7b7f58d3ab9b2ea9a43d04",
+  "case_id": "SA-014",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "OFFICIAL_SDK",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "8cf8b65bdd9e4adae85dc10b7f886040483cce87d0d8de584d35ab5fa042c967",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:27:55.066080Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This proves the exact v1.6.1 handler under the recorded stateless configuration; it does not prove other Go SDK versions or deployments."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-014",
+      "cleanup_verified": true,
+      "coverage_level": "OFFICIAL_SDK",
+      "evidence_basis": "OFFICIAL_SDK evidence requires an exact isolated Go SDK, not a simulated implementation.",
+      "exact_official_sdk_available": true,
+      "fail_oracle": "Any hostile input reaches the handler or the version/configuration is not exact.",
+      "fixture_source_sha256": "ae43e810708cb4c994660f2a33ed4810af607c07e35a98f6fc8205532d895cc8",
+      "handler_hits_after_protection": 1,
+      "hostile_statuses": {
+        "host": 403,
+        "host_port": 403,
+        "host_suffix": 403,
+        "origin": 403,
+        "valid": 200
+      },
+      "module_zip_sha256": "42d2f3dd1c889e7591675c83eae6ccb29a4a3ae9560dd5767869467bbb03ca85",
+      "network_policy": "sandbox-exec deny network* and GOPROXY=off",
+      "normal_go_cache_used": false,
+      "official_sdk_version": "v1.6.1",
+      "pass_oracle": "The exact version and configuration reject every hostile request while accepting the valid control.",
+      "program_owned_module_path": "vendor/official/go-mod-cache/github.com/modelcontextprotocol/go-sdk@v1.6.1",
+      "protocol_status": "OFFICIAL_GUIDANCE",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "valid_status": 200,
+      "vulnerable_control": {
+        "safe_handler_hits": 1,
+        "safe_statuses": {
+          "host": 403,
+          "host_port": 403,
+          "host_suffix": 403,
+          "origin": 403,
+          "valid": 200
+        },
+        "vulnerable_handler_hits": 2,
+        "vulnerable_statuses": {
+          "host": 200,
+          "origin": 200
+        }
+      }
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:47.408886Z",
+  "subject": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+  "subject_version": "package:github.com/modelcontextprotocol/go-sdk@v1.6.1",
+  "target_verdict": "PASS"
+}

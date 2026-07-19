@@ -1,0 +1,49 @@
+{
+  "blocked_reason": {
+    "detail": "An exact read-only PortfolioCommandCenter archive is available, but no qualified target webview-to-command-bridge executor is available for the actual Tauri IPC path.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "b2a06c86e70dc1952a3c797f0be0c17d1691dc6568fbc29bcc01c47d4ccdd142",
+  "case_id": "HC-011",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "314e7c334e51a9bf4bff678f2bfb488c71713ebc887e36967076b080b68a93df",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:01.279241Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Browser qualification and successful target compilation cannot establish behavior of an unexercised Tauri webview command bridge."
+  ],
+  "observations": [
+    {
+      "archive_available": true,
+      "archive_sha256": "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9",
+      "browser_mode": "QUALIFIED",
+      "browser_required": true,
+      "fixture_browser_evidence_substituted": false,
+      "target_code_executed": false,
+      "unsafe_fallback_refused": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:01.278556Z",
+  "subject": "In an exact isolated source copy, hostile webview content cannot reach proposal-approval or external-apply-shaped commands.",
+  "subject_version": "git:772be25eed8554defa55505cadd23e7fc61df982+deviations:923c2ea0e98ce59df1e2b6e09b440a6ebc479296bd21d0857f9813a1c4d5a998",
+  "target_verdict": "BLOCKED"
+}

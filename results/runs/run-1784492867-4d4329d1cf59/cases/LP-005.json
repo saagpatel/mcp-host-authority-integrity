@@ -1,0 +1,91 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "f460bc071fc4b8b6c58a6c83f17ac68274a1093893f65163fba8a93cf959c720",
+  "case_id": "LP-005",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "6eaf24bb346d3691254ac64fcddc3adf168b924ed275c2bb07fbef52c41313fd",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:01.454447Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "direct-sibling-call",
+        "synthetic-credential-pivot",
+        "claimed-principal-pivot"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-005",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "host mediation binds each server to a distinct synthetic principal",
+          "variant": "direct-sibling-call"
+        },
+        {
+          "accepted": false,
+          "reason": "host mediation binds each server to a distinct synthetic principal",
+          "variant": "synthetic-credential-pivot"
+        },
+        {
+          "accepted": false,
+          "reason": "host mediation binds each server to a distinct synthetic principal",
+          "variant": "claimed-principal-pivot"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "claimed-principal-pivot",
+        "direct-sibling-call",
+        "synthetic-credential-pivot"
+      ]
+    },
+    {
+      "authority_tuple_dimensions": [
+        "principal",
+        "server",
+        "operation",
+        "arguments",
+        "scope",
+        "expiry"
+      ],
+      "exact_tuple_required": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:01.453714Z",
+  "subject": "Compromising one fixture server does not grant direct sibling access or host impersonation.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

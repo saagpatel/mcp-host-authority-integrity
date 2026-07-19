@@ -1,0 +1,163 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "45bc748adb19e247f158bb50d520100cde68abc78843b14265f0cb1a1fcff2fe",
+  "case_id": "OA-006",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "952ee89b2a12e0d49e3f9019347cc72c4210ceae5eaaff8ca06b3af6dd8bab7e",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:05.209546Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is browser-executed fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "bob-completes-alice",
+        "client-swap",
+        "punycode-destination",
+        "redirected-destination",
+        "parameter-tamper",
+        "completion-replay"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "OA-006",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "bob-completes-alice"
+        },
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "client-swap"
+        },
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "punycode-destination"
+        },
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "redirected-destination"
+        },
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "parameter-tamper"
+        },
+        {
+          "accepted": false,
+          "reason": "completion compared initiating user, client, normalized destination, parameter digest, and one-shot state",
+          "variant": "completion-replay"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "bob-completes-alice",
+        "client-swap",
+        "completion-replay",
+        "parameter-tamper",
+        "punycode-destination",
+        "redirected-destination"
+      ]
+    },
+    {
+      "browser_mode": "QUALIFIED",
+      "case_id": "OA-006",
+      "kind": "browser-fixture-controls",
+      "negative": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.380285,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 52192,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [],
+          "legitimate_control": true
+        },
+        "role": "safe-subject"
+      },
+      "positive": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.460816,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 54704,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [
+            "bob-completes-alice",
+            "client-swap",
+            "punycode-destination",
+            "redirected-destination",
+            "parameter-tamper",
+            "completion-replay"
+          ],
+          "browser_events_dispatched": 6,
+          "legitimate_control": true
+        },
+        "role": "deliberately-vulnerable"
+      },
+      "profile_cleanup_verified": true,
+      "separate_fresh_profiles": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:03.973488Z",
+  "subject": "URL elicitation completion remains bound to the initiating synthetic user and client across redirects and tampering.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

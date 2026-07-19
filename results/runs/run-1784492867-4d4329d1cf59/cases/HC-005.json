@@ -1,0 +1,173 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "a4d8b2cb368cdd9670b1325e9a22c3c57d55862c3f42e3c763556825975d3b84",
+  "case_id": "HC-005",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "9d2d0ea6f81e2ce94098b8532c9c11744b3bc18fdc958fc8fc55da7246b80ff0",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:27:58.792489Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is browser-executed fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "undeclared-egress",
+        "redirect-egress",
+        "nested-frame",
+        "clipboard",
+        "camera",
+        "microphone",
+        "geolocation"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "HC-005",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "undeclared-egress"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "redirect-egress"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "nested-frame"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "clipboard"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "camera"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "microphone"
+        },
+        {
+          "accepted": false,
+          "reason": "the fixture host policy rejected every undeclared browser authority",
+          "variant": "geolocation"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "camera",
+        "clipboard",
+        "geolocation",
+        "microphone",
+        "nested-frame",
+        "redirect-egress",
+        "undeclared-egress"
+      ]
+    },
+    {
+      "browser_mode": "QUALIFIED",
+      "case_id": "HC-005",
+      "kind": "browser-fixture-controls",
+      "negative": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.375323,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 60160,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [],
+          "csp": "default-src 'none'; script-src 'unsafe-inline'; frame-src 'none'; connect-src 'none'; img-src 'none'; media-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'",
+          "legitimate_control": true,
+          "prohibited_dom_effects_created": 0
+        },
+        "role": "safe-subject"
+      },
+      "positive": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.379661,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 53104,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [
+            "undeclared-egress",
+            "redirect-egress",
+            "nested-frame",
+            "clipboard",
+            "camera",
+            "microphone",
+            "geolocation"
+          ],
+          "browser_events_dispatched": 7,
+          "legitimate_control": true
+        },
+        "role": "deliberately-vulnerable"
+      },
+      "profile_cleanup_verified": true,
+      "separate_fresh_profiles": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:57.642595Z",
+  "subject": "The disposable app host denies undeclared egress, nested-frame, clipboard, camera, microphone, and geolocation authority.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

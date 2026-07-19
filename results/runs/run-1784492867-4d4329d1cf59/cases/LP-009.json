@@ -1,0 +1,52 @@
+{
+  "blocked_reason": {
+    "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was ACTIVE and does not override the clean-source requirement.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "1bab0b23603d999676bf769b6da9736dd1172fad6a21045b91d39fe94ccce3d8",
+  "case_id": "LP-009",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "e7b29e2d57d3bb6242b698136c02e66b74b8f96fd6ecf45b56d2f868ed798383",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:01.461650Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "archive_sha256": null,
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "ownership": "ACTIVE",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found the prior owner lifecycle ended and no pending handoff. Exact open-time evidence: a Git lock or process cwd indicates active ownership.",
+      "source_candidate_head": "e28c9d12849dd3b27454e64f90e8a54cd3608807",
+      "source_candidate_tree": "583be14d52b60883b892c8aae615dffb91047080",
+      "source_clean_at_epoch_open": false,
+      "target_access": "frozen closure-epoch identity only",
+      "target_code_executed": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:01.461040Z",
+  "subject": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+  "subject_version": "git:e28c9d12849dd3b27454e64f90e8a54cd3608807+deviations:17ca6894f0b85bdfd291e722a8a031433fc57a0b51705d15d4beb131d0a84b00",
+  "target_verdict": "BLOCKED"
+}

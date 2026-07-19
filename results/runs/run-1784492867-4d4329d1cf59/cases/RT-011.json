@@ -1,0 +1,273 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "c529c50ed53fa860f1e828e07da0ddcc262bae697d39e054828de7a2dc5a8432",
+  "case_id": "RT-011",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "d836a615a9247ed09b600295680f2e27f20c96b5332019a12d6e5651e01696bf",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:27:47.379765Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "The case reuses active probes from the exact current containment qualification."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "host-filesystem",
+        "metadata-network",
+        "dns",
+        "privilege",
+        "process-limit",
+        "environment-inheritance"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-011",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "host-filesystem"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "metadata-network"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "dns"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "privilege"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "process-limit"
+        },
+        {
+          "accepted": false,
+          "reason": "active qualification probe denied the prohibited effect",
+          "variant": "environment-inheritance"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "dns",
+        "environment-inheritance",
+        "host-filesystem",
+        "metadata-network",
+        "privilege",
+        "process-limit"
+      ]
+    },
+    {
+      "container_limits": {
+        "byte_boundaries": {
+          "decompressed": [
+            true,
+            true,
+            false
+          ],
+          "request": [
+            true,
+            true,
+            false
+          ],
+          "response": [
+            true,
+            true,
+            false
+          ]
+        },
+        "file_size": {
+          "at_limit": true,
+          "over_limit_rejected": true
+        },
+        "redirect_boundaries": [
+          true,
+          true,
+          false
+        ],
+        "runtime_flags": {
+          "caps_dropped": true,
+          "cpu_half": true,
+          "fsize_8m": true,
+          "memory_256m": true,
+          "network_none": true,
+          "no_new_privileges": true,
+          "nofile_64": true,
+          "non_root": true,
+          "only_declared_bind": true,
+          "pids_16": true,
+          "readonly_root": true
+        },
+        "schema_depth_boundaries": [
+          true,
+          true,
+          false
+        ]
+      },
+      "environment_inventory": {
+        "cwd": "/tmp",
+        "descriptor_allowlist_passed": true,
+        "descriptor_inventory": [
+          {
+            "fd": 0,
+            "target": "/dev/null"
+          },
+          {
+            "fd": 1,
+            "target": "pipe:[782728]"
+          },
+          {
+            "fd": 2,
+            "target": "pipe:[782729]"
+          },
+          {
+            "fd": 3,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 4,
+            "target": "pipe:[782096]"
+          },
+          {
+            "fd": 5,
+            "target": "pipe:[782096]"
+          },
+          {
+            "fd": 6,
+            "target": "pipe:[782097]"
+          },
+          {
+            "fd": 7,
+            "target": "pipe:[782097]"
+          },
+          {
+            "fd": 8,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 9,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 10,
+            "target": "pipe:[782800]"
+          },
+          {
+            "fd": 11,
+            "target": "pipe:[782800]"
+          },
+          {
+            "fd": 12,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 13,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 14,
+            "target": "pipe:[782098]"
+          },
+          {
+            "fd": 15,
+            "target": "pipe:[782098]"
+          },
+          {
+            "fd": 16,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 17,
+            "target": "closed-during-inventory"
+          }
+        ],
+        "forbidden_key_names": [],
+        "gid": 65534,
+        "groups": [
+          65534
+        ],
+        "positive_control_detected": true,
+        "process_limit_checks": {
+          "cpu_half": true,
+          "memory_256m": true,
+          "nofile_64": true,
+          "pids_16": true
+        },
+        "safe_key_names": [
+          "HOME",
+          "HOSTNAME",
+          "NODE_VERSION",
+          "PATH",
+          "PWD",
+          "TMPDIR",
+          "UV_TOOL_BIN_DIR",
+          "UV_TOOL_DIR",
+          "XDG_CACHE_HOME",
+          "XDG_CONFIG_HOME",
+          "XDG_STATE_HOME",
+          "YARN_VERSION"
+        ],
+        "uid": 65534,
+        "umask": "77"
+      },
+      "network_boundary": {
+        "denied": {
+          "dns": false,
+          "metadata": false,
+          "other_loopback": false,
+          "public_ip": false,
+          "unrelated_loopback": false
+        },
+        "internal_nonce_exchange": true,
+        "outside_hit": false
+      },
+      "qualification_checks": {
+        "CQ-003": "PASS",
+        "CQ-008": "PASS",
+        "CQ-011": "PASS"
+      },
+      "qualification_run_id": "cq-1784492848-d26f4febb652"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:47.378362Z",
+  "subject": "The exact recorded disposable container flags deny host reachability and bound filesystem, privileges, and processes.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

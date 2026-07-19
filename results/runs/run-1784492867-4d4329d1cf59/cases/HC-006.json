@@ -1,0 +1,156 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "2744828c16fa7a9580e2b79edbd96febbdcb0542e7a647002e4b47af886b6b26",
+  "case_id": "HC-006",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "f6e8376b2fe4411d49b389ca3e8572f6f0c52f924f59a70e64c3bdafd743ded6",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:00.029118Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is browser-executed fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "invisible-click",
+        "programmatic-click",
+        "fake-pointer-event",
+        "stale-gesture",
+        "unrelated-gesture"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "HC-006",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "only a recent visible relevant trusted-host gesture matched the exact action",
+          "variant": "invisible-click"
+        },
+        {
+          "accepted": false,
+          "reason": "only a recent visible relevant trusted-host gesture matched the exact action",
+          "variant": "programmatic-click"
+        },
+        {
+          "accepted": false,
+          "reason": "only a recent visible relevant trusted-host gesture matched the exact action",
+          "variant": "fake-pointer-event"
+        },
+        {
+          "accepted": false,
+          "reason": "only a recent visible relevant trusted-host gesture matched the exact action",
+          "variant": "stale-gesture"
+        },
+        {
+          "accepted": false,
+          "reason": "only a recent visible relevant trusted-host gesture matched the exact action",
+          "variant": "unrelated-gesture"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "fake-pointer-event",
+        "invisible-click",
+        "programmatic-click",
+        "stale-gesture",
+        "unrelated-gesture"
+      ]
+    },
+    {
+      "browser_mode": "QUALIFIED",
+      "case_id": "HC-006",
+      "kind": "browser-fixture-controls",
+      "negative": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.381162,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 47760,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [],
+          "legitimate_control": true,
+          "programmatic_events_all_untrusted": true
+        },
+        "role": "safe-subject"
+      },
+      "positive": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.459967,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 35712,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [
+            "invisible-click",
+            "programmatic-click",
+            "fake-pointer-event",
+            "stale-gesture",
+            "unrelated-gesture"
+          ],
+          "browser_events_dispatched": 5,
+          "legitimate_control": true
+        },
+        "role": "deliberately-vulnerable"
+      },
+      "profile_cleanup_verified": true,
+      "separate_fresh_profiles": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:27:58.794392Z",
+  "subject": "Consequential consent remains in trusted host chrome and binds server, tool, arguments, and effect to a relevant gesture.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}

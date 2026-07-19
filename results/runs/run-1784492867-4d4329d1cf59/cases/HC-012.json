@@ -1,0 +1,123 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "4d0e778468c088191f5472149f845426843c39a856c98be971620d885e911360",
+  "case_id": "HC-012",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "aeb085525074d58460e2866336fe47d63c817bdf6c3b2f5576126ff844881df6",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:01.443650Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This executes the archived PortfolioCommandCenter Rust command-spawn path via its compiled test harness; it does not exercise the separate Tauri webview IPC path required for HC-011."
+  ],
+  "observations": [
+    {
+      "ambient_fake_zsh_followed_without_detection": true,
+      "archive_fidelity_proven": true,
+      "archive_path": "results/closure-epochs/closure-1784492790-603826525a8a/archives/PortfolioCommandCenter-772be25eed8554defa55505cadd23e7fc61df982.zip",
+      "archive_sha256": "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9",
+      "cleanup_verified": true,
+      "containment_domains": [
+        "vulnerable-control",
+        "safe-baseline",
+        "hostile-path"
+      ],
+      "instrumentation": {
+        "hostile_path": {
+          "argv_sha256": "00c40c23d9f58d587396911189b3906e6e7021b407838c674c4ecf6972ace491",
+          "cleanup_sha256": "8a22a7bfb0e4e77cac567cae1d1be2e477b6898f6cb7607ce283a3b0413fac73",
+          "cleanup_verified": true,
+          "domain": "hostile-path",
+          "fake_zsh_followed": true,
+          "fake_zsh_log_sha256": "4191f3cb29631b0fe0df8ec7cacee05c5f701c339f07390a8f4c4550e4ee9545",
+          "fake_zsh_log_tail": "-path-poisoning/hostile-path/tmp/pcc_test_fake_producer_harness_383295000_47410/repo\nargv=[-lc][printf 'fake producer ok\\n']\nfake_zsh_invoked=1\ncwd=/<HOME>/Projects/mcp-host-authority-integrity/work/temporary-state/run-1784492867-4d4329d1cf59/hc-012/hc012-path-poisoning/hostile-path/tmp/pcc_test_fake_producer_harness_383295000_47410/repo\nargv=[-lc][printf 'safe apply stub failed\\n' >&2; exit 17]\n",
+          "fake_zsh_path": "/<HOME>/Projects/mcp-host-authority-integrity/work/temporary-state/run-1784492867-4d4329d1cf59/hc-012/hc012-path-poisoning/hostile-path/fake-bin/zsh",
+          "fake_zsh_sha256": "d96204e52ec9ee0c4aec1b0a739a12beb4e378721308b05fb4c30c7d597c0549",
+          "home_confined": true,
+          "path_mode": "hostile",
+          "returncode": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_tail": "",
+          "stdout_sha256": "c0134b2c710701a92fe5a09d2144be8a7970bb75f2983437604d806276e77351",
+          "stdout_tail": "\nrunning 1 test\ntest tests::fake_producer_harness_covers_success_failure_cancellation_and_recovery ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.06s\n\n",
+          "timed_out": false,
+          "tmp_confined": true
+        },
+        "safe_baseline": {
+          "argv_sha256": "00c40c23d9f58d587396911189b3906e6e7021b407838c674c4ecf6972ace491",
+          "cleanup_sha256": "79af504f605936c038013d591d735922bbad97261ba8c14c003697937a0ab4b7",
+          "cleanup_verified": true,
+          "domain": "safe-baseline",
+          "fake_zsh_followed": false,
+          "fake_zsh_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fake_zsh_log_tail": "",
+          "fake_zsh_path": "/<HOME>/Projects/mcp-host-authority-integrity/work/temporary-state/run-1784492867-4d4329d1cf59/hc-012/hc012-path-poisoning/safe-baseline/fake-bin/zsh",
+          "fake_zsh_sha256": "d96204e52ec9ee0c4aec1b0a739a12beb4e378721308b05fb4c30c7d597c0549",
+          "home_confined": true,
+          "path_mode": "safe-baseline",
+          "returncode": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_tail": "",
+          "stdout_sha256": "bddb52d9699c862ecab0e50cdb82e44745058edee1a57599e0db6308c91882d6",
+          "stdout_tail": "\nrunning 1 test\ntest tests::fake_producer_harness_covers_success_failure_cancellation_and_recovery ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 38 filtered out; finished in 0.04s\n\n",
+          "timed_out": false,
+          "tmp_confined": true
+        },
+        "vulnerable_control": {
+          "argv_sha256": "bcd214702461b11702bfd1548e0c7b07fb64cfea8c91d36017ff8d5725c96d28",
+          "cleanup_sha256": "fc85fb272eaa619dccdc780096cc0f74da93d59e78b96c1abcab4f469ed3858b",
+          "cleanup_verified": true,
+          "domain": "vulnerable-control",
+          "fake_zsh_followed": true,
+          "fake_zsh_log_sha256": "085c5a6d538b1b6177112f75fb1a740724d88621a949160c4e00730e1d069f4f",
+          "fake_zsh_log_tail": "fake_zsh_invoked=1\ncwd=/<HOME>/Projects/mcp-host-authority-integrity/work/temporary-state/run-1784492867-4d4329d1cf59/hc-012/hc012-path-poisoning/vulnerable-control\nargv=[-lc][printf 'hc012 vulnerable control reached\\n']\n",
+          "fake_zsh_path": "/<HOME>/Projects/mcp-host-authority-integrity/work/temporary-state/run-1784492867-4d4329d1cf59/hc-012/hc012-path-poisoning/vulnerable-control/fake-bin/zsh",
+          "fake_zsh_sha256": "d96204e52ec9ee0c4aec1b0a739a12beb4e378721308b05fb4c30c7d597c0549",
+          "home_confined": true,
+          "path_mode": "hostile",
+          "returncode": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_tail": "",
+          "stdout_sha256": "6d824c4f104efe37794c2857452fc9528694d7f1f1b98dc684ab8f1a2240fd30",
+          "stdout_tail": "hc012 vulnerable control reached\n",
+          "timed_out": false,
+          "tmp_confined": true
+        }
+      },
+      "lockfile_path": "work/isolated-targets/executors/pcc-772be25eed8554defa55505cadd23e7fc61df982/src-tauri/Cargo.lock",
+      "lockfile_sha256": "c963d4103c730eddf6fe269f8b941623d1e70b7c4cc6ab9b71ac0cdf3c7b8445",
+      "ownership": "CLEAR",
+      "source_candidate_head": "772be25eed8554defa55505cadd23e7fc61df982",
+      "source_candidate_tree": "e86aa28de7d2456dffb60f38f774e14f62f56731",
+      "source_clean_at_epoch_open": true,
+      "substitute_fixture_claimed": false,
+      "target_code_executed": true,
+      "target_repository_accessed_during_case": false,
+      "test_executable_path": "work/isolated-targets/executors/pcc-772be25eed8554defa55505cadd23e7fc61df982/target/debug/deps/portfolio_command_center_lib-c7074b473b70cc3d",
+      "test_executable_sha256": "a55ab8c8ac72dbf2e63666b5f8fe8441c875f3a9df9b4c9b1fe1344fef0ee9c4",
+      "test_name": "tests::fake_producer_harness_covers_success_failure_cancellation_and_recovery"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "FAIL",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:01.280197Z",
+  "subject": "In an exact isolated source copy, command identity, evidence paths, and approval inputs do not follow untrusted ambient state.",
+  "subject_version": "git:772be25eed8554defa55505cadd23e7fc61df982+deviations:3b8a08e1779dad6030a71e46b62e1b2db2e0020da7c34e0dc338a82043077df1",
+  "target_verdict": "FAIL"
+}

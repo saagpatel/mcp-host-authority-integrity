@@ -1,0 +1,157 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "084d0e6537fee916af182ecf539eea60d4eb13b4368269bc1cd248e6eb4e7488",
+  "case_id": "OA-005",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "e928e56572bc6b4a3f2e18fef638e0ccd8bed7b0be35980f2d6e7f780ccf050c",
+      "qualification_digest": "eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56"
+    }
+  ],
+  "finished_at": "2026-07-19T20:28:03.971717Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is browser-executed fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "trusted-brand-loopback-redirect",
+        "logo-confusion",
+        "unicode-brand",
+        "metadata-redirect-mismatch",
+        "redirect-after-approval"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "OA-005",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "the approval DOM displayed and bound the normalized actual redirect",
+          "variant": "trusted-brand-loopback-redirect"
+        },
+        {
+          "accepted": false,
+          "reason": "the approval DOM displayed and bound the normalized actual redirect",
+          "variant": "logo-confusion"
+        },
+        {
+          "accepted": false,
+          "reason": "the approval DOM displayed and bound the normalized actual redirect",
+          "variant": "unicode-brand"
+        },
+        {
+          "accepted": false,
+          "reason": "the approval DOM displayed and bound the normalized actual redirect",
+          "variant": "metadata-redirect-mismatch"
+        },
+        {
+          "accepted": false,
+          "reason": "the approval DOM displayed and bound the normalized actual redirect",
+          "variant": "redirect-after-approval"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "logo-confusion",
+        "metadata-redirect-mismatch",
+        "redirect-after-approval",
+        "trusted-brand-loopback-redirect",
+        "unicode-brand"
+      ]
+    },
+    {
+      "browser_mode": "QUALIFIED",
+      "case_id": "OA-005",
+      "kind": "browser-fixture-controls",
+      "negative": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.375091,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 40960,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [],
+          "displayed_redirect": "https://client.fixture.invalid/callback",
+          "legitimate_control": true,
+          "metadata_brand_used_for_authority": false
+        },
+        "role": "safe-subject"
+      },
+      "positive": {
+        "launcher": {
+          "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+          "command_profile_safe": true,
+          "diagnostic_report_changes": 0,
+          "elapsed_seconds": 0.376471,
+          "environment_profile_safe": true,
+          "max_observed_pids": 1,
+          "max_observed_rss_kib": 55072,
+          "outer_sandbox_network_denied": true,
+          "outer_sandbox_normal_profiles_denied": true,
+          "pid_ceiling": 4,
+          "residual_processes": 0,
+          "returncode": 0,
+          "rss_ceiling_kib": 393216,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "payload": {
+          "accepted_variants": [
+            "trusted-brand-loopback-redirect",
+            "logo-confusion",
+            "unicode-brand",
+            "metadata-redirect-mismatch",
+            "redirect-after-approval"
+          ],
+          "browser_events_dispatched": 5,
+          "legitimate_control": true
+        },
+        "role": "deliberately-vulnerable"
+      },
+      "profile_cleanup_verified": true,
+      "separate_fresh_profiles": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "DRAFT_OR_EMERGING",
+  "result": "PASS",
+  "run_id": "run-1784492867-4d4329d1cf59",
+  "started_at": "2026-07-19T20:28:02.824649Z",
+  "subject": "The approval surface exposes and binds the actual redirect target rather than trusting a legitimate-looking metadata identity.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035",
+  "target_verdict": "PASS"
+}
