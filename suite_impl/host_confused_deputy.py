@@ -558,12 +558,14 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _browser_refusal(case, context)
     if case_id == "HC-012":
         frozen = context.frozen_target(case_id)
+        cleanliness = "clean" if frozen["clean"] else "not clean"
         return Evaluation(
             target_verdict="BLOCKED",
             blocked_kind="ACCESS",
             blocked_detail=(
-                "PortfolioCommandCenter is clean at the frozen epoch identity, but current "
-                "security-branch ownership is not clear enough to create or execute an archive."
+                f"PortfolioCommandCenter is {cleanliness} at the frozen epoch identity; "
+                "current branch ownership is not clear enough to create or execute "
+                "an archive."
             ),
             observations=[
                 {

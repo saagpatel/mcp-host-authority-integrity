@@ -17,7 +17,7 @@
     "historical_exception_repaired"
   ],
   "properties": {
-    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-1"},
+    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-2"},
     "phase": {"const": "OPEN"},
     "epoch_id": {"type": "string", "pattern": "^closure-[a-z0-9-]+$"},
     "opened_at": {"type": "string", "minLength": 1},

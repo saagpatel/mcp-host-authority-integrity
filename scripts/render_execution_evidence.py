@@ -133,9 +133,9 @@ def render_summary(
         "",
         f"The new closure epoch `{closure['epoch_id']}` passed its own "
         "no-forbidden-mutation gate. Target identities were frozen once with both "
-        "optional-lock controls; final checks compared lstat metadata digests and "
-        "did not invoke Git. Historical `SE-001` remains a violation and is not "
-        "repaired or reinterpreted.",
+        "optional-lock controls; final checks performed no target inventory and "
+        "did not invoke target Git. Historical `SE-001` remains a violation and "
+        "is not repaired or reinterpreted.",
         "",
         "## Suite totals",
         "",

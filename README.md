@@ -45,8 +45,9 @@ health. A harness exit code is never treated as a security verdict by itself.
 with `GIT_OPTIONAL_LOCKS=0` and `git --no-optional-locks`, creates an immutable
 program-owned target archive only when cleanliness and ownership permit, and
 binds the resulting receipt into qualification and execution. `epoch-close`
-performs no target Git command; it compares frozen lstat metadata and the
-hash-bound run instead.
+performs no target inventory or target Git command; it validates the frozen
+opening reads, the case-level no-live-target-access evidence, and the hash-bound
+run instead.
 
 ## Suites
 

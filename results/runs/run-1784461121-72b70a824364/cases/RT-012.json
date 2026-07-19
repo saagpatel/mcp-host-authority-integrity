@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "No fidelity-proven immutable mcp-trust archive is bound to this run.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "48d64fdb02b479301f572baf49e6af9acb4b8d74ed054ae59af5069d9f59100b",
+  "case_id": "RT-012",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "LIVE_TARGET",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "897a197e986b6708ed4d6ee89ab8267fd2d791defcf5c5f53e46d3ee2e3fe4dd",
+      "qualification_digest": "fdd707dfe5e63087675a859aaa7cf811b89855020909f75d92bf95f67f09a139"
+    }
+  ],
+  "finished_at": "2026-07-19T11:38:41.995458Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "archive_created": false,
+      "archive_fidelity_proven": false,
+      "target_code_executed": false,
+      "target_head": "2e6b0ddf4d16ec910eb44eec4b324158e0a79ce3"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784461121-72b70a824364",
+  "started_at": "2026-07-19T11:38:41.990670Z",
+  "subject": "The exact pinned mcp-trust read-only interface claim is compared with only behavior observable without mutation.",
+  "subject_version": "git:2e6b0ddf4d16ec910eb44eec4b324158e0a79ce3",
+  "target_verdict": "BLOCKED"
+}

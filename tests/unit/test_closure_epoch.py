@@ -12,6 +12,7 @@ from harness.closure_epoch import (
     TargetPolicy,
     _archive_and_verify,
     _metadata_digest,
+    _target_access_checks,
     safe_git,
     target_observation,
 )
@@ -89,6 +90,50 @@ class ClosureEpochTests(unittest.TestCase):
         receipt = synthetic_closure_epoch()
         self.assertEqual(target_observation(receipt, "RT-012")["head"], "1" * 40)
         self.assertEqual(target_observation(receipt, "HC-012")["head"], "2" * 40)
+
+    def test_closeout_uses_case_evidence_without_final_target_inventory(self) -> None:
+        results = [
+            {
+                "case_id": "RT-012",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [{"target_code_executed": False}],
+            },
+            {
+                "case_id": "HC-011",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [{"unsafe_fallback_refused": True}],
+            },
+            {
+                "case_id": "HC-012",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [{"target_repository_accessed_during_case": False}],
+            },
+            {
+                "case_id": "LP-007",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {"target_access": "frozen closure-epoch identity only"}
+                ],
+            },
+            {
+                "case_id": "LP-009",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {"target_access": "frozen closure-epoch identity only"}
+                ],
+            },
+        ]
+        checks = _target_access_checks(synthetic_closure_epoch(), results)
+        self.assertEqual(len(checks), 4)
+        self.assertTrue(all(item["case_evidence_valid"] for item in checks))
+        self.assertTrue(all(item["post_open_access"] == "NONE" for item in checks))
+        self.assertTrue(
+            all(
+                item["final_observation"]
+                == "none; no final target inventory or Git command"
+                for item in checks
+            )
+        )
 
 
 if __name__ == "__main__":

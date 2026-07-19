@@ -1,0 +1,69 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "67daa3b2350e6af25526a31c3393d8249633ad441c7a2d563a13eea403cb220a",
+  "case_id": "SA-013",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "79e389b8c17ad9345b5aee5bfec00aa340a980d74e224ad1374220c2333eb56c",
+      "qualification_digest": "fdd707dfe5e63087675a859aaa7cf811b89855020909f75d92bf95f67f09a139"
+    }
+  ],
+  "finished_at": "2026-07-19T11:38:42.262130Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "MCP requires rate limiting but does not define the key; this oracle is fixture-only."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-013",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-013-negative",
+          "facts": {
+            "principal_operation_budget_exhausted": true,
+            "rotations_restoring_budget": []
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-013-positive",
+          "facts": {
+            "rotations_restoring_budget": [
+              "client",
+              "connection",
+              "handle",
+              "tool_name"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "MCP requires rate limiting but does not define the key; this oracle is fixture-only.",
+      "fail_oracle": "Rotation restores budget before the bounded window expires.",
+      "pass_oracle": "Connection, handle, client, and tool-name rotation cannot reset the principal-operation budget.",
+      "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784461121-72b70a824364",
+  "started_at": "2026-07-19T11:38:42.260233Z",
+  "subject": "Rate limiting remains bound to principal and operation across transport and metadata rotation.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:fea7e19464525502ea67d07457331a04b8623ab58322290845091bf72567144b",
+  "target_verdict": "PASS"
+}

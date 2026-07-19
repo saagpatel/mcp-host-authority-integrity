@@ -1,0 +1,160 @@
+{
+  "closure_version": "MHAI-CLOSURE-EPOCH-1",
+  "epoch_id": "closure-1784461058-d1e8f4540ceb",
+  "git_read_contract": {
+    "argument": "git --no-optional-locks",
+    "environment": "GIT_OPTIONAL_LOCKS=0"
+  },
+  "historical_exception_repaired": false,
+  "historical_exceptions": [
+    "SE-001"
+  ],
+  "lane_discovery": {
+    "browser": {
+      "detail": "No browser executable exists in the cached containment image; the normal host Chrome profile remains forbidden.",
+      "eligible": false
+    },
+    "cross_sdk": {
+      "detail": "Qualified cached image contains Python mcp 1.28.1 and TypeScript @modelcontextprotocol/sdk 1.29.0.",
+      "eligible": true
+    },
+    "go_sdk": {
+      "detail": "No exact official Go MCP SDK exists in the bounded local caches.",
+      "eligible": false
+    },
+    "type_checker": {
+      "detail": "mypy 2.0.0 is installed locally.",
+      "eligible": true
+    }
+  },
+  "opened_at": "2026-07-19T11:37:44.440529Z",
+  "phase": "OPEN",
+  "program_commit": "0d6d87d370e0851241be42c4aa851d4f26437192",
+  "target_observations": [
+    {
+      "archive": {
+        "created": false,
+        "fidelity_proven": false,
+        "reason": "source worktree is not clean"
+      },
+      "branch": "main",
+      "case_ids": [
+        "RT-012"
+      ],
+      "clean": false,
+      "head": "2e6b0ddf4d16ec910eb44eec4b324158e0a79ce3",
+      "metadata": {
+        "git_entry_count": 8352,
+        "git_metadata_sha256": "50fb4dcbfd0174ead38e40e1dce87da90cf452f91df4485591f4b18764f986fe",
+        "git_scope": "included-in-worktree",
+        "index": {
+          "inode": 227310641,
+          "mtime_ns": 1784458294964914612,
+          "size": 11904
+        },
+        "worktree_entry_count": 8352,
+        "worktree_metadata_sha256": "50fb4dcbfd0174ead38e40e1dce87da90cf452f91df4485591f4b18764f986fe"
+      },
+      "name": "mcp-trust",
+      "ownership": "CLEAR",
+      "ownership_basis": "Clean main checkout, one worktree, no matching process, and prior owner session ended.",
+      "read_mutation_free": true,
+      "status_sha256": "8caea121d7264dd2e3c2c571eed821d77fbba49ed3bb260a6f7e064f925d1a06",
+      "tree": "d602e7feee52a988d2c0c050e936fe40884f89a1"
+    },
+    {
+      "archive": {
+        "created": false,
+        "fidelity_proven": false,
+        "reason": "source ownership is not clear"
+      },
+      "branch": "fix/serde-with-ghsa-7gcf-g7xr-8hxj",
+      "case_ids": [
+        "HC-011",
+        "HC-012"
+      ],
+      "clean": true,
+      "head": "772be25eed8554defa55505cadd23e7fc61df982",
+      "metadata": {
+        "git_entry_count": 8131,
+        "git_metadata_sha256": "66aa45d28534cce07a8ec54f427d6a995be84d964277a2e72afdf518a693e9cf",
+        "git_scope": "included-in-worktree",
+        "index": {
+          "inode": 225864915,
+          "mtime_ns": 1784448355780507425,
+          "size": 5907
+        },
+        "worktree_entry_count": 8131,
+        "worktree_metadata_sha256": "66aa45d28534cce07a8ec54f427d6a995be84d964277a2e72afdf518a693e9cf"
+      },
+      "name": "PortfolioCommandCenter",
+      "ownership": "UNCLEAR",
+      "ownership_basis": "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+      "read_mutation_free": true,
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree": "e86aa28de7d2456dffb60f38f774e14f62f56731"
+    },
+    {
+      "archive": {
+        "created": false,
+        "fidelity_proven": false,
+        "reason": "source ownership is not clear"
+      },
+      "branch": "codex/fix/serde-with-ghsa-7gcf-g7xr-8hxj",
+      "case_ids": [
+        "LP-007"
+      ],
+      "clean": true,
+      "head": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
+      "metadata": {
+        "git_entry_count": 762,
+        "git_metadata_sha256": "a5314f8b3698ce27a6571dc5466039979437b7a65c9da91398ccceebdc6b5211",
+        "git_scope": "included-in-worktree",
+        "index": {
+          "inode": 225269680,
+          "mtime_ns": 1784445971901788889,
+          "size": 26693
+        },
+        "worktree_entry_count": 762,
+        "worktree_metadata_sha256": "a5314f8b3698ce27a6571dc5466039979437b7a65c9da91398ccceebdc6b5211"
+      },
+      "name": "AIGCCore",
+      "ownership": "UNCLEAR",
+      "ownership_basis": "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+      "read_mutation_free": true,
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tree": "e89ae646ceb8932ac88a3f0bb27fcd8bedd95798"
+    },
+    {
+      "archive": {
+        "created": false,
+        "fidelity_proven": false,
+        "reason": "source ownership is not clear"
+      },
+      "branch": "feat/wave2-signature",
+      "case_ids": [
+        "LP-009"
+      ],
+      "clean": false,
+      "head": "150ed52ea906059103dbcfec709d4d2fde86389e",
+      "metadata": {
+        "git_entry_count": 11,
+        "git_metadata_sha256": "98588ece158a4af73a8b58c0a3a37efc063003b461676f92f1e6fb0f437aa977",
+        "git_scope": "linked-worktree-gitdir",
+        "index": {
+          "inode": 228338923,
+          "mtime_ns": 1784461055548739846,
+          "size": 93155
+        },
+        "worktree_entry_count": 992,
+        "worktree_metadata_sha256": "1273e68d0d7865264b46bede47cc63278731e74b276f97b9ddef39e96cdb7ad4"
+      },
+      "name": "portfolio-index",
+      "ownership": "ACTIVE",
+      "ownership_basis": "The shared worktree moved to feat/wave2-signature after the prior closeout.",
+      "read_mutation_free": true,
+      "status_sha256": "f3b0e2c1106ba5151c44422fe5dc921399fe03ac67cd7b61bbad09baf51d7b88",
+      "tree": "9ad9353e2a896d0f244edceba0206dbcd238cd26"
+    }
+  ]
+}

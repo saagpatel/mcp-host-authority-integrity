@@ -162,10 +162,16 @@ def _blocked_copy(
     case: dict[str, Any],
     context: RunContext,
     *,
-    detail: str,
+    target_name: str,
+    ownership_detail: str,
 ) -> Evaluation:
     frozen = context.frozen_target(case["case_id"])
     commit = frozen["head"]
+    cleanliness = "clean" if frozen["clean"] else "not clean"
+    detail = (
+        f"{target_name} is {cleanliness} at the frozen epoch identity; "
+        f"{ownership_detail}"
+    )
     deviation = hashlib.sha256(
         f"{case['case_id']}:{commit}:copy-not-created".encode()
     ).hexdigest()
@@ -263,9 +269,10 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _blocked_copy(
             case,
             context,
-            detail=(
-                "AIGCCore is clean at the frozen epoch identity, but source ownership "
-                "is not clear enough to create or execute a program-owned archive."
+            target_name="AIGCCore",
+            ownership_detail=(
+                "source ownership is not clear enough to create or execute a "
+                "program-owned archive."
             ),
         )
     if case_id == "LP-008":
@@ -274,9 +281,10 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _blocked_copy(
             case,
             context,
-            detail=(
-                "portfolio-index is clean at the frozen epoch identity, but the shared "
-                "feat/wave2-signature worktree has an active owner."
+            target_name="portfolio-index",
+            ownership_detail=(
+                f"the shared {context.frozen_target(case_id)['branch']} worktree "
+                "has an active owner."
             ),
         )
     if case_id == "LP-011":

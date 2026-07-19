@@ -1,0 +1,127 @@
+{
+  "closed_at": "2026-07-19T11:39:21.474245Z",
+  "closure_version": "MHAI-CLOSURE-EPOCH-1",
+  "epoch_id": "closure-1784461058-d1e8f4540ceb",
+  "historical_exception_repaired": false,
+  "historical_exceptions": [
+    "SE-001"
+  ],
+  "no_forbidden_mutation_gate": "FAIL",
+  "open_digest": "6b510bfc7f4b99fd5743d87af88d5d1a6e0bbf2824bdca50a39cfa90ce491887",
+  "phase": "CLOSE",
+  "qualification_run_id": "cq-1784461090-d328e81a28d7",
+  "remaining_blockers": [
+    {
+      "case_id": "RT-012",
+      "detail": "No fidelity-proven immutable mcp-trust archive is bound to this run.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "SA-014",
+      "detail": "No exact official Go MCP SDK exists in the bounded local caches; network access and package installation remain forbidden.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-001",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-005",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-006",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-009",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-011",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-012",
+      "detail": "PortfolioCommandCenter is clean at the frozen epoch identity, but current security-branch ownership is not clear enough to create or execute an archive.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "LP-007",
+      "detail": "AIGCCore is clean at the frozen epoch identity, but source ownership is not clear enough to create or execute a program-owned archive.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "LP-009",
+      "detail": "portfolio-index is clean at the frozen epoch identity, but the shared feat/wave2-signature worktree has an active owner.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "OA-004",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "OA-005",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "OA-006",
+      "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    }
+  ],
+  "result": "FAIL",
+  "run_id": "run-1784461121-72b70a824364",
+  "run_manifest_sha256": "f3744c879df75eb553959e34ccae0971348c5141c5d8cedf3d67ac537adb7378",
+  "safely_obtainable_coverage_executed": true,
+  "target_metadata_checks": [
+    {
+      "closing_metadata_sha256": "836bae10b19e6befa9b3ae5b806ccee7e4bbe1491b7a8d5bd08edc920960f05e",
+      "final_observation": "lstat metadata digest only; no final Git command",
+      "name": "mcp-trust",
+      "opening_metadata_sha256": "f6d9c03baa90302c94457854f47781f31834fbba8cceb60b9e58822e74bbbf57",
+      "stable": false
+    },
+    {
+      "closing_metadata_sha256": "dc9c6e467af69a4954eb3d79846aaa2de47dcd82520325b2026782b4ca093d79",
+      "final_observation": "lstat metadata digest only; no final Git command",
+      "name": "PortfolioCommandCenter",
+      "opening_metadata_sha256": "dc9c6e467af69a4954eb3d79846aaa2de47dcd82520325b2026782b4ca093d79",
+      "stable": true
+    },
+    {
+      "closing_metadata_sha256": "2f4617b7458b16660c915810420fd8274bf4233096c1efe9e0d550a83f248f93",
+      "final_observation": "lstat metadata digest only; no final Git command",
+      "name": "AIGCCore",
+      "opening_metadata_sha256": "2f4617b7458b16660c915810420fd8274bf4233096c1efe9e0d550a83f248f93",
+      "stable": true
+    },
+    {
+      "closing_metadata_sha256": "d3e9e7eb528feb5def71e279006ce4feaf3614567d4ef00613265fe3c059c9fd",
+      "final_observation": "lstat metadata digest only; no final Git command",
+      "name": "portfolio-index",
+      "opening_metadata_sha256": "d3e9e7eb528feb5def71e279006ce4feaf3614567d4ef00613265fe3c059c9fd",
+      "stable": true
+    }
+  ]
+}

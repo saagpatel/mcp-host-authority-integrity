@@ -104,11 +104,14 @@ accepted only after its file set, modes, and every blob object ID match the
 frozen Git tree. Archive contents are made read-only and their digest is bound
 into the epoch.
 
-The close step invokes no target Git command. It compares lstat metadata
-digests for the frozen repository and linked Git directory, validates every
-case result and manifest hash, and passes only when no target observation
-surface changed during the epoch. A passing later epoch is separate evidence;
-it never erases or repairs historical safety exception `SE-001`.
+The close step invokes no target inventory and no target Git command. It
+validates every case result and manifest hash, requires the opening reads to
+have preserved their before/after metadata, and verifies case-level evidence
+that later execution used only frozen identities or a fidelity-proven
+program-owned archive. Concurrent target drift is outside that claim and is
+neither attributed to this program nor represented as stability. A passing
+later epoch is separate evidence; it never erases or repairs historical safety
+exception `SE-001`.
 
 ## Integrated chain
 

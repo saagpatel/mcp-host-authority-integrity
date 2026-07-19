@@ -8,13 +8,13 @@ from harness.schema_validation import canonical_digest
 
 def synthetic_closure_epoch() -> dict[str, Any]:
     targets = [
-        ("mcp-trust", ["RT-012"], "1" * 40, "CLEAR"),
+        ("mcp-trust", ["RT-012"], "1" * 40, "UNCLEAR"),
         ("PortfolioCommandCenter", ["HC-011", "HC-012"], "2" * 40, "UNCLEAR"),
         ("AIGCCore", ["LP-007"], "3" * 40, "UNCLEAR"),
         ("portfolio-index", ["LP-009"], "4" * 40, "ACTIVE"),
     ]
     return {
-        "closure_version": "MHAI-CLOSURE-EPOCH-1",
+        "closure_version": "MHAI-CLOSURE-EPOCH-2",
         "phase": "OPEN",
         "epoch_id": "closure-unit-test",
         "opened_at": "2026-07-19T00:00:00Z",

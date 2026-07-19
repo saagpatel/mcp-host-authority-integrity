@@ -13,7 +13,7 @@
     "qualification_run_id",
     "run_id",
     "run_manifest_sha256",
-    "target_metadata_checks",
+    "target_access_checks",
     "no_forbidden_mutation_gate",
     "safely_obtainable_coverage_executed",
     "remaining_blockers",
@@ -22,7 +22,7 @@
     "result"
   ],
   "properties": {
-    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-1"},
+    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-2"},
     "phase": {"const": "CLOSE"},
     "epoch_id": {"type": "string", "pattern": "^closure-[a-z0-9-]+$"},
     "closed_at": {"type": "string", "minLength": 1},
@@ -30,7 +30,7 @@
     "qualification_run_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},
     "run_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-    "target_metadata_checks": {
+    "target_access_checks": {
       "type": "array",
       "minItems": 4,
       "maxItems": 4,
@@ -39,18 +39,18 @@
         "additionalProperties": false,
         "required": [
           "name",
-          "opening_metadata_sha256",
-          "closing_metadata_sha256",
-          "stable",
+          "opening_read_mutation_free",
+          "post_open_access",
+          "case_evidence_valid",
           "final_observation"
         ],
         "properties": {
           "name": {"type": "string"},
-          "opening_metadata_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-          "closing_metadata_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
-          "stable": {"type": "boolean"},
+          "opening_read_mutation_free": {"const": true},
+          "post_open_access": {"enum": ["NONE", "PROGRAM_ARCHIVE_ONLY"]},
+          "case_evidence_valid": {"const": true},
           "final_observation": {
-            "const": "lstat metadata digest only; no final Git command"
+            "const": "none; no final target inventory or Git command"
           }
         }
       }

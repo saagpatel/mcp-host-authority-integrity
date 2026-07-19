@@ -24,7 +24,7 @@ from harness.schema_validation import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-CLOSURE_VERSION = "MHAI-CLOSURE-EPOCH-1"
+CLOSURE_VERSION = "MHAI-CLOSURE-EPOCH-2"
 
 
 class ClosureEpochError(RuntimeError):
@@ -46,9 +46,8 @@ TARGET_POLICIES = (
         "mcp-trust",
         Path("/Users/d/Projects/mcp-trust"),
         ("RT-012",),
-        "CLEAR",
-        "Clean main checkout, one worktree, no matching process, and prior owner session ended.",
-        archive_allowed=True,
+        "UNCLEAR",
+        "The source changed during the preceding closure window, so current ownership is not proven.",
     ),
     TargetPolicy(
         "PortfolioCommandCenter",
@@ -467,6 +466,65 @@ def _validate_bound_run(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return results
 
 
+def _target_access_checks(
+    open_receipt: dict[str, Any],
+    results: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Validate the case evidence proving no post-open live-target access."""
+    results_by_id = {result["case_id"]: result for result in results}
+    checks: list[dict[str, Any]] = []
+    for target in open_receipt["target_observations"]:
+        case_evidence_valid = True
+        access_mode = "NONE"
+        for case_id in target["case_ids"]:
+            result = results_by_id[case_id]
+            observation = result["observations"][0]
+            if case_id == "RT-012":
+                archive = target["archive"]
+                if archive.get("created"):
+                    archive_path = (ROOT / archive["path"]).resolve()
+                    case_evidence_valid = case_evidence_valid and (
+                        archive.get("fidelity_proven") is True
+                        and ROOT.resolve() in archive_path.parents
+                        and observation.get("archive_sha256") == archive["sha256"]
+                        and observation.get("target_mount") == "read-only"
+                    )
+                    access_mode = "PROGRAM_ARCHIVE_ONLY"
+                else:
+                    case_evidence_valid = case_evidence_valid and (
+                        result["result"] == "BLOCKED_BY_ACCESS"
+                        and observation.get("target_code_executed") is False
+                    )
+            elif case_id == "HC-011":
+                case_evidence_valid = case_evidence_valid and (
+                    result["result"] == "BLOCKED_BY_ACCESS"
+                    and observation.get("unsafe_fallback_refused") is True
+                )
+            elif case_id == "HC-012":
+                case_evidence_valid = case_evidence_valid and (
+                    result["result"] == "BLOCKED_BY_ACCESS"
+                    and observation.get("target_repository_accessed_during_case") is False
+                )
+            elif case_id in {"LP-007", "LP-009"}:
+                case_evidence_valid = case_evidence_valid and (
+                    result["result"] == "BLOCKED_BY_ACCESS"
+                    and observation.get("target_access")
+                    == "frozen closure-epoch identity only"
+                )
+            else:
+                case_evidence_valid = False
+        checks.append(
+            {
+                "name": target["name"],
+                "opening_read_mutation_free": target["read_mutation_free"],
+                "post_open_access": access_mode,
+                "case_evidence_valid": case_evidence_valid,
+                "final_observation": "none; no final target inventory or Git command",
+            }
+        )
+    return checks
+
+
 def close_epoch() -> tuple[dict[str, Any], Path]:
     open_receipt = load_json(ROOT / "results/latest/closure-epoch-open.json")
     validate_open_receipt(open_receipt)
@@ -491,22 +549,7 @@ def close_epoch() -> tuple[dict[str, Any], Path]:
         raise ClosureEpochError("latest complete run is not bound to the open closure epoch")
     results = _validate_bound_run(manifest)
 
-    checks: list[dict[str, Any]] = []
-    observations_by_name = {
-        item["name"]: item for item in open_receipt["target_observations"]
-    }
-    for policy in TARGET_POLICIES:
-        opening = observations_by_name[policy.name]["metadata"]
-        current = _target_metadata(policy.path, _git_dir_without_git(policy.path))
-        checks.append(
-            {
-                "name": policy.name,
-                "opening_metadata_sha256": canonical_digest(opening),
-                "closing_metadata_sha256": canonical_digest(current),
-                "stable": current == opening,
-                "final_observation": "lstat metadata digest only; no final Git command",
-            }
-        )
+    checks = _target_access_checks(open_receipt, results)
 
     remaining: list[dict[str, str]] = []
     for result in results:
@@ -519,7 +562,14 @@ def close_epoch() -> tuple[dict[str, Any], Path]:
                     "detail": result["blocked_reason"]["detail"],
                 }
             )
-    forbidden_gate = "PASS" if all(item["stable"] for item in checks) else "FAIL"
+    forbidden_gate = (
+        "PASS"
+        if all(
+            item["opening_read_mutation_free"] and item["case_evidence_valid"]
+            for item in checks
+        )
+        else "FAIL"
+    )
     safely_obtainable = not any(
         result["result"] in {"ERROR", "UNKNOWN", "NOT_RUN", "NOT_IMPLEMENTED"}
         for result in results
@@ -533,7 +583,7 @@ def close_epoch() -> tuple[dict[str, Any], Path]:
         "qualification_run_id": manifest["qualification_run_id"],
         "run_id": manifest["run_id"],
         "run_manifest_sha256": canonical_digest(manifest),
-        "target_metadata_checks": checks,
+        "target_access_checks": checks,
         "no_forbidden_mutation_gate": forbidden_gate,
         "safely_obtainable_coverage_executed": safely_obtainable,
         "remaining_blockers": remaining,

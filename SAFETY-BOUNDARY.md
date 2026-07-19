@@ -80,8 +80,9 @@ authority is unavailable, the case is not weakened. It is recorded as
 
 Target identities are observed once at epoch open and persisted in
 program-owned evidence. Execution uses only those frozen identities. Final
-closure invokes no target Git command and compares frozen lstat metadata
-digests instead. A clean, clearly owned target may be archived at its frozen
-commit only after complete tree/blob/mode fidelity verification; a missing
-dependency, unclear owner, dirty source, or incomplete fidelity proof remains
-blocked.
+closure invokes no target inventory and no target Git command; it validates
+the opening read's before/after metadata and case-level evidence that later
+execution used no live target. A clean, clearly owned target may be archived at
+its frozen commit only after complete tree/blob/mode fidelity verification; a
+missing dependency, unclear owner, dirty source, or incomplete fidelity proof
+remains blocked.

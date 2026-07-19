@@ -1,0 +1,50 @@
+{
+  "blocked_reason": {
+    "detail": "portfolio-index is clean at the frozen epoch identity, but the shared feat/wave2-signature worktree has an active owner.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "1bab0b23603d999676bf769b6da9736dd1172fad6a21045b91d39fe94ccce3d8",
+  "case_id": "LP-009",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "6b0dd9d1c2fdc820de79df8c90c62ab4e5907eddc144fa9e48b6e6d527f9d659",
+      "qualification_digest": "fdd707dfe5e63087675a859aaa7cf811b89855020909f75d92bf95f67f09a139"
+    }
+  ],
+  "finished_at": "2026-07-19T11:38:46.260828Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "ownership": "ACTIVE",
+      "ownership_basis": "The shared worktree moved to feat/wave2-signature after the prior closeout.",
+      "source_candidate_head": "150ed52ea906059103dbcfec709d4d2fde86389e",
+      "source_candidate_tree": "9ad9353e2a896d0f244edceba0206dbcd238cd26",
+      "source_clean_at_epoch_open": false,
+      "target_access": "frozen closure-epoch identity only"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784461121-72b70a824364",
+  "started_at": "2026-07-19T11:38:46.259962Z",
+  "subject": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+  "subject_version": "git:150ed52ea906059103dbcfec709d4d2fde86389e+deviations:945726f4fc4e0457717019e58840cb5a59a1e2d2181299aca8fd6b33359d4917",
+  "target_verdict": "BLOCKED"
+}
