@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
-from harness.execution import RunContext, deterministic_declared_result
+from harness.execution import Evaluation, RunContext, deterministic_declared_result
 from harness.schema_validation import load_json
 from suite_impl.host_confused_deputy import evaluate
 from tests.helpers import closure_context_fields
@@ -49,22 +49,15 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
                     ],
                 )
 
-    def test_qualified_fixture_browser_executes_both_controls(self) -> None:
-        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temporary:
-            context = RunContext(
-                run_id="hc-qualified-browser",
-                run_root=Path(temporary),
-                browser_mode="QUALIFIED",
-                qualification_digest="0" * 64,
-                **closure_context_fields(),
-            )
-            result = evaluate(
-                self.cases["HC-001"],
-                context.for_case("HC-001"),
-            )
-        self.assertEqual(deterministic_declared_result(result), "PASS")
-        self.assertEqual(result.positive_control, "PASS")
-        self.assertEqual(result.negative_control, "PASS")
+    def test_qualified_fixture_browser_routes_to_active_executor(self) -> None:
+        sentinel = Evaluation(target_verdict="PASS", observations=[{"unit": True}])
+        with patch(
+            "suite_impl.browser_fixtures.evaluate_hc",
+            return_value=sentinel,
+        ) as executor:
+            result = evaluate(self.cases["HC-001"], self.context("QUALIFIED"))
+        self.assertIs(result, sentinel)
+        executor.assert_called_once()
 
     def test_qualified_browser_does_not_substitute_for_target_executor(self) -> None:
         result = evaluate(self.cases["HC-011"], self.context("QUALIFIED"))

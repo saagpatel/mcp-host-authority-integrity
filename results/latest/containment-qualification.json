@@ -1,5 +1,5 @@
 {
-  "browser_mode": "BROWSER_DISABLED",
+  "browser_mode": "QUALIFIED",
   "checks": [
     {
       "check_id": "CQ-001",
@@ -57,7 +57,7 @@
           "delayed_canary_absent": true,
           "delayed_window_seconds": 3,
           "emergency_stop_seconds": null,
-          "immutable_container_identity": "e34de8845a29e5b3cb87173da745cff90196baa623398d136cddc58052fd2cfd",
+          "immutable_container_identity": "33e590e5e136d52cb93f3d9201e5ad6debe4f554d07ed3d5466799d6c5ab357a",
           "pid_reuse_probe_started_after_controller_loss": true,
           "unrelated_process_survived": true,
           "watchdog": "PASS"
@@ -72,8 +72,8 @@
           "controller_mode": "emergency-stop",
           "delayed_canary_absent": true,
           "delayed_window_seconds": 3,
-          "emergency_stop_seconds": 0.7173237919923849,
-          "immutable_container_identity": "7fd0f37e04c21bef4cc5d35d18b172ff3f4292e28a88097449605ec932ccbbe2",
+          "emergency_stop_seconds": 0.18569908299832605,
+          "immutable_container_identity": "7e157962fc4fcb98819172d271351f3944a74ebe73042ec3d36a9fa65130374d",
           "pid_reuse_probe_started_after_controller_loss": true,
           "unrelated_process_survived": true,
           "watchdog": "PASS"
@@ -215,11 +215,11 @@
             },
             {
               "fd": 1,
-              "target": "pipe:[321605]"
+              "target": "pipe:[598424]"
             },
             {
               "fd": 2,
-              "target": "pipe:[321606]"
+              "target": "pipe:[598425]"
             },
             {
               "fd": 3,
@@ -227,19 +227,19 @@
             },
             {
               "fd": 4,
-              "target": "pipe:[321659]"
+              "target": "pipe:[599420]"
             },
             {
               "fd": 5,
-              "target": "pipe:[321659]"
+              "target": "pipe:[599420]"
             },
             {
               "fd": 6,
-              "target": "pipe:[321660]"
+              "target": "pipe:[599421]"
             },
             {
               "fd": 7,
-              "target": "pipe:[321660]"
+              "target": "pipe:[599421]"
             },
             {
               "fd": 8,
@@ -251,11 +251,11 @@
             },
             {
               "fd": 10,
-              "target": "pipe:[320803]"
+              "target": "pipe:[598506]"
             },
             {
               "fd": 11,
-              "target": "pipe:[320803]"
+              "target": "pipe:[598506]"
             },
             {
               "fd": 12,
@@ -267,11 +267,11 @@
             },
             {
               "fd": 14,
-              "target": "pipe:[321661]"
+              "target": "pipe:[599422]"
             },
             {
               "fd": 15,
-              "target": "pipe:[321661]"
+              "target": "pipe:[599422]"
             },
             {
               "fd": 16,
@@ -318,7 +318,7 @@
       "check_id": "CQ-012",
       "observations": [
         {
-          "all_browser_cases_refused": true,
+          "all_browser_cases_refused": false,
           "browser_case_ids": [
             "HC-001",
             "HC-005",
@@ -329,60 +329,92 @@
             "OA-005",
             "OA-006"
           ],
-          "browser_cases_must_block": true,
-          "candidate_assessment_sha256": "1c6792b078319ba6d283ffe9f328274d7915238633de5e2ff71a30e8b3d79028",
-          "candidate_launcher_status": "REJECTED_UNSTABLE",
-          "candidate_rejection_class": "repeatable-wall-time-ceiling-failure",
-          "contained_browser_candidates": [],
-          "host_cached_candidates": [
+          "browser_identity": {
+            "binary_sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45",
+            "bundle_tree_sha256": "2ce0e63dbf28c73c9096904171095c803828c7e14a3d56bfb312a19a6ad732aa",
+            "contract_version": "MHAI-BROWSER-2",
+            "metadata_sha256": "f9fcc742e33e0b12fe6650bf1f833c0cb1c391214a382d05c58c5e817f87e1ad",
+            "package_version": "1.62.0-alpha-2026-07-19",
+            "revision": "1234",
+            "sandbox_exec_sha256": "8290e4be7387a0df83cd1559e86afd880464f269450573d012795761fe298f16",
+            "version": "151.0.7922.34"
+          },
+          "candidate_launcher_status": "QUALIFIED_PROGRAM_OWNED",
+          "launches": [
             {
-              "browser_version": "145",
-              "playwright_version": "1.58.2",
-              "revision": "1208",
-              "single_link_regular_executable_present": true
+              "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+              "command_profile_safe": true,
+              "diagnostic_report_changes": 0,
+              "elapsed_seconds": 0.741447,
+              "environment_profile_safe": true,
+              "max_observed_pids": 1,
+              "max_observed_rss_kib": 118448,
+              "outer_sandbox_network_denied": true,
+              "outer_sandbox_normal_profiles_denied": true,
+              "pid_ceiling": 4,
+              "residual_processes": 0,
+              "returncode": 0,
+              "rss_ceiling_kib": 393216,
+              "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
             {
-              "browser_version": "147",
-              "playwright_version": "1.59.1",
-              "revision": "1217",
-              "single_link_regular_executable_present": true
+              "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+              "command_profile_safe": true,
+              "diagnostic_report_changes": 0,
+              "elapsed_seconds": 0.757977,
+              "environment_profile_safe": true,
+              "max_observed_pids": 1,
+              "max_observed_rss_kib": 117936,
+              "outer_sandbox_network_denied": true,
+              "outer_sandbox_normal_profiles_denied": true,
+              "pid_ceiling": 4,
+              "residual_processes": 0,
+              "returncode": 0,
+              "rss_ceiling_kib": 393216,
+              "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             },
             {
-              "browser_version": "148.0.7778.96",
-              "playwright_version": "1.60.0",
-              "revision": "1223",
-              "single_link_regular_executable_present": true
-            },
-            {
-              "browser_version": "149.0.7827.55",
-              "playwright_version": "1.61.1",
-              "revision": "1228",
-              "single_link_regular_executable_present": true
+              "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
+              "command_profile_safe": true,
+              "diagnostic_report_changes": 0,
+              "elapsed_seconds": 0.537919,
+              "environment_profile_safe": true,
+              "max_observed_pids": 1,
+              "max_observed_rss_kib": 114512,
+              "outer_sandbox_network_denied": true,
+              "outer_sandbox_normal_profiles_denied": true,
+              "pid_ceiling": 4,
+              "residual_processes": 0,
+              "returncode": 0,
+              "rss_ceiling_kib": 393216,
+              "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             }
           ],
           "non_browser_cases_refused": [],
           "normal_profile_identifiers_enumerated": false,
           "normal_profiles_mounted": false,
-          "normal_profiles_read": false
+          "normal_profiles_read": false,
+          "repeat_count": 3,
+          "repeatable_launcher_qualified": true
         }
       ],
       "result": "PASS"
     }
   ],
-  "finished_at": "2026-07-19T14:09:39.656528Z",
-  "harness_digest": "415930a81fb2e4ea0bc90f65cde84db02a1bd23cf7381c0043408e0c08d295cf",
+  "finished_at": "2026-07-19T17:15:14.220674Z",
+  "harness_digest": "9fb035cfeba217c145c1377ee59d6807f0b3f6ddf784f745da67a3099ab25585",
   "limitations": [
     "The browser launcher is disabled unless CQ-012 records QUALIFIED.",
     "Qualification proves this exact harness and cached runtime identity only."
   ],
   "qualification_version": "MHAI-CONTAINMENT-1",
   "result": "PASS",
-  "run_id": "cq-1784470163-f60c0875aeca",
+  "run_id": "cq-1784481299-162cf1eb1a84",
   "runtime": {
     "container_image": "sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5 [mcp-trust-live-batch@sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5]",
     "container_server": "29.5.2",
     "os": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
     "python": "3.14.6"
   },
-  "started_at": "2026-07-19T14:09:23.069787Z"
+  "started_at": "2026-07-19T17:14:59.771317Z"
 }

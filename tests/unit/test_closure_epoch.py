@@ -16,6 +16,7 @@ from harness.closure_epoch import (
     safe_git,
     target_observation,
 )
+from harness.schema_validation import load_json
 from tests.helpers import synthetic_closure_epoch
 
 
@@ -150,6 +151,13 @@ class ClosureEpochTests(unittest.TestCase):
                 for item in checks
             )
         )
+
+    def test_close_schema_accepts_archive_receipt_only_access(self) -> None:
+        schema = load_json(ROOT / "schemas/closure-epoch-close.schema.json")
+        allowed = schema["properties"]["target_access_checks"]["items"][
+            "properties"
+        ]["post_open_access"]["enum"]
+        self.assertIn("PROGRAM_ARCHIVE_RECEIPT_ONLY", allowed)
 
 
 if __name__ == "__main__":

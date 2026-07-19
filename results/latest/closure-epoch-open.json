@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784470121-d4dd8cc267c7",
+  "epoch_id": "closure-1784481266-8ca6ed9fff71",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -14,14 +14,26 @@
   ],
   "lane_discovery": {
     "browser": {
-      "detail": "Locally cached candidates failed repeatable bounded launcher qualification; CQ-012 must retain hard refusal.",
-      "eligible": false
+      "detail": "An official disposable Playwright Chromium headless-shell is present in program-owned storage and awaits CQ-012 repeatability.",
+      "eligible": true,
+      "identity": {
+        "binary_sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45",
+        "bundle_tree_sha256": "2ce0e63dbf28c73c9096904171095c803828c7e14a3d56bfb312a19a6ad732aa",
+        "contract_version": "MHAI-BROWSER-2",
+        "metadata_sha256": "f9fcc742e33e0b12fe6650bf1f833c0cb1c391214a382d05c58c5e817f87e1ad",
+        "package_version": "1.62.0-alpha-2026-07-19",
+        "revision": "1234",
+        "sandbox_exec_sha256": "8290e4be7387a0df83cd1559e86afd880464f269450573d012795761fe298f16",
+        "version": "151.0.7922.34"
+      },
+      "normal_profile_use_authorized": false
     },
     "cross_sdk": {
       "detail": "Qualified cached image contains Python mcp 1.28.1 and TypeScript @modelcontextprotocol/sdk 1.29.0.",
       "eligible": true
     },
     "go_sdk": {
+      "authorized_download_previously_completed": true,
       "cached_image_results": [
         {
           "exact_module_matches": 0,
@@ -60,13 +72,17 @@
         }
       ],
       "cached_images_considered": 7,
-      "detail": "No exact official github.com/modelcontextprotocol/go-sdk version exists in the bounded host module cache or inspectable cached images; any unavailable image remains an explicit access limitation.",
-      "eligible": false,
+      "detail": "The authorized exact official github.com/modelcontextprotocol/go-sdk v1.6.1 module is present in program-owned storage.",
+      "eligible": true,
       "host_exact_versions": [],
       "host_go_mod_files_scanned": 1,
       "image_exact_module_matches": 0,
       "network_access_used": false,
       "package_install_used": false,
+      "program_owned_module_path": "vendor/official/go-mod-cache/github.com/modelcontextprotocol/go-sdk@v1.6.1",
+      "program_owned_module_zip_sha256": "42d2f3dd1c889e7591675c83eae6ccb29a4a3ae9560dd5767869467bbb03ca85",
+      "program_owned_official_available": true,
+      "program_owned_official_version": "v1.6.1",
       "unavailable_images": [
         "ghcr.io/astral-sh/uv:0.8.15"
       ]
@@ -76,46 +92,58 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T14:08:47.714959Z",
+  "opened_at": "2026-07-19T17:14:32.454769Z",
   "phase": "OPEN",
-  "program_commit": "fa94dd94e4c7aabc4c2154ffd121c6fe7e133613",
+  "program_commit": "c798c327ed6fbf0ee64b67b9b22f24ccb92585d6",
   "target_observations": [
     {
       "archive": {
         "created": false,
         "fidelity_proven": false,
-        "reason": "source ownership is not clear"
+        "reason": "source worktree is not clean"
       },
       "branch": "main",
       "case_ids": [
         "RT-012"
       ],
       "clean": false,
-      "head": "2e6b0ddf4d16ec910eb44eec4b324158e0a79ce3",
+      "head": "f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462",
       "metadata": {
-        "git_entry_count": 8382,
-        "git_metadata_sha256": "e2095de099b47b9c6de52b2e279c36a2ee184e5967cc5d9437b6b01f510f2d9a",
+        "git_entry_count": 8720,
+        "git_metadata_sha256": "ab8dbca69d95584df86dda672f689a2c36134c89f8f23c61a8130e0fecabfdac",
         "git_scope": "included-in-worktree",
         "index": {
-          "inode": 227310641,
-          "mtime_ns": 1784458294964914612,
+          "inode": 232358429,
+          "mtime_ns": 1784479253892045674,
           "size": 11904
         },
-        "worktree_entry_count": 8382,
-        "worktree_metadata_sha256": "e2095de099b47b9c6de52b2e279c36a2ee184e5967cc5d9437b6b01f510f2d9a"
+        "worktree_entry_count": 8720,
+        "worktree_metadata_sha256": "ab8dbca69d95584df86dda672f689a2c36134c89f8f23c61a8130e0fecabfdac"
       },
       "name": "mcp-trust",
-      "ownership": "UNCLEAR",
-      "ownership_basis": "The worktree is not approved as disposable source, and current ownership is not proven.",
+      "owner_activity": {
+        "clear": true,
+        "cwd_process_count": 0,
+        "detail": "no Git lock and no process with cwd inside the worktree",
+        "git_lock_count": 0,
+        "status": "CLEAR"
+      },
+      "ownership": "CLEAR",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
       "status_sha256": "8caea121d7264dd2e3c2c571eed821d77fbba49ed3bb260a6f7e064f925d1a06",
-      "tree": "d602e7feee52a988d2c0c050e936fe40884f89a1"
+      "tree": "bdc61b679f06136d84cefaabc6928c0a9f82c030"
     },
     {
       "archive": {
-        "created": false,
-        "fidelity_proven": false,
-        "reason": "source ownership is not clear"
+        "created": true,
+        "fidelity_proven": true,
+        "file_count": 61,
+        "immutable_mode": "0444",
+        "object_format": "sha1",
+        "path": "results/closure-epochs/closure-1784481266-8ca6ed9fff71/archives/PortfolioCommandCenter-772be25eed8554defa55505cadd23e7fc61df982.zip",
+        "sha256": "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9",
+        "tree_manifest_sha256": "2bec1f601543958368fb3c6e0b5a33b1ab54b9afa73077b3b233bfd676dab620"
       },
       "branch": "fix/serde-with-ghsa-7gcf-g7xr-8hxj",
       "case_ids": [
@@ -126,7 +154,7 @@
       "head": "772be25eed8554defa55505cadd23e7fc61df982",
       "metadata": {
         "git_entry_count": 8131,
-        "git_metadata_sha256": "d349d2496b0f8204a476d8359da72550667f5cf4d9e22e2481a538f0f5379d05",
+        "git_metadata_sha256": "a41a39c9363b2a73f70b0d2399309736f69386c4174cfff792db5b3c15ba2d29",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 225864915,
@@ -134,20 +162,32 @@
           "size": 5907
         },
         "worktree_entry_count": 8131,
-        "worktree_metadata_sha256": "d349d2496b0f8204a476d8359da72550667f5cf4d9e22e2481a538f0f5379d05"
+        "worktree_metadata_sha256": "a41a39c9363b2a73f70b0d2399309736f69386c4174cfff792db5b3c15ba2d29"
       },
       "name": "PortfolioCommandCenter",
-      "ownership": "UNCLEAR",
-      "ownership_basis": "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+      "owner_activity": {
+        "clear": true,
+        "cwd_process_count": 0,
+        "detail": "no Git lock and no process with cwd inside the worktree",
+        "git_lock_count": 0,
+        "status": "CLEAR"
+      },
+      "ownership": "CLEAR",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live preflight found no pending handoff, Git lock, or process rooted in this worktree. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
       "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "tree": "e86aa28de7d2456dffb60f38f774e14f62f56731"
     },
     {
       "archive": {
-        "created": false,
-        "fidelity_proven": false,
-        "reason": "source ownership is not clear"
+        "created": true,
+        "fidelity_proven": true,
+        "file_count": 254,
+        "immutable_mode": "0444",
+        "object_format": "sha1",
+        "path": "results/closure-epochs/closure-1784481266-8ca6ed9fff71/archives/AIGCCore-09c3aa435a608d03c002782e6268c10f5bb7fe94.zip",
+        "sha256": "18b71db9ee9b2c01c25e87f60c1396fb11fa39a21a9b352d2a0c5203c7992ae2",
+        "tree_manifest_sha256": "d68bd64b48584fb4a7dc6af24c9e99e9cf86da9ab380e334653f5d2d59a90dce"
       },
       "branch": "codex/fix/serde-with-ghsa-7gcf-g7xr-8hxj",
       "case_ids": [
@@ -157,7 +197,7 @@
       "head": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
       "metadata": {
         "git_entry_count": 762,
-        "git_metadata_sha256": "c76b65b86fba8576d0f330d4dcef368ac07f690344a60088f5ac52a3ebe7b8ab",
+        "git_metadata_sha256": "d82a75f85bac6be124d27add30fb2115ca9275746f689ba6d92ebcbc6b52e65b",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 225269680,
@@ -165,11 +205,18 @@
           "size": 26693
         },
         "worktree_entry_count": 762,
-        "worktree_metadata_sha256": "c76b65b86fba8576d0f330d4dcef368ac07f690344a60088f5ac52a3ebe7b8ab"
+        "worktree_metadata_sha256": "d82a75f85bac6be124d27add30fb2115ca9275746f689ba6d92ebcbc6b52e65b"
       },
       "name": "AIGCCore",
-      "ownership": "UNCLEAR",
-      "ownership_basis": "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+      "owner_activity": {
+        "clear": true,
+        "cwd_process_count": 0,
+        "detail": "no Git lock and no process with cwd inside the worktree",
+        "git_lock_count": 0,
+        "status": "CLEAR"
+      },
+      "ownership": "CLEAR",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live preflight found no pending handoff, Git lock, or process rooted in this worktree. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
       "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "tree": "e89ae646ceb8932ac88a3f0bb27fcd8bedd95798"
@@ -178,32 +225,39 @@
       "archive": {
         "created": false,
         "fidelity_proven": false,
-        "reason": "source ownership is not clear"
+        "reason": "source worktree is not clean"
       },
-      "branch": "feat/wave3-accretive",
+      "branch": "feat/portfolio-index",
       "case_ids": [
         "LP-009"
       ],
       "clean": false,
-      "head": "eb17854731c6cadcdc5a01a318439667e085f957",
+      "head": "b2d6d3a82e240f24207139caa323297b97d218f8",
       "metadata": {
         "git_entry_count": 11,
-        "git_metadata_sha256": "c2f0865ef8598439554d2de1efe984774bce9c2980fc6a05e79e36832ceaf6ff",
+        "git_metadata_sha256": "513db8fa439437b32f8258234d18d8be4c90a41b2f753d9e475d6225b43e85b2",
         "git_scope": "linked-worktree-gitdir",
         "index": {
-          "inode": 230158110,
-          "mtime_ns": 1784467814256749769,
-          "size": 93823
+          "inode": 231387990,
+          "mtime_ns": 1784473896899289378,
+          "size": 93443
         },
-        "worktree_entry_count": 999,
-        "worktree_metadata_sha256": "6fe547edb835c5556096b233245f0cf49e792996a882c8ed2c5ed83e67352718"
+        "worktree_entry_count": 997,
+        "worktree_metadata_sha256": "055970f03fa4ac24f1c5962aeb94a36f10a4253c08c87cb005cf8e063e0f907c"
       },
       "name": "portfolio-index",
-      "ownership": "ACTIVE",
-      "ownership_basis": "The shared portfolio-index worktree has an active owner; no clean ownership window is authorized.",
+      "owner_activity": {
+        "clear": true,
+        "cwd_process_count": 0,
+        "detail": "no Git lock and no process with cwd inside the worktree",
+        "git_lock_count": 0,
+        "status": "CLEAR"
+      },
+      "ownership": "CLEAR",
+      "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found the prior owner lifecycle ended and no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
-      "status_sha256": "7892fbcb9308bd19a531a8988c340b8ac8ec710a21c2a41c2b649c5b24c04089",
-      "tree": "d7e7aab8e64d2a37ece219020e6a16cdea673e31"
+      "status_sha256": "15b51694bb8c55eb67a0791e5b4d95232247b71dcfd3d8ef51537b77d6df95fe",
+      "tree": "583624f86bdb057b5af22c30c91d20148f7c33cc"
     }
   ]
 }

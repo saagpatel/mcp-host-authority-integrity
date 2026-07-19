@@ -47,7 +47,13 @@
         "properties": {
           "name": {"type": "string"},
           "opening_read_mutation_free": {"const": true},
-          "post_open_access": {"enum": ["NONE", "PROGRAM_ARCHIVE_ONLY"]},
+          "post_open_access": {
+            "enum": [
+              "NONE",
+              "PROGRAM_ARCHIVE_ONLY",
+              "PROGRAM_ARCHIVE_RECEIPT_ONLY"
+            ]
+          },
           "case_evidence_valid": {"const": true},
           "final_observation": {
             "const": "none; no final target inventory or Git command"
