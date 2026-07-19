@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T21:25:28.649530Z",
+  "closed_at": "2026-07-19T21:34:06.660050Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784496134-a9e98dd015d8",
+  "epoch_id": "closure-1784496632-d0555fff0cc2",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,26 +10,13 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "940a1b6c5d73b86fc9017e49c477250668560e4588ae4340979a9eb472daad10",
+  "open_digest": "e7c443d48d6b695b15c1707b838dd48c2af1803cd8184feeb58858f1420eafd7",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784496289-d722fcd60baa",
-  "remaining_blockers": [
-    {
-      "case_id": "RT-012",
-      "detail": "No fidelity-proven immutable mcp-trust archive is bound to this run.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "LP-009",
-      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was CLEAR and does not override the clean-source requirement.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    }
-  ],
+  "qualification_run_id": "cq-1784496764-114ae88c95b9",
+  "remaining_blockers": [],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784496308-d351acead7de",
-  "run_manifest_sha256": "12ea192fce979e9045f407fb488e2ab020302ad3335c32aeaef1030fc896ec3a",
+  "run_id": "run-1784496781-9aefacc4526f",
+  "run_manifest_sha256": "e09e896ab2dd55f74c8b93c099babbdf67db24d17b97dc27f8ddaeef86ca5c16",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {
@@ -37,7 +24,7 @@
       "final_observation": "none; no final target inventory or Git command",
       "name": "mcp-trust",
       "opening_read_mutation_free": true,
-      "post_open_access": "NONE"
+      "post_open_access": "PROGRAM_ARCHIVE_ONLY"
     },
     {
       "case_evidence_valid": true,
@@ -58,7 +45,7 @@
       "final_observation": "none; no final target inventory or Git command",
       "name": "portfolio-index",
       "opening_read_mutation_free": true,
-      "post_open_access": "NONE"
+      "post_open_access": "PROGRAM_ARCHIVE_RECEIPT_ONLY"
     }
   ]
 }
