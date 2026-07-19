@@ -1,0 +1,98 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "80c0c41098f38ad9d23d8ecd18795d08135b2c6771cc983c788fb2acb82a9933",
+  "case_id": "LP-001",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "20a780053c53dd2e22a8d7da118b43417335124d4f536ddd9e642774f17d63c3",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:44.907897Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "cookie-disclosure-cross-port",
+        "cookie-replay-approve",
+        "cookie-replay-send",
+        "cookie-replay-apply"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-001",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "session audience includes exact fixture origin and port",
+          "variant": "cookie-disclosure-cross-port"
+        },
+        {
+          "accepted": false,
+          "reason": "session audience includes exact fixture origin and port",
+          "variant": "cookie-replay-approve"
+        },
+        {
+          "accepted": false,
+          "reason": "session audience includes exact fixture origin and port",
+          "variant": "cookie-replay-send"
+        },
+        {
+          "accepted": false,
+          "reason": "session audience includes exact fixture origin and port",
+          "variant": "cookie-replay-apply"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "cookie-disclosure-cross-port",
+        "cookie-replay-apply",
+        "cookie-replay-approve",
+        "cookie-replay-send"
+      ]
+    },
+    {
+      "authority_tuple_dimensions": [
+        "principal",
+        "server",
+        "operation",
+        "arguments",
+        "scope",
+        "expiry"
+      ],
+      "exact_tuple_required": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:44.905790Z",
+  "subject": "A synthetic loopback session is not accepted across attacker and legitimate fixture ports without exact origin binding.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

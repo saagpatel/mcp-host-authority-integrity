@@ -1,23 +1,14 @@
 # Findings
 
-The complete bound run `run-1784457876-5689c98bd88c` produced no validated
-target finding. Its machine-readable finding set is the empty array in
-`results/findings.json`.
+The complete bound run `run-1784461483-9e9faacaa0da` validated one evidence-bounded finding.
 
-The run recorded 43 `PASS` results and 14 `BLOCKED_BY_ACCESS` results. The
-passes apply to exact synthetic fixtures, local static-contract checks, or
-contained oracles at their declared evidence ceilings. They do not establish
-that an unexecuted installed target is secure, and the deliberately vulnerable
-positive controls are harness controls rather than product vulnerabilities.
+## MHAI-SA-015-001 — Official Python and TypeScript SDKs diverge on a conflicting request envelope
 
-Candidate observations must pass validation with:
+- Severity: `LOW`
+- Coverage: `OFFICIAL_SDK`
+- Version: `package:python-mcp+typescript-sdk@1.28.1+1.29.0`
+- Trust boundary: Untrusted JSON-RPC request envelope to SDK request dispatch.
 
-- reproducible execution;
-- valid positive and negative controls;
-- exact subject component, version, and configuration;
-- one named trust boundary and concrete unauthorized outcome or misleading claim;
-- redacted evidence and deterministic reproduction;
-- limitations and alternative explanations;
-- independent confirmation for High or Critical severity.
+Python accepts and selects params.name='danger' for an envelope carrying a conflicting top-level name='safe', while TypeScript rejects the same envelope; cross-SDK execution equivalence is therefore unsafe to assume.
 
-Fixture-only behavior is not a third-party product vulnerability.
+This does not establish an authorization bypass in a downstream host. The machine-readable finding, controls, evidence, limitations, and alternative explanations are in `results/findings.json`.

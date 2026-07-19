@@ -1,0 +1,71 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "9d2d64730301750306dc20734988e10f1a908007a4e8ccee2697d34bd45a17bf",
+  "case_id": "SA-010",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "e81499b3007a82d5abea52839a013f32c305c58f49f4c9a3a3be916befa8bd23",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:43.065456Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Header/body authority binding is SEP-2243 final-proposal behavior."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-010",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-010-negative",
+          "facts": {
+            "rejected_before_authorization": "[REDACTED_SYNTHETIC_SECRET]",
+            "valid_control_reached_canary": true
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-010-positive",
+          "facts": {
+            "disagreements_reaching_canary": [
+              "case_varied_duplicate_name",
+              "duplicate_method",
+              "invalid_encoding",
+              "method_disagreement",
+              "name_disagreement",
+              "proxy_normalization"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "Header/body authority binding is SEP-2243 final-proposal behavior.",
+      "fail_oracle": "Any disagreement selects one authority input and reaches the canary action.",
+      "pass_oracle": "Duplicate Mcp-Method/Mcp-Name fields, case-varied header names, invalid encodings, proxy normalization, and any header/body value disagreement are rejected before authorization.",
+      "protocol_status": "FINAL_PROPOSAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FINAL_PROPOSAL",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:43.065093Z",
+  "subject": "Mcp-Method must equal the case-sensitive JSON-RPC method and Mcp-Name must equal the applicable params.name after case-insensitive header-name parsing, or the request is rejected before execution.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

@@ -1,0 +1,67 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "a3038370c0f47bad14bf27a2af21a830236a3bc21f4c840962b8125f99d56176",
+  "case_id": "SA-012",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a4e704474daaeafaee408d3f0d67594e66404e9698c93c192cd8f67d581aaded",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:43.068118Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Client implementation metadata is released-core data, not authenticated identity."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-012",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-012-negative",
+          "facts": {
+            "forged_decision": false,
+            "same_policy_decision": true,
+            "untrusted_decision": false
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-012-positive",
+          "facts": {
+            "forged_decision": true,
+            "metadata_changed_outcome": true,
+            "untrusted_decision": false
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "Client implementation metadata is released-core data, not authenticated identity.",
+      "fail_oracle": "Self-asserted metadata changes an authorization outcome.",
+      "pass_oracle": "A forged trusted-looking identity receives the same policy decision as an untrusted client.",
+      "protocol_status": "RELEASED_CORE",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:43.067554Z",
+  "subject": "Self-asserted client name and capabilities do not independently grant approval or access.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

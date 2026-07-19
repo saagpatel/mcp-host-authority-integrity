@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "alternative_explanations": [
+      "A downstream Python host may add its own strict unknown-field rejection.",
+      "The TypeScript SDK's stricter envelope policy may be intentional."
+    ],
+    "case_ids": [
+      "SA-015"
+    ],
+    "component": "Python mcp request models and TypeScript MCP SDK request schemas",
+    "coverage_level": "OFFICIAL_SDK",
+    "evidence": [
+      {
+        "authority_relevant_disagreement": true,
+        "disagreements": [
+          "conflicting_top_level_name"
+        ],
+        "observation_sha256": "8ba96c23f2fafa6519b1714780c9ae36b0de0e5dc026044c4620e471a10ef3ef",
+        "package_versions": {
+          "python": "mcp@1.28.1",
+          "typescript": "@modelcontextprotocol/sdk@1.29.0"
+        },
+        "run_id": "run-1784461483-9e9faacaa0da"
+      }
+    ],
+    "finding_id": "MHAI-SA-015-001",
+    "fixture_only": false,
+    "independent_confirmation": "NOT_REQUIRED",
+    "limitations": [
+      "No downstream host authorization bypass was demonstrated.",
+      "The finding covers only the exact versions and request-dispatch paths recorded.",
+      "The two language SDKs have independent release version sequences."
+    ],
+    "negative_control": "Both exact SDKs accept the valid tools/call control with tool name safe.",
+    "positive_control": "A synthetic accept-versus-reject pair is detected as a disagreement.",
+    "reproduction": [
+      "Use the exact qualified cached image with network disabled and a read-only root.",
+      "Parse the same JSON-RPC envelope through each SDK's transport and request-dispatch schemas.",
+      "Observe Python ACCEPT/tools/call/danger and TypeScript REJECT."
+    ],
+    "scope": "Exact cached official SDK request-dispatch parsers in the qualified container.",
+    "severity": "LOW",
+    "title": "Official Python and TypeScript SDKs diverge on a conflicting request envelope",
+    "trust_boundary": "Untrusted JSON-RPC request envelope to SDK request dispatch.",
+    "unauthorized_outcome_or_misleading_claim": "Python accepts and selects params.name='danger' for an envelope carrying a conflicting top-level name='safe', while TypeScript rejects the same envelope; cross-SDK execution equivalence is therefore unsafe to assume.",
+    "version": "package:python-mcp+typescript-sdk@1.28.1+1.29.0"
+  }
+]

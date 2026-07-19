@@ -109,6 +109,7 @@ def render_summary(
     results: list[dict[str, Any]],
 ) -> str:
     cases_by_id = {case["case_id"]: case for case in cases}
+    results_by_id = {result["case_id"]: result for result in results}
     by_suite: dict[str, Counter[str]] = defaultdict(Counter)
     for result in results:
         by_suite[cases_by_id[result["case_id"]]["suite"]][result["result"]] += 1
@@ -182,8 +183,15 @@ def render_summary(
             "in bounded local caches.",
             "- Exact Python and TypeScript SDK parsers executed from the qualified "
             "cached image with network disabled.",
-            "- `RT-012` executed the fidelity-proven mcp-trust archive; other "
-            "isolated-copy cases remained blocked where source ownership was unclear.",
+            (
+                "- `RT-012` executed only the fidelity-proven program-owned "
+                "mcp-trust archive."
+                if results_by_id["RT-012"]["result"] == "PASS"
+                else "- `RT-012` remained blocked because no fidelity-proven "
+                "mcp-trust archive was available; the live target was not executed."
+            ),
+            "- Other isolated-copy cases remained blocked where source ownership "
+            "was unclear or active.",
             "- No target repair, content/ref/worktree edit, publication, external "
             "write, disclosure, push, or deploy was performed.",
             "- `SE-001` remains the historical Gate 7 violation. The new epoch's "

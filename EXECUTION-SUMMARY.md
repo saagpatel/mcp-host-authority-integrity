@@ -2,39 +2,43 @@
 
 ## Outcome
 
-`EXECUTION_COMPLETE_CLOSURE_GATE_FAIL`
+`EXECUTION_COMPLETE_NEW_EPOCH_PASS_WITH_HISTORICAL_EXCEPTION`
 
-The bound run `run-1784457876-5689c98bd88c` produced 57 schema-valid, hash-bound case results. No case produced `FAIL`, `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`. The run recorded 43 fixture, static-contract, or contained-oracle passes and 14 explicit access blocks.
+The bound run `run-1784461483-9e9faacaa0da` produced 57 schema-valid, hash-bound case results: 43 `PASS`, 1 `FAIL`, and 13 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
 
-No validated target vulnerability was established. A fixture `PASS` proves only the exact recorded synthetic subject and controls; it is not evidence that an installed target is secure or vulnerable.
+One low-severity exact-SDK interoperability finding was validated in `SA-015`. It is not evidence of an authorization bypass in a particular host. A fixture `PASS` proves only the recorded synthetic subject and controls.
 
-Gate 7 closure failed because a final `git status` readback refreshed the shared `portfolio-index` worktree's Git index stat cache. The command did not request a ref, content, or worktree-file change; only the index mtime refresh is directly attributable to it. The strict no-write target boundary cannot be claimed. See `SAFETY-EXCEPTION.md`.
+The new closure epoch `closure-1784461445-0f3f973ae17a` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation and is not repaired or reinterpreted.
 
 ## Suite totals
 
-| Suite | PASS | BLOCKED_BY_ACCESS | Total |
-|---|---:|---:|---:|
-| Runtime Truth | 11 | 1 | 12 |
-| Stateless Authority | 13 | 2 | 15 |
-| Host Confused Deputy | 6 | 6 | 12 |
-| Local Privilege Containment | 9 | 2 | 11 |
-| OAuth and Browser Identity | 3 | 3 | 6 |
-| Integrated Attack Chain | 1 | 0 | 1 |
-| **Total** | **43** | **14** | **57** |
+| Suite | PASS | FAIL | BLOCKED_BY_ACCESS | Total |
+|---|---:|---:|---:|---:|
+| Runtime Truth | 11 | 0 | 1 | 12 |
+| Stateless Authority | 13 | 1 | 1 | 15 |
+| Host Confused Deputy | 6 | 0 | 6 | 12 |
+| Local Privilege Containment | 9 | 0 | 2 | 11 |
+| OAuth and Browser Identity | 3 | 0 | 3 | 6 |
+| Integrated Attack Chain | 1 | 0 | 0 | 1 |
+| **Total** | **43** | **1** | **13** | **57** |
 
 ## Containment binding
 
-- Qualification: `cq-1784457861-f4d3957b171e` / `PASS`.
+- Qualification: `cq-1784461460-d74e3dbb9b1a` / `PASS`.
 - Qualification checks: 12/12 `PASS`.
 - Browser mode: `BROWSER_DISABLED`.
-- Qualification digest: `46e81147afecec95a8207a80ddb77af35a325766006661c435164bcdc3224893`.
-- Fixture digest: `0a01c75ccc63999079bdce56bc4b32be6fbcd945fbc64216dc86dd1f75a8b734`.
+- Qualification digest: `9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720`.
+- Fixture digest: `015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122`.
+- Closure epoch: `closure-1784461445-0f3f973ae17a` / `PASS_WITH_HISTORICAL_EXCEPTION`.
+- Closure digest: `82224d8eea4adbd0ae5eb86a273d85102031885a84da00760e6ddb3bb81cd1ca`.
 - Final cleanup: `PASS`.
 
 ## Evidence boundary
 
 - Browser-required cases blocked because the disposable browser launcher was not qualified; no normal user browser profile was read.
-- Official-SDK cases blocked because exact isolated SDK versions were not available under the no-network, no-package-manager boundary.
-- Live-target and isolated-copy cases blocked where active ownership, source drift, or missing immutable copies prevented faithful execution.
+- The Go SDK case remains blocked because no exact official Go SDK exists in bounded local caches.
+- Exact Python and TypeScript SDK parsers executed from the qualified cached image with network disabled.
+- `RT-012` remained blocked because no fidelity-proven mcp-trust archive was available; the live target was not executed.
+- Other isolated-copy cases remained blocked where source ownership was unclear or active.
 - No target repair, content/ref/worktree edit, publication, external write, disclosure, push, or deploy was performed.
-- The Gate 7 target no-write assertion failed due to the Git index stat-cache refresh recorded in `SAFETY-EXCEPTION.md`.
+- `SE-001` remains the historical Gate 7 violation. The new epoch's passing gate is separate evidence and does not repair it.

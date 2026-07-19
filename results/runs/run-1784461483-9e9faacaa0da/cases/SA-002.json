@@ -1,0 +1,74 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "89177be9569f2e7d87abb2b2ae8d0a996b7941e4788ed9a896c2391d4913b86e",
+  "case_id": "SA-002",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "8838242022e8305b338faa01b15cf44c85875e06fdea233015d1884a256372bf",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:43.054972Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "SEP-2567 is a final proposal; tamper rejection is the fixture's explicit security contract."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-002",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-002-negative",
+          "facts": {
+            "rejected_mutation_classes": [
+              "byte",
+              "casing",
+              "encoding",
+              "field",
+              "wrapper"
+            ],
+            "valid_control_accepted": true
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-002-positive",
+          "facts": {
+            "normalized_into_authority": [
+              "casing",
+              "encoding",
+              "wrapper"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "SEP-2567 is a final proposal; tamper rejection is the fixture's explicit security contract.",
+      "fail_oracle": "Any tampered handle is normalized into a valid authorization context.",
+      "pass_oracle": "Every byte, field, encoding, casing, and wrapper mutation is rejected.",
+      "protocol_status": "FINAL_PROPOSAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FINAL_PROPOSAL",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:43.054585Z",
+  "subject": "Malformed or modified state handles fail closed before authority use.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

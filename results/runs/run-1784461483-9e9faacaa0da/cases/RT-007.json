@@ -1,0 +1,92 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "6d3d7d8fca637d85a2f4006e6f4614cb2b2e2cfe1fae5fe53e208e413061006c",
+  "case_id": "RT-007",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "f0adeaf5b4e8cb398d4093bd81fe089648616f8007cc81cee364da4a0df4d70e",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:43.042074Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "schema-change",
+        "annotation-change",
+        "identity-change",
+        "effect-change"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-007",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "schema-change"
+        },
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "annotation-change"
+        },
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "identity-change"
+        },
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "effect-change"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "annotation-change",
+        "effect-change",
+        "identity-change",
+        "schema-change"
+      ]
+    },
+    {
+      "fresh_discovery_required": true,
+      "list_changed_received": true,
+      "prior_approval_reused": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:43.041107Z",
+  "subject": "The fixture host invalidates cached trust and approval state after tools/list_changed.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

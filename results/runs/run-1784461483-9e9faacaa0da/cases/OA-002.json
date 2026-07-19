@@ -1,0 +1,93 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "00cf4a07035ac70887641853dae628ea67dc73b265f08907578ed72a2f46a0a7",
+  "case_id": "OA-002",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "9e51da47fed8fe14ef411a91c69db686dda33942ec198764ae8e794933473236",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:44.945445Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "response-issuer-a-under-b",
+        "cached-registration-a-under-b",
+        "authorization-code-a-under-b",
+        "token-endpoint-a-under-b"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "OA-002",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "returned issuer must exactly match the expected issuer",
+          "variant": "response-issuer-a-under-b"
+        },
+        {
+          "accepted": false,
+          "reason": "returned issuer must exactly match the expected issuer",
+          "variant": "cached-registration-a-under-b"
+        },
+        {
+          "accepted": false,
+          "reason": "returned issuer must exactly match the expected issuer",
+          "variant": "authorization-code-a-under-b"
+        },
+        {
+          "accepted": false,
+          "reason": "returned issuer must exactly match the expected issuer",
+          "variant": "token-endpoint-a-under-b"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "authorization-code-a-under-b",
+        "cached-registration-a-under-b",
+        "response-issuer-a-under-b",
+        "token-endpoint-a-under-b"
+      ]
+    },
+    {
+      "comparison": "exact string equality before credential use",
+      "credentials_released": "[REDACTED_SYNTHETIC_SECRET]",
+      "expected_issuer": "https://issuer-b.fixture.invalid",
+      "swapped_issuer": "https://issuer-a.fixture.invalid"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:44.944073Z",
+  "subject": "Authorization responses, registrations, callbacks, and credentials remain bound to the selected issuer.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

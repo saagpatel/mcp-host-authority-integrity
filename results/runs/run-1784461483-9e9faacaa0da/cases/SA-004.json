@@ -1,0 +1,65 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "1c1bcb593fe8c17df63d4b6bf2e6549718d073e95a0fe747b0881d5980e74e78",
+  "case_id": "SA-004",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "3b1a3abb13db0180e336f0810f21ec04fe3315123c98acc0105b30a062be72fe",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:43.057632Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Idempotent continuation is evaluated as a final-proposal fixture invariant."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-004",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-004-negative",
+          "facts": {
+            "counter": 1,
+            "stable_outcome": true
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-004-positive",
+          "facts": {
+            "counter": 2,
+            "stable_outcome": true
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "Idempotent continuation is evaluated as a final-proposal fixture invariant.",
+      "fail_oracle": "The downstream canary counter exceeds one.",
+      "pass_oracle": "Retries return one stable outcome while the canary counter remains exactly one.",
+      "protocol_status": "FINAL_PROPOSAL",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FINAL_PROPOSAL",
+  "result": "PASS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:43.057236Z",
+  "subject": "A replayed input-response key cannot apply the downstream synthetic action more than once.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "PASS"
+}

@@ -1,0 +1,45 @@
+{
+  "blocked_reason": {
+    "detail": "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "a4d8b2cb368cdd9670b1325e9a22c3c57d55862c3f42e3c763556825975d3b84",
+  "case_id": "HC-005",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "2fd188a5d438f5d01dcdf9c3f14aa19dd326022be9f7e6c389df2b8761ae490e",
+      "qualification_digest": "9f896a138a05f1ac9bd8a160d53bd0b1ae6fe967ffc3495e9e359dd9f45b6720"
+    }
+  ],
+  "finished_at": "2026-07-19T11:44:44.891625Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No browser or embedded-webview behavior was executed."
+  ],
+  "observations": [
+    {
+      "browser_mode": "BROWSER_DISABLED",
+      "browser_required": true,
+      "unsafe_fallback_refused": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784461483-9e9faacaa0da",
+  "started_at": "2026-07-19T11:44:44.891151Z",
+  "subject": "The disposable app host denies undeclared egress, nested-frame, clipboard, camera, microphone, and geolocation authority.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:015bd5099ab40146443997ca53cd45575325003459931d62ef7ec2cca49fd122",
+  "target_verdict": "BLOCKED"
+}
