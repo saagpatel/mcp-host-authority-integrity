@@ -1,0 +1,102 @@
+{
+  "blocked_reason": {
+    "detail": "No exact official Go MCP SDK is available from the frozen bounded cache discovery; network access and package installation remain forbidden.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "d0e706f8da9379ab8e4126c395a56a830300cf554e7b7f58d3ab9b2ea9a43d04",
+  "case_id": "SA-014",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "OFFICIAL_SDK",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "f23720e9a3dc8aa2a178c25f4c1d573829de24aa45f63ab9b13fc09546f3413b",
+      "qualification_digest": "8f96d2dd3a4ee7c36acd860eccf2859bcc7db012bd92331db24045666d047f26"
+    }
+  ],
+  "finished_at": "2026-07-19T13:45:43.448209Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No OFFICIAL_SDK behavior was simulated or inferred from the in-memory fixture model."
+  ],
+  "observations": [
+    {
+      "cache_discovery": {
+        "cached_image_results": [
+          {
+            "exact_module_matches": 0,
+            "image": "ghcr.io/astral-sh/uv:0.8.15",
+            "scan_result": "UNAVAILABLE"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "mcp-trust-batch3:20260703",
+            "scan_result": "PASS"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "mcp-trust-batch4:20260703",
+            "scan_result": "PASS"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "mcp-trust-live-batch:20260628",
+            "scan_result": "PASS"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "mcp-trust-scan:corpus-2026-07-03",
+            "scan_result": "PASS"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "node:22-slim",
+            "scan_result": "PASS"
+          },
+          {
+            "exact_module_matches": 0,
+            "image": "node:24-slim",
+            "scan_result": "PASS"
+          }
+        ],
+        "cached_images_considered": 7,
+        "detail": "No exact official github.com/modelcontextprotocol/go-sdk version exists in the bounded host module cache or inspectable cached images; any unavailable image remains an explicit access limitation.",
+        "eligible": false,
+        "host_exact_versions": [],
+        "host_go_mod_files_scanned": 1,
+        "image_exact_module_matches": 0,
+        "network_access_used": false,
+        "package_install_used": false,
+        "unavailable_images": [
+          "ghcr.io/astral-sh/uv:0.8.15"
+        ]
+      },
+      "case_id": "SA-014",
+      "coverage_level": "OFFICIAL_SDK",
+      "evidence_basis": "OFFICIAL_SDK evidence requires an exact isolated Go SDK, not a simulated implementation.",
+      "exact_official_sdk_available": false,
+      "fail_oracle": "Any hostile input reaches the handler or the version/configuration is not exact.",
+      "pass_oracle": "The exact version and configuration reject every hostile request while accepting the valid control.",
+      "protocol_status": "OFFICIAL_GUIDANCE",
+      "simulated_official_sdk_refused": true,
+      "synthetic_negative_control_executed": false,
+      "synthetic_positive_control_executed": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784468743-a620d6649541",
+  "started_at": "2026-07-19T13:45:43.447332Z",
+  "subject": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+  "subject_version": "package:github.com/modelcontextprotocol/go-sdk@unavailable",
+  "target_verdict": "BLOCKED"
+}

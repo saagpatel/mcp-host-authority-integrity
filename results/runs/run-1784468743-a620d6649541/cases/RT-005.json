@@ -1,0 +1,71 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "7a0ea62a3111679a86c2cb369335c7c5823e911d3baaf713783d633a47d9fbb3",
+  "case_id": "RT-005",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "f5cd2fab48620479c5db328d60f26ad1cb3b138a6ecfe04e5929acdc9be102d3",
+      "qualification_digest": "8f96d2dd3a4ee7c36acd860eccf2859bcc7db012bd92331db24045666d047f26"
+    }
+  ],
+  "finished_at": "2026-07-19T13:45:43.300172Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "openWorldHint-false-run-owned-loopback-attempt"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-005",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "openWorldHint-false-run-owned-loopback-attempt"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "openWorldHint-false-run-owned-loopback-attempt"
+      ]
+    },
+    {
+      "hint_treated_as_untrusted": true,
+      "openWorldHint": false,
+      "runtime_effect": "run-owned-loopback-attempt"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784468743-a620d6649541",
+  "started_at": "2026-07-19T13:45:43.292581Z",
+  "subject": "The fixture host dynamically checks a tool marked openWorldHint false.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

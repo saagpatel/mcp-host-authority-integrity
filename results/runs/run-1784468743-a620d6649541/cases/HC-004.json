@@ -1,0 +1,54 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "4ce89f7896c9134bcb136ba046be5b44fbae553a46b72ed2d2f5fe96628c6bb6",
+  "case_id": "HC-004",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "87dc536f06edbd2e41644ce69d4a57c35aebe9f8378aa9b650f4c45e5974a145",
+      "qualification_digest": "8f96d2dd3a4ee7c36acd860eccf2859bcc7db012bd92331db24045666d047f26"
+    }
+  ],
+  "finished_at": "2026-07-19T13:45:46.799630Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "content_digest_changed": true,
+      "kind": "template-review-cache",
+      "safe_render_after_change_before_review": false,
+      "safe_render_after_revalidation": true,
+      "safe_render_before_change": true,
+      "uri_stable": true,
+      "vulnerable_reused_prior_review": true
+    },
+    {
+      "case_id": "HC-004",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784468743-a620d6649541",
+  "started_at": "2026-07-19T13:45:46.798440Z",
+  "subject": "Materially changed executable ui resource content invalidates cached review despite a stable URI.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

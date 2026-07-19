@@ -1,0 +1,79 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "ad6d4e17cb89b53f5dc1109d72a822295287ae3eb7d24f197439d73e5123ba95",
+  "case_id": "RT-006",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "297c3effbbeebe53bec1f5556dab3d9e82e3f2947d6a4beb920e9ddb5edc5589",
+      "qualification_digest": "8f96d2dd3a4ee7c36acd860eccf2859bcc7db012bd92331db24045666d047f26"
+    }
+  ],
+  "finished_at": "2026-07-19T13:45:43.320184Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "later-page-contradictory-entry",
+        "repeated-cursor-loop"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-006",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "later-page-contradictory-entry"
+        },
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "repeated-cursor-loop"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "later-page-contradictory-entry",
+        "repeated-cursor-loop"
+      ]
+    },
+    {
+      "contradictory_entry_page": 3,
+      "cursor_loop_rejected": true,
+      "opaque_cursors_followed": 2,
+      "page_count": 3
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784468743-a620d6649541",
+  "started_at": "2026-07-19T13:45:43.310333Z",
+  "subject": "The fixture host follows every valid cursor exactly once and detects contradictory later pages.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

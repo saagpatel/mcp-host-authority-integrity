@@ -1,0 +1,58 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "a0eb35ef0bf8834050030f37fb03e1c59ca8ac20269bf4affa64435166be217b",
+  "case_id": "HC-002",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "34baa0a7b55006e01fdaf93e1083d8f51a922fb1141e363820d2f08daa6fde21",
+      "qualification_digest": "8f96d2dd3a4ee7c36acd860eccf2859bcc7db012bd92331db24045666d047f26"
+    }
+  ],
+  "finished_at": "2026-07-19T13:45:46.794501Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "kind": "tool-visibility-matrix",
+      "safe_app_server_a": [
+        "render",
+        "shared"
+      ],
+      "safe_cross_server_invocation": "rejected",
+      "safe_model_server_a": [
+        "shared",
+        "summarize"
+      ],
+      "vulnerable_same_name_selected_server": "server-b"
+    },
+    {
+      "case_id": "HC-002",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784468743-a620d6649541",
+  "started_at": "2026-07-19T13:45:46.790078Z",
+  "subject": "App-only, model-only, dual-use, and same-named sibling tools retain their visibility and server binding.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}
