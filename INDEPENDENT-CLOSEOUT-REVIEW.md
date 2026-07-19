@@ -9,10 +9,10 @@ coverage boundary. It does not claim that the two archive-ineligible target
 lanes were executed.
 
 The accepted terminal candidate is closure epoch
-`closure-1784495113-a0b677ec2815`, qualification
-`cq-1784495422-27d0df87a553`, and run
-`run-1784495440-c7a1950e3673`. The program source checkpoint frozen by the
-single target observation is `9665603bee6bca64c32bbb064002246665d33946`.
+`closure-1784496134-a9e98dd015d8`, qualification
+`cq-1784496289-d722fcd60baa`, and run
+`run-1784496308-d351acead7de`. The program source checkpoint frozen by the
+single target observation is `72e2310af39fea372edd393c858072e69e88df91`.
 
 ## Blocking findings
 
@@ -25,6 +25,11 @@ None for acceptance of the safely obtainable coverage boundary.
 - Confirmed the remaining access blockers are exactly `RT-012` and `LP-009`;
   both targets were owner-free but dirty at the single allowed epoch
   observation, so neither received an archive or target execution.
+- Confirmed the pre-epoch discrepancy was caused by Git configuration scope:
+  the target-owner status inherited the normal global excludes file, while the
+  independent epoch used a disposable Git `HOME` and therefore exposed
+  globally ignored untracked files. Their filenames were not retained in the
+  immutable receipt and were not inspected after epoch open.
 - Confirmed `HC-011` executes the registered PortfolioCommandCenter Tauri IPC
   dispatcher from commit `eee2f2217ce1735eab321e3824452a22cda4d807`.
   The vulnerable canary control, local safe baseline, hostile proposal
@@ -56,9 +61,9 @@ None for acceptance of the safely obtainable coverage boundary.
   fidelity-proven immutable archive is bound to this run.
 - `LP-009` remains blocked because `portfolio-index` was dirty at epoch open;
   owner-free status does not override the clean-source requirement.
-- The epoch-open program checkpoint predates two program-only executor
-  preparation corrections. Those corrections read only the already-frozen
-  archives; the executable receipts and final result chain bind their outputs.
+- The exact globally ignored filenames are `UNKNOWN` because the epoch receipt
+  intentionally records only the status digest and no post-open target read was
+  authorized.
 - Historical safety exceptions are preserved, not repaired.
 - Ignored program-owned build caches under `work/` remain outside the run-owned
   cleanup claim.
@@ -67,6 +72,8 @@ None for acceptance of the safely obtainable coverage boundary.
 
 ## Required corrections
 
-None for this epoch. Retiring `RT-012` or `LP-009` requires target-owner work
-outside the program followed by fresh, explicit authorization for another
-single target observation.
+None for accepting this epoch. Retiring `RT-012` and `LP-009` requires one
+consolidated authorization: allow target-owner work outside the program to run
+status with a disposable isolated Git `HOME`, preserve and reconcile only the
+newly exposed untracked files, and then allow the program exactly one additional
+read-only epoch observation.

@@ -87,3 +87,9 @@ execution used no live target. A clean, clearly owned target may be archived at
 its frozen commit only after complete tree/blob/mode fidelity verification; a
 missing dependency, unclear owner, dirty source, or incomplete fidelity proof
 remains blocked.
+
+Any target-owner cleanliness preflight intended to predict epoch eligibility
+must use the same disposable isolated Git `HOME` as epoch-open. A normal user
+`HOME` may load a global excludes file and hide untracked files that the
+independent epoch correctly treats as dirt. Normal-HOME cleanliness is therefore
+insufficient evidence for archive eligibility.

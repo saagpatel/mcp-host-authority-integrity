@@ -44,7 +44,7 @@
     "portfolio_command_center": {
       "target_commit": "eee2f2217ce1735eab321e3824452a22cda4d807",
       "source_archive_sha256": "568f0dd465f7d4c91b39bd2e78ec956ff2570c8c3f86e800dd45c437514f9772",
-      "test_executable_sha256": "a26ab5dc5e86654a48dac0544c2e5723c5478610d8bd4d7f65933c4970452e8c",
+      "test_executable_sha256": "b044de65d02a6b20193469b3178221c679e5aefed0625947895125599a6b78c8",
       "cargo_lock_sha256": "c963d4103c730eddf6fe269f8b941623d1e70b7c4cc6ab9b71ac0cdf3c7b8445",
       "registry_package_count": 433,
       "git_package_count": 0,
@@ -56,7 +56,7 @@
     "aigc_core": {
       "target_commit": "94b28bff8fec69e25d1c761845764a95496b8dad",
       "source_archive_sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
-      "test_executable_sha256": "38eded560ff2fc1caaf2817293f2c00db6400bb93b5c14113e63fc45bd71bc39",
+      "test_executable_sha256": "23776995ebd58e032559c0bd7fa3c28f48c2a5d8094f6cec6297de149ec179a8",
       "test_feature": "authority-integrity-test-hooks",
       "cargo_lock_sha256": "8d2e8b960ed4d6ee22818ad182200deccdf89fea5ddd2f060fc0e8b0763c7afc",
       "registry_package_count": 480,
