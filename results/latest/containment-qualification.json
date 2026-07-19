@@ -57,7 +57,7 @@
           "delayed_canary_absent": true,
           "delayed_window_seconds": 3,
           "emergency_stop_seconds": null,
-          "immutable_container_identity": "bd6348af08aafc57770de208a97d242659d756ec95d47f3614ec8468222c418a",
+          "immutable_container_identity": "f1800243b695340ac513a4b7cbb9e6556ccf1c6ea9cea01ce4fe633d912ea14a",
           "pid_reuse_probe_started_after_controller_loss": true,
           "unrelated_process_survived": true,
           "watchdog": "PASS"
@@ -72,8 +72,8 @@
           "controller_mode": "emergency-stop",
           "delayed_canary_absent": true,
           "delayed_window_seconds": 3,
-          "emergency_stop_seconds": 0.1761278749909252,
-          "immutable_container_identity": "d5140a99169b43f3e6a3f27f06457d0a0d1fb008dbd8f27189f3970dd146ba90",
+          "emergency_stop_seconds": 0.17651791698881425,
+          "immutable_container_identity": "96e8eb86a0b89e1edf1706424a39198e79c82965eb270c10153c3bb0ff5cb9a5",
           "pid_reuse_probe_started_after_controller_loss": true,
           "unrelated_process_survived": true,
           "watchdog": "PASS"
@@ -215,11 +215,11 @@
             },
             {
               "fd": 1,
-              "target": "pipe:[729286]"
+              "target": "pipe:[732054]"
             },
             {
               "fd": 2,
-              "target": "pipe:[729287]"
+              "target": "pipe:[732055]"
             },
             {
               "fd": 3,
@@ -227,19 +227,19 @@
             },
             {
               "fd": 4,
-              "target": "pipe:[729318]"
+              "target": "pipe:[732104]"
             },
             {
               "fd": 5,
-              "target": "pipe:[729318]"
+              "target": "pipe:[732104]"
             },
             {
               "fd": 6,
-              "target": "pipe:[729319]"
+              "target": "pipe:[732105]"
             },
             {
               "fd": 7,
-              "target": "pipe:[729319]"
+              "target": "pipe:[732105]"
             },
             {
               "fd": 8,
@@ -251,11 +251,11 @@
             },
             {
               "fd": 10,
-              "target": "pipe:[729320]"
+              "target": "pipe:[733049]"
             },
             {
               "fd": 11,
-              "target": "pipe:[729320]"
+              "target": "pipe:[733049]"
             },
             {
               "fd": 12,
@@ -267,11 +267,11 @@
             },
             {
               "fd": 14,
-              "target": "pipe:[729321]"
+              "target": "pipe:[732106]"
             },
             {
               "fd": 15,
-              "target": "pipe:[729321]"
+              "target": "pipe:[732106]"
             },
             {
               "fd": 16,
@@ -345,10 +345,10 @@
               "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
               "command_profile_safe": true,
               "diagnostic_report_changes": 0,
-              "elapsed_seconds": 0.617578,
+              "elapsed_seconds": 0.451622,
               "environment_profile_safe": true,
               "max_observed_pids": 1,
-              "max_observed_rss_kib": 118400,
+              "max_observed_rss_kib": 36176,
               "outer_sandbox_network_denied": true,
               "outer_sandbox_normal_profiles_denied": true,
               "pid_ceiling": 4,
@@ -361,10 +361,10 @@
               "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
               "command_profile_safe": true,
               "diagnostic_report_changes": 0,
-              "elapsed_seconds": 0.696309,
+              "elapsed_seconds": 0.377454,
               "environment_profile_safe": true,
               "max_observed_pids": 1,
-              "max_observed_rss_kib": 117920,
+              "max_observed_rss_kib": 60144,
               "outer_sandbox_network_denied": true,
               "outer_sandbox_normal_profiles_denied": true,
               "pid_ceiling": 4,
@@ -377,10 +377,10 @@
               "chromium_inner_sandbox": "disabled; the qualified macOS outer sandbox is the enforced boundary",
               "command_profile_safe": true,
               "diagnostic_report_changes": 0,
-              "elapsed_seconds": 0.621814,
+              "elapsed_seconds": 0.380934,
               "environment_profile_safe": true,
               "max_observed_pids": 1,
-              "max_observed_rss_kib": 115056,
+              "max_observed_rss_kib": 74096,
               "outer_sandbox_network_denied": true,
               "outer_sandbox_normal_profiles_denied": true,
               "pid_ceiling": 4,
@@ -401,7 +401,7 @@
       "result": "PASS"
     }
   ],
-  "finished_at": "2026-07-19T19:33:35.690800Z",
+  "finished_at": "2026-07-19T19:36:42.035942Z",
   "harness_digest": "4c410c1912fd25008673f356096bcec1af2567f92c5c2603d2d690529eb86e05",
   "limitations": [
     "The browser launcher is disabled unless CQ-012 records QUALIFIED.",
@@ -409,12 +409,12 @@
   ],
   "qualification_version": "MHAI-CONTAINMENT-1",
   "result": "PASS",
-  "run_id": "cq-1784489601-7fd1af359305",
+  "run_id": "cq-1784489790-549ff5692b7d",
   "runtime": {
     "container_image": "sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5 [mcp-trust-live-batch@sha256:4e1d51e652038640b61afd12379f93c3ae81f1d1e859b494c7933affd3cfb7a5]",
     "container_server": "29.5.2",
     "os": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
     "python": "3.14.6"
   },
-  "started_at": "2026-07-19T19:33:21.894782Z"
+  "started_at": "2026-07-19T19:36:30.018988Z"
 }
