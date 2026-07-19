@@ -193,8 +193,7 @@ def render_summary(
                 "- CQ-012 qualified the exact official program-owned disposable "
                 "browser. Seven fixture-browser cases executed with fresh profiles, "
                 "network denied, normal profile roots denied, and clean process/profile "
-                "cleanup. `HC-011` remained independently blocked on the target "
-                "webview-command executor."
+                "cleanup."
                 if qualification["browser_mode"] == "QUALIFIED"
                 else "- Browser-required cases remained hard-refused; no normal user "
                 "browser profile was read, mounted, imported, or launched."
@@ -223,11 +222,32 @@ def render_summary(
                 else "- `HC-012` remained blocked because no qualified exact target "
                 "command-spawn executor was available."
             ),
-            "- `HC-011` remained blocked because no actual archived Tauri "
-            "webview-to-command IPC executor was available.",
-            "- `LP-007` remained blocked because no complete AIGCCore UI, Tauri "
-            "command, core adapter, dependency-path executor with a proven "
-            "network-attempt sensor was available.",
+            (
+                "- `HC-011` executed the source-owned registered Tauri IPC "
+                "dispatcher from the exact PortfolioCommandCenter archive; hostile "
+                "remote origins were rejected before approval/apply effects and the "
+                "vulnerable canary control was observed."
+                if results_by_id["HC-011"]["result"] == "PASS"
+                else "- `HC-011` remained blocked because no actual archived Tauri "
+                "webview-to-command IPC executor was available."
+            ),
+            (
+                "- `LP-007` executed the archived frontend request contract, Tauri "
+                "dispatcher, production adapter runtime, and socket dependency; the "
+                "loopback attempt sensor fired while non-loopback and malformed "
+                "inputs were rejected before an attempt."
+                if results_by_id["LP-007"]["result"] == "PASS"
+                else "- `LP-007` remained blocked because no complete AIGCCore UI, "
+                "Tauri command, core adapter, dependency-path executor with a proven "
+                "network-attempt sensor was available."
+            ),
+            (
+                "- `LP-009` executed the exact archived portfolio-index public "
+                "aggregation generator with public and private-marker controls."
+                if results_by_id["LP-009"]["result"] == "PASS"
+                else "- `LP-009` remained blocked because no clean, fidelity-proven "
+                "portfolio-index archive was available."
+            ),
             "- During this closure epoch, no target repair, content/ref/worktree "
             "edit, publication, external write, disclosure, push, or deploy was "
             "performed.",

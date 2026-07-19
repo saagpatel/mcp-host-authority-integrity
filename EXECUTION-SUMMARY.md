@@ -4,11 +4,11 @@
 
 `EXECUTION_COMPLETE_NEW_EPOCH_PASS_WITH_HISTORICAL_EXCEPTION`
 
-The bound run `run-1784492867-4d4329d1cf59` produced 57 schema-valid, hash-bound case results: 51 `PASS`, 2 `FAIL`, and 4 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
+The bound run `run-1784495440-c7a1950e3673` produced 57 schema-valid, hash-bound case results: 53 `PASS`, 2 `FAIL`, and 2 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
 
 One low-severity exact-SDK interoperability finding was validated in `SA-015`. It is not evidence of an authorization bypass in a particular host. A fixture `PASS` proves only the recorded synthetic subject and controls.
 
-The new closure epoch `closure-1784492790-603826525a8a` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
+The new closure epoch `closure-1784495113-a0b677ec2815` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
 
 ## Suite totals
 
@@ -16,32 +16,33 @@ The new closure epoch `closure-1784492790-603826525a8a` passed its own no-forbid
 |---|---:|---:|---:|---:|
 | Runtime Truth | 11 | 0 | 1 | 12 |
 | Stateless Authority | 14 | 1 | 0 | 15 |
-| Host Confused Deputy | 10 | 1 | 1 | 12 |
-| Local Privilege Containment | 9 | 0 | 2 | 11 |
+| Host Confused Deputy | 11 | 1 | 0 | 12 |
+| Local Privilege Containment | 10 | 0 | 1 | 11 |
 | OAuth and Browser Identity | 6 | 0 | 0 | 6 |
 | Integrated Attack Chain | 1 | 0 | 0 | 1 |
-| **Total** | **51** | **2** | **4** | **57** |
+| **Total** | **53** | **2** | **2** | **57** |
 
 ## Containment binding
 
-- Qualification: `cq-1784492848-d26f4febb652` / `PASS`.
+- Qualification: `cq-1784495422-27d0df87a553` / `PASS`.
 - Qualification checks: 12/12 `PASS`.
 - Browser mode: `QUALIFIED`.
-- Qualification digest: `eb27bbcfbd29b813782771f39dd1ee1d3973bac9b1cbd3cda451a50dfdf0bd56`.
-- Fixture digest: `8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035`.
-- Closure epoch: `closure-1784492790-603826525a8a` / `PASS_WITH_HISTORICAL_EXCEPTION`.
-- Closure digest: `0c7b6d24e46bc8b3c53d07204fdedb09bd715899c2b0acd0730a1c0da4c48fa9`.
+- Qualification digest: `4c59b87150f386ef48b2e5e3bd1face75b940a0b3f53d78eb21ddfa376504f05`.
+- Fixture digest: `d4cc6998114cba302e701decacf9889fbfd6e2fdb2e5212a4a1c2973b1316ed2`.
+- Closure epoch: `closure-1784495113-a0b677ec2815` / `PASS_WITH_HISTORICAL_EXCEPTION`.
+- Closure digest: `d47c1d73daaa623678703841d8d4bc0e7af41d87ef26aa00f5b32026d51c724a`.
 - Final cleanup: `PASS`.
 
 ## Evidence boundary
 
-- CQ-012 qualified the exact official program-owned disposable browser. Seven fixture-browser cases executed with fresh profiles, network denied, normal profile roots denied, and clean process/profile cleanup. `HC-011` remained independently blocked on the target webview-command executor.
+- CQ-012 qualified the exact official program-owned disposable browser. Seven fixture-browser cases executed with fresh profiles, network denied, normal profile roots denied, and clean process/profile cleanup.
 - `SA-014` executed the exact official Go MCP SDK v1.6.1 from program-owned storage with the network denied and all hostile Origin/Host inputs rejected.
 - Exact Python and TypeScript SDK parsers executed from the qualified cached image with network disabled.
 - `RT-012` remained blocked because no fidelity-proven mcp-trust archive was available; the live target was not executed.
 - `HC-012` executed the exact archived PortfolioCommandCenter command-spawn path and recorded a hostile `PATH` failure.
-- `HC-011` remained blocked because no actual archived Tauri webview-to-command IPC executor was available.
-- `LP-007` remained blocked because no complete AIGCCore UI, Tauri command, core adapter, dependency-path executor with a proven network-attempt sensor was available.
+- `HC-011` executed the source-owned registered Tauri IPC dispatcher from the exact PortfolioCommandCenter archive; hostile remote origins were rejected before approval/apply effects and the vulnerable canary control was observed.
+- `LP-007` executed the archived frontend request contract, Tauri dispatcher, production adapter runtime, and socket dependency; the loopback attempt sensor fired while non-loopback and malformed inputs were rejected before an attempt.
+- `LP-009` remained blocked because no clean, fidelity-proven portfolio-index archive was available.
 - During this closure epoch, no target repair, content/ref/worktree edit, publication, external write, disclosure, push, or deploy was performed.
 - `SE-001` remains the historical Gate 7 violation. The new epoch's passing gate is separate evidence and does not repair it.
 - `SE-002` preserves the macOS crash-diagnostic writes caused by failed pre-epoch browser probes.

@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T20:28:09.584298Z",
+  "closed_at": "2026-07-19T21:11:09.778361Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784492790-603826525a8a",
+  "epoch_id": "closure-1784495113-a0b677ec2815",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,9 +10,9 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "0c7b6d24e46bc8b3c53d07204fdedb09bd715899c2b0acd0730a1c0da4c48fa9",
+  "open_digest": "d47c1d73daaa623678703841d8d4bc0e7af41d87ef26aa00f5b32026d51c724a",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784492848-d26f4febb652",
+  "qualification_run_id": "cq-1784495422-27d0df87a553",
   "remaining_blockers": [
     {
       "case_id": "RT-012",
@@ -21,27 +21,15 @@
       "result": "BLOCKED_BY_ACCESS"
     },
     {
-      "case_id": "HC-011",
-      "detail": "An exact read-only PortfolioCommandCenter archive is available, but no qualified target webview-to-command-bridge executor is available for the actual Tauri IPC path.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "LP-007",
-      "detail": "An exact read-only AIGCCore archive is available, but no qualified target executor with a proven network-attempt sensor can exercise the full UI, command, adapter, and dependency paths.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
       "case_id": "LP-009",
-      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was ACTIVE and does not override the clean-source requirement.",
+      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was CLEAR and does not override the clean-source requirement.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     }
   ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784492867-4d4329d1cf59",
-  "run_manifest_sha256": "690830b343a0a052843af8059be7d6b6724559a37c02eb784387f33645b5e1a6",
+  "run_id": "run-1784495440-c7a1950e3673",
+  "run_manifest_sha256": "7c5cbca543ef33aec402f5699593a98c7152829412c2c8db54271544ba271880",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {
