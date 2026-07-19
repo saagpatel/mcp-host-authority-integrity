@@ -747,6 +747,15 @@ def _target_access_checks(
             if case_id == "RT-012":
                 archive = target["archive"]
                 if archive.get("created"):
+                    observation = next(
+                        (
+                            item
+                            for item in result["observations"]
+                            if item.get("archive_sha256") == archive.get("sha256")
+                            and item.get("target_mount") == "read-only"
+                        ),
+                        observation,
+                    )
                     archive_path = (ROOT / archive["path"]).resolve()
                     case_evidence_valid = case_evidence_valid and (
                         archive.get("fidelity_proven") is True

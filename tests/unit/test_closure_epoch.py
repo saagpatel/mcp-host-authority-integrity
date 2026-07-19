@@ -257,6 +257,11 @@ class ClosureEpochTests(unittest.TestCase):
                 "result": "PASS",
                 "observations": [
                     {
+                        "kind": "control-summary",
+                        "positive_canary_detected": True,
+                        "safe_canary_absent": True,
+                    },
+                    {
                         "archive_sha256": "1" * 64,
                         "target_mount": "read-only",
                     }
