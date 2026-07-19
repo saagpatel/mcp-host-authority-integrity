@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784495113-a0b677ec2815",
+  "epoch_id": "closure-1784496134-a9e98dd015d8",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -92,9 +92,9 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T21:05:24.697999Z",
+  "opened_at": "2026-07-19T21:22:26.111458Z",
   "phase": "OPEN",
-  "program_commit": "9665603bee6bca64c32bbb064002246665d33946",
+  "program_commit": "72e2310af39fea372edd393c858072e69e88df91",
   "target_observations": [
     {
       "archive": {
@@ -141,7 +141,7 @@
         "file_count": 61,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784495113-a0b677ec2815/archives/PortfolioCommandCenter-eee2f2217ce1735eab321e3824452a22cda4d807.zip",
+        "path": "results/closure-epochs/closure-1784496134-a9e98dd015d8/archives/PortfolioCommandCenter-eee2f2217ce1735eab321e3824452a22cda4d807.zip",
         "sha256": "568f0dd465f7d4c91b39bd2e78ec956ff2570c8c3f86e800dd45c437514f9772",
         "tree_manifest_sha256": "b48a9e5211d630083b82f678637eade4e7d9a00e84d667b87cbebd84f30c64f7"
       },
@@ -185,7 +185,7 @@
         "file_count": 259,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784495113-a0b677ec2815/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
+        "path": "results/closure-epochs/closure-1784496134-a9e98dd015d8/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
         "sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
         "tree_manifest_sha256": "a7f701a4476d3005dd050b4fa6c4d1375531867549d993deb4219d53d7d963fc"
       },
