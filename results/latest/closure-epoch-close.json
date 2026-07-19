@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T19:54:07.330931Z",
+  "closed_at": "2026-07-19T20:05:47.951368Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784490790-fe8ae3d7b978",
+  "epoch_id": "closure-1784491481-b82a24a36af2",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,9 +10,9 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "e4ff2b2e723305aa28b36cd601d07bbea85fa263f2188c28d17becdd36cc28f7",
+  "open_digest": "033bf04c438189b73f0fbcc4c57a336370be1280fc0b7f1a436cb49a89df59e4",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784490811-c51d48e34461",
+  "qualification_run_id": "cq-1784491510-fb69d75fb8e7",
   "remaining_blockers": [
     {
       "case_id": "RT-012",
@@ -40,8 +40,8 @@
     }
   ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784490827-a6738e666761",
-  "run_manifest_sha256": "aaf1336de87583d3aa5aa1dbaa949731411d51ad9461a23334dbc3da7f81ba00",
+  "run_id": "run-1784491527-bee2f114f7da",
+  "run_manifest_sha256": "fe493d11a9dc068e317fa97a817313ebc4548f8c7be5e131c8e79c276596b571",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {
