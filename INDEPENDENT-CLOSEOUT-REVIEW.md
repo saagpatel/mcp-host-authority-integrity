@@ -4,12 +4,14 @@
 
 `PASS`
 
-The final independent read-only closeout audit found no evidence contradiction
-or terminal blocker in closure epoch
-`closure-1784468643-4afb5d72974d`, qualification
-`cq-1784468686-d724613539d8`, and run
-`run-1784468743-a620d6649541`. The stable snapshot reviewed was
-`c9adeeed623cfe6bfc69eb81f64b2c27f7331dee`.
+The final independent read-only audit found no blocking contradiction at exact
+stable commit `b039a89ad6e50b5d95bf1c0a482d755061d8755e`.
+
+The accepted evidence is closure epoch
+`closure-1784470121-d4dd8cc267c7`, qualification
+`cq-1784470163-f60c0875aeca`, and run
+`run-1784470190-e2a14dc361fc`. The program source checkpoint bound by the epoch
+is `fa94dd94e4c7aabc4c2154ffd121c6fe7e133613`.
 
 ## Blocking findings
 
@@ -17,42 +19,45 @@ None.
 
 ## Verification
 
-- Confirmed the reviewed worktree was clean at the exact snapshot and no Git
-  remote was configured.
-- Confirmed the only delta from the previously accepted evidence commit was the
-  renderer plus regenerated execution-summary wording.
-- Confirmed the Go SDK wording is evidence-bounded: no exact SDK was available
-  from the frozen bounded cache discovery, and one unavailable cached image
-  remains an explicit access limitation.
-- Validated all 57 unique result schemas, exact paths, hashes, catalog order,
-  immutable-copy equality, and the exact
-  `43 PASS / 1 FAIL / 13 BLOCKED_BY_ACCESS` counts.
-- Confirmed all 13 blocker records match the close receipt.
-- Confirmed 12/12 containment checks passed; the qualification is current and
-  bound to the recorded harness and fixture digests.
-- Confirmed `BROWSER_DISABLED`, the rejected-candidate assessment hash, the
-  canonical qualification/open/manifest bindings, and both optional-lock
-  controls.
-- Confirmed all four opening target reads were mutation-free, every target
-  access check records `post_open_access: NONE`, and closeout evidence records
-  no final target inventory or target Git command.
-- Confirmed CQ-009 cleanup receipts, empty program-owned work directories,
-  renderer consistency, and diff hygiene.
-- Confirmed `SA-015` is a `LOW` exact-SDK interoperability finding and does not
-  claim a downstream-host authorization bypass.
-- Confirmed the earlier v1 epoch remains `FAIL` and historical `SE-001` remains
-  unrepaired; `SE-002` and `SE-003` also remain preserved.
+- Confirmed a clean worktree at the reviewed commit, with no remote or upstream
+  configured.
+- Confirmed the source checkpoint is the direct parent of the evidence-only
+  closeout commit.
+- Validated every schema, all 57 result paths and hashes, exact catalog order,
+  immutable-copy equality, and current harness and fixture digests.
+- Confirmed the qualification is 12/12 `PASS`, CQ-012 preserves
+  `BROWSER_DISABLED`, and CQ-009 cleanup receipts are clean.
+- Confirmed the run contains exactly
+  `43 PASS / 1 FAIL / 13 BLOCKED_BY_ACCESS` and every blocker matches the close
+  receipt.
+- Confirmed both optional-lock controls are recorded, all four opening reads
+  claim mutation-free operation, all post-open target access is `NONE`, and no
+  final target inventory or target Git command is recorded.
+- Confirmed no target, browser, Go-SDK, fixture, or other access-limited evidence
+  was converted into a pass.
+- Confirmed `SA-015` remains a `LOW` exact-version SDK interoperability finding
+  with no claimed downstream-host authorization bypass.
+- Confirmed the historical v1 epoch remains `FAIL`; `SE-001` is unrepaired;
+  `SE-002` and `SE-003` remain preserved.
+- Confirmed `SE-004` accurately records the outside-root
+  `/tmp/mhai-case-list.txt` write, timestamp, 2,450-byte size, SHA-256, bounded
+  content-read verification, and explicit non-repair.
+- Confirmed renderer consistency, diff hygiene, and empty program-owned work
+  files.
 
 ## Limitations
 
-- The 13 access blockers remain unresolved.
-- The independent audit did not perform a Docker runtime rebind, target Git
-  command, normal-browser-profile access, network action, or external-state
-  inspection.
-- Live runtime/container residue and absolute historical no-push are outside
-  the independent proof boundary. Bounded support is provided by the cleanup
-  receipts, empty program work directories, clean Git state, no configured
-  remote, and no push or network action by the audit.
+- The independent audit performed no Docker runtime rebind, target Git access,
+  normal-browser-profile access, network action, or inspection of
+  `/tmp/mhai-case-list.txt`.
+- Live external residue and absolute historical no-push cannot be proven by the
+  independent lane. Its support is bounded to receipts, empty work files, clean
+  Git state, and the absent remote and upstream.
+- Resolving the 13 blockers still requires a qualified disposable browser
+  runtime, an exact official Go SDK supplied under program-owned state, and
+  ownership-cleared immutable-source windows for the four named targets. None
+  authorizes normal-profile access, target mutation, repair, publication, push,
+  deploy, or exception-artifact alteration.
 
 ## Required corrections
 
