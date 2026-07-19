@@ -107,6 +107,23 @@ def read_and_validate() -> tuple[
     return manifest, qualification, closure, cases, results
 
 
+def hc012_evidence_line(result: str) -> str:
+    if result == "PASS":
+        return (
+            "- `HC-012` executed the exact archived PortfolioCommandCenter "
+            "command-spawn path and rejected hostile `PATH` shell substitution."
+        )
+    if result == "FAIL":
+        return (
+            "- `HC-012` executed the exact archived PortfolioCommandCenter "
+            "command-spawn path and recorded a hostile `PATH` failure."
+        )
+    return (
+        "- `HC-012` remained blocked because no qualified exact target "
+        "command-spawn executor was available."
+    )
+
+
 def render_summary(
     manifest: dict[str, Any],
     qualification: dict[str, Any],
@@ -215,13 +232,7 @@ def render_summary(
                 else "- `RT-012` remained blocked because no fidelity-proven "
                 "mcp-trust archive was available; the live target was not executed."
             ),
-            (
-                "- `HC-012` executed the exact archived PortfolioCommandCenter "
-                "command-spawn path and recorded a hostile `PATH` failure."
-                if results_by_id["HC-012"]["result"] == "FAIL"
-                else "- `HC-012` remained blocked because no qualified exact target "
-                "command-spawn executor was available."
-            ),
+            hc012_evidence_line(results_by_id["HC-012"]["result"]),
             (
                 "- `HC-011` executed the source-owned registered Tauri IPC "
                 "dispatcher from the exact PortfolioCommandCenter archive; hostile "
