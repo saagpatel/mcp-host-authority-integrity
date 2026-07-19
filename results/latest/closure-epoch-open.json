@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784496134-a9e98dd015d8",
+  "epoch_id": "closure-1784496632-d0555fff0cc2",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -92,33 +92,38 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T21:22:26.111458Z",
+  "opened_at": "2026-07-19T21:30:45.767844Z",
   "phase": "OPEN",
-  "program_commit": "72e2310af39fea372edd393c858072e69e88df91",
+  "program_commit": "3e41dc1c8f4ab5ef1067cb906866b2ae6b46e0de",
   "target_observations": [
     {
       "archive": {
-        "created": false,
-        "fidelity_proven": false,
-        "reason": "source worktree is not clean"
+        "created": true,
+        "fidelity_proven": true,
+        "file_count": 123,
+        "immutable_mode": "0444",
+        "object_format": "sha1",
+        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/mcp-trust-f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462.zip",
+        "sha256": "1dc9e806417403171b0060e580982310f4fb2845459b78aec63febeb440a1353",
+        "tree_manifest_sha256": "9914fc7b1db6e819fe3f358304e91dfb7f16e82ec2117acaf8af091e91cabb3d"
       },
       "branch": "main",
       "case_ids": [
         "RT-012"
       ],
-      "clean": false,
+      "clean": true,
       "head": "f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462",
       "metadata": {
-        "git_entry_count": 8721,
-        "git_metadata_sha256": "a9df5b18644e2da3a4136ca1fc32a68c6b22e6bbea478dbebf2b3770f02cb799",
+        "git_entry_count": 8716,
+        "git_metadata_sha256": "6b8760310bf0c875a68a28154e5b89de78fd5b643b5d0800860cd3e03a440ba6",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 232358429,
           "mtime_ns": 1784479253892045674,
           "size": 11904
         },
-        "worktree_entry_count": 8721,
-        "worktree_metadata_sha256": "a9df5b18644e2da3a4136ca1fc32a68c6b22e6bbea478dbebf2b3770f02cb799"
+        "worktree_entry_count": 8716,
+        "worktree_metadata_sha256": "6b8760310bf0c875a68a28154e5b89de78fd5b643b5d0800860cd3e03a440ba6"
       },
       "name": "mcp-trust",
       "owner_activity": {
@@ -131,7 +136,7 @@
       "ownership": "CLEAR",
       "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
-      "status_sha256": "8caea121d7264dd2e3c2c571eed821d77fbba49ed3bb260a6f7e064f925d1a06",
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "tree": "bdc61b679f06136d84cefaabc6928c0a9f82c030"
     },
     {
@@ -141,7 +146,7 @@
         "file_count": 61,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496134-a9e98dd015d8/archives/PortfolioCommandCenter-eee2f2217ce1735eab321e3824452a22cda4d807.zip",
+        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/PortfolioCommandCenter-eee2f2217ce1735eab321e3824452a22cda4d807.zip",
         "sha256": "568f0dd465f7d4c91b39bd2e78ec956ff2570c8c3f86e800dd45c437514f9772",
         "tree_manifest_sha256": "b48a9e5211d630083b82f678637eade4e7d9a00e84d667b87cbebd84f30c64f7"
       },
@@ -154,7 +159,7 @@
       "head": "eee2f2217ce1735eab321e3824452a22cda4d807",
       "metadata": {
         "git_entry_count": 14839,
-        "git_metadata_sha256": "dc06e0c065e0141621b4185803ddc3bf1ba32801f7a46857ccc138d5f4d8c733",
+        "git_metadata_sha256": "cbda60dd296d894e3f91ce6457aae63913ab01bfcd650562f94cbe2a90bebfd3",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 235549696,
@@ -162,7 +167,7 @@
           "size": 5907
         },
         "worktree_entry_count": 14839,
-        "worktree_metadata_sha256": "dc06e0c065e0141621b4185803ddc3bf1ba32801f7a46857ccc138d5f4d8c733"
+        "worktree_metadata_sha256": "cbda60dd296d894e3f91ce6457aae63913ab01bfcd650562f94cbe2a90bebfd3"
       },
       "name": "PortfolioCommandCenter",
       "owner_activity": {
@@ -185,7 +190,7 @@
         "file_count": 259,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496134-a9e98dd015d8/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
+        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
         "sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
         "tree_manifest_sha256": "a7f701a4476d3005dd050b4fa6c4d1375531867549d993deb4219d53d7d963fc"
       },
@@ -197,7 +202,7 @@
       "head": "94b28bff8fec69e25d1c761845764a95496b8dad",
       "metadata": {
         "git_entry_count": 69593,
-        "git_metadata_sha256": "940a29ef86bea6eee9aeeae6efb0b4a8de506752274507c0fb18c94270ee0851",
+        "git_metadata_sha256": "9c5fbe8dde666296ce90f707e588dce444a61ab708f164ea3b289a96cf93e114",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 235550192,
@@ -205,7 +210,7 @@
           "size": 27144
         },
         "worktree_entry_count": 69593,
-        "worktree_metadata_sha256": "940a29ef86bea6eee9aeeae6efb0b4a8de506752274507c0fb18c94270ee0851"
+        "worktree_metadata_sha256": "9c5fbe8dde666296ce90f707e588dce444a61ab708f164ea3b289a96cf93e114"
       },
       "name": "AIGCCore",
       "owner_activity": {
@@ -223,27 +228,32 @@
     },
     {
       "archive": {
-        "created": false,
-        "fidelity_proven": false,
-        "reason": "source worktree is not clean"
+        "created": true,
+        "fidelity_proven": true,
+        "file_count": 866,
+        "immutable_mode": "0444",
+        "object_format": "sha1",
+        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/portfolio-index-e28c9d12849dd3b27454e64f90e8a54cd3608807.zip",
+        "sha256": "58340e5688dae473a07771d80fc32ad807cbe3aac8b17bc02622afd9062e8c9e",
+        "tree_manifest_sha256": "4e4403c92159448f1640bd4aa1d8f038576d461751f69d8583f19c810cc5b238"
       },
       "branch": "feat/portfolio-index",
       "case_ids": [
         "LP-009"
       ],
-      "clean": false,
+      "clean": true,
       "head": "e28c9d12849dd3b27454e64f90e8a54cd3608807",
       "metadata": {
         "git_entry_count": 11,
-        "git_metadata_sha256": "7786ac3b1c90cda13373b3fa866c739a84786b101ec33ceab557464311469a91",
+        "git_metadata_sha256": "7568cfc706be1c217313864f5f04ee2d4166e49784c0efdb215995b029569b9b",
         "git_scope": "linked-worktree-gitdir",
         "index": {
           "inode": 234768819,
           "mtime_ns": 1784486682435331567,
           "size": 93443
         },
-        "worktree_entry_count": 997,
-        "worktree_metadata_sha256": "deb7adeea7d2addac45778fac572e7b1d47a0f209202b34769b6ec339d3499fa"
+        "worktree_entry_count": 982,
+        "worktree_metadata_sha256": "0c974c63c7f914939684eb7eca66f6cac3fa290a0c89998fe8028f64f0afc8c8"
       },
       "name": "portfolio-index",
       "owner_activity": {
@@ -256,7 +266,7 @@
       "ownership": "CLEAR",
       "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found the prior owner lifecycle ended and no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
-      "status_sha256": "15b51694bb8c55eb67a0791e5b4d95232247b71dcfd3d8ef51537b77d6df95fe",
+      "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "tree": "583be14d52b60883b892c8aae615dffb91047080"
     }
   ]
