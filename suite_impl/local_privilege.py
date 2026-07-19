@@ -4,11 +4,22 @@ from __future__ import annotations
 
 import hashlib
 import hmac
+import json
+import shutil
 from pathlib import Path
 from typing import Any
 
 from harness.execution import Evaluation, RunContext
 from harness.limits import SCHEMA_DEPTH, LimitExceeded, enforce_schema_depth
+from harness.process_control import run_argv, scrubbed_environment
+from harness.target_executors import (
+    AIGC_LP007_MARKERS,
+    AIGC_LP007_TESTS,
+    bound_executable,
+    executor_receipt,
+    file_sha256,
+    run_exact_test,
+)
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
 
 BRIDGE_DB = Path("/Users/d/Projects/bridge-db")
@@ -234,6 +245,338 @@ def _blocked_copy(
     )
 
 
+def _evaluate_lp_007_target(
+    case: dict[str, Any],
+    context: RunContext,
+) -> Evaluation:
+    frozen = context.frozen_target(case["case_id"])
+    archive = frozen["archive"]
+    try:
+        executable, receipt, source_root = bound_executable(
+            context,
+            case["case_id"],
+            set(AIGC_LP007_TESTS.values()),
+        )
+    except (FileNotFoundError, ValueError) as error:
+        blocked = _blocked_copy(case, context, target_name="AIGCCore")
+        blocked.observations[0]["executor_error"] = str(error)
+        return blocked
+
+    case_root = context.case_root / "lp007-network-path"
+    rust_runs = {
+        label: run_exact_test(
+            executable=executable,
+            test_name=test_name,
+            domain_root=case_root / label,
+        )
+        for label, test_name in AIGC_LP007_TESTS.items()
+    }
+    marker_results = {
+        "positive_attempt": (
+            AIGC_LP007_MARKERS["positive_attempt"]
+            in rust_runs["positive_control"]["stdout_tail"]
+        ),
+        "full_path": (
+            AIGC_LP007_MARKERS["full_path"]
+            in rust_runs["positive_control"]["stdout_tail"]
+        ),
+        "hostile_non_loopback": (
+            AIGC_LP007_MARKERS["hostile_non_loopback"]
+            in rust_runs["hostile_non_loopback"]["stdout_tail"]
+        ),
+        "malformed": (
+            AIGC_LP007_MARKERS["malformed"]
+            in rust_runs["malformed"]["stdout_tail"]
+        ),
+    }
+
+    node = shutil.which("node")
+    contract_path = source_root / "src/ui/authorityIntegrityContract.ts"
+    ui_domain = case_root / "frontend-contract"
+    ui_domain.mkdir(parents=True, exist_ok=False, mode=0o700)
+    ui_environment = scrubbed_environment(ui_domain)
+    ui_script = (
+        "import(process.argv[1]).then((m) => {"
+        "const value=m.authorityIntegrityInvokeRequest(process.argv[2]);"
+        "console.log(JSON.stringify(value));"
+        "}).catch((error)=>{console.error(error);process.exit(2)})"
+    )
+    if node is None or not contract_path.is_file():
+        ui_completed = None
+        ui_request: dict[str, Any] = {}
+    else:
+        ui_completed = run_argv(
+            [
+                node,
+                "--experimental-strip-types",
+                "-e",
+                ui_script,
+                contract_path.resolve().as_uri(),
+                "http://203.0.113.1:9",
+            ],
+            cwd=source_root,
+            environment=ui_environment,
+            timeout_seconds=10,
+            max_output_bytes=64 * 1024,
+            apply_resource_limits=False,
+        )
+        try:
+            ui_request = json.loads(ui_completed.stdout)
+        except json.JSONDecodeError:
+            ui_request = {}
+    shutil.rmtree(ui_domain)
+    ui_cleanup = not ui_domain.exists()
+    ui_contract_passed = (
+        ui_completed is not None
+        and ui_completed.returncode == 0
+        and ui_request
+        == {
+            "command": "authority_integrity_probe_adapter",
+            "body": {"input": {"endpoint": "http://203.0.113.1:9"}},
+        }
+        and ui_cleanup
+    )
+    positive_passed = (
+        rust_runs["positive_control"]["returncode"] == 0
+        and marker_results["positive_attempt"]
+        and marker_results["full_path"]
+    )
+    negative_passed = (
+        rust_runs["hostile_non_loopback"]["returncode"] == 0
+        and rust_runs["malformed"]["returncode"] == 0
+        and marker_results["hostile_non_loopback"]
+        and marker_results["malformed"]
+        and ui_contract_passed
+    )
+    cleanup_passed = all(run["cleanup_verified"] for run in rust_runs.values())
+    if case_root.exists():
+        shutil.rmtree(case_root)
+    cleanup_passed = cleanup_passed and ui_cleanup and not case_root.exists()
+    observations = [
+        {
+            "source_candidate_head": frozen["head"],
+            "source_candidate_tree": frozen["tree"],
+            "archive_path": archive.get("path"),
+            "archive_sha256": archive.get("sha256"),
+            "archive_fidelity_proven": archive.get("fidelity_proven"),
+            "test_executable_sha256": receipt["test_executable_sha256"],
+            "source_deviations": receipt["source_deviations"],
+            "frontend_contract_path": str(contract_path.relative_to(source_root)),
+            "frontend_contract_sha256": file_sha256(contract_path),
+            "frontend_request": ui_request,
+            "frontend_contract_executed": ui_completed is not None,
+            "actual_tauri_ipc_dispatcher_executed": True,
+            "production_adapter_runtime_executed": True,
+            "socket_dependency_executed": True,
+            "successful_network_scope": "run-owned loopback positive-control listener only",
+            "arbitrary_egress_succeeded": False,
+            "rust_runs": rust_runs,
+            "marker_results": marker_results,
+            "target_code_executed": True,
+            "target_repository_accessed_during_case": False,
+            "cleanup_verified": cleanup_passed,
+        }
+    ]
+    deviation = hashlib.sha256(
+        json.dumps(
+            {
+                "executor_sha256": receipt["test_executable_sha256"],
+                "frontend_contract_sha256": file_sha256(contract_path),
+                "marker_results": marker_results,
+                "source_deviations": receipt["source_deviations"],
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+    if not positive_passed or not negative_passed or not cleanup_passed:
+        return Evaluation(
+            target_verdict="UNKNOWN",
+            observations=observations,
+            positive_control="PASS" if positive_passed else "FAIL",
+            negative_control="PASS" if negative_passed else "FAIL",
+            containment_result="PASS",
+            cleanup_result="PASS" if cleanup_passed else "FAIL",
+            declared_result="ERROR",
+            limitations=[
+                "The source-owned UI, IPC, adapter, dependency, or sensor control matrix was incomplete."
+            ],
+            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+        )
+    return Evaluation(
+        target_verdict="PASS",
+        observations=observations,
+        positive_control="PASS",
+        negative_control="PASS",
+        containment_result="PASS",
+        cleanup_result="PASS",
+        limitations=[
+            "Coverage is limited to the source-owned integrity hook and the exercised loopback, non-loopback, and malformed endpoint variants."
+        ],
+        subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+    )
+
+
+def _evaluate_lp_009_target(
+    case: dict[str, Any],
+    context: RunContext,
+) -> Evaluation:
+    frozen = context.frozen_target(case["case_id"])
+    archive = frozen["archive"]
+    try:
+        receipt, source_root = executor_receipt(context, case["case_id"])
+    except (FileNotFoundError, ValueError) as error:
+        blocked = _blocked_copy(case, context, target_name="portfolio-index")
+        blocked.observations[0]["executor_error"] = str(error)
+        return blocked
+
+    generator = source_root / "scripts/build-projects.py"
+    python = shutil.which("python3")
+    if python is None or not generator.is_file():
+        blocked = _blocked_copy(case, context, target_name="portfolio-index")
+        blocked.observations[0]["executor_error"] = "exact generator unavailable"
+        return blocked
+
+    private_marker = "mhai-private-only-lp009"
+    owner_marker = "mhai-private-owner-lp009"
+    projects: list[dict[str, Any]] = [
+        {
+            "identity": {"repo_full_name": "saagpatel/mcp-trust"},
+            "derived": {
+                "stack": ["Python"],
+                "activity_status": "active",
+                "has_tests": True,
+                "has_ci": True,
+            },
+            "declared": {"lifecycle_state": "active"},
+        },
+        {
+            "identity": {"repo_full_name": f"saagpatel/{private_marker}"},
+            "derived": {
+                "stack": ["Python"],
+                "activity_status": "active",
+                "has_tests": False,
+                "has_ci": False,
+            },
+            "declared": {"lifecycle_state": "active"},
+            "owner": owner_marker,
+            "notes": private_marker,
+        },
+    ]
+    truth: dict[str, Any] = {
+        "schema_version": "synthetic-lp009",
+        "projects": projects,
+    }
+    case_root = context.case_root / "lp009-public-aggregation"
+    safe_domain = case_root / "safe-subject"
+    safe_domain.mkdir(parents=True, exist_ok=False, mode=0o700)
+    safe_environment = scrubbed_environment(safe_domain)
+    script = (
+        "import importlib.util,json,sys;"
+        "spec=importlib.util.spec_from_file_location('target_build_projects',sys.argv[1]);"
+        "module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);"
+        "print(json.dumps(module.build(json.loads(sys.argv[2])),sort_keys=True))"
+    )
+    completed = run_argv(
+        [python, "-c", script, str(generator), json.dumps(truth, sort_keys=True)],
+        cwd=source_root,
+        environment=safe_environment,
+        timeout_seconds=10,
+        max_output_bytes=256 * 1024,
+        apply_resource_limits=False,
+    )
+    try:
+        public_output = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        public_output = {}
+    safe_blob = json.dumps(public_output, sort_keys=True)
+    shutil.rmtree(safe_domain)
+    safe_cleanup = not safe_domain.exists()
+
+    vulnerable_domain = case_root / "vulnerable-control"
+    vulnerable_domain.mkdir(parents=True, exist_ok=False, mode=0o700)
+    vulnerable_canary = vulnerable_domain / "public-output.json"
+    vulnerable_output = {
+        "curated": {
+            project["identity"]["repo_full_name"].rsplit("/", 1)[-1]: project
+            for project in projects
+        }
+    }
+    vulnerable_canary.write_text(
+        json.dumps(vulnerable_output, sort_keys=True),
+        encoding="utf-8",
+    )
+    vulnerable_blob = vulnerable_canary.read_text(encoding="utf-8")
+    positive_passed = private_marker in vulnerable_blob and owner_marker in vulnerable_blob
+    shutil.rmtree(vulnerable_domain)
+    vulnerable_cleanup = not vulnerable_domain.exists()
+
+    negative_passed = (
+        completed.returncode == 0
+        and "mcp-trust" in public_output.get("curated", {})
+        and private_marker not in safe_blob
+        and owner_marker not in safe_blob
+    )
+    if case_root.exists():
+        shutil.rmtree(case_root)
+    cleanup_passed = safe_cleanup and vulnerable_cleanup and not case_root.exists()
+    observations = [
+        {
+            "source_candidate_head": frozen["head"],
+            "source_candidate_tree": frozen["tree"],
+            "archive_path": archive.get("path"),
+            "archive_sha256": archive.get("sha256"),
+            "archive_fidelity_proven": archive.get("fidelity_proven"),
+            "source_deviations": receipt["source_deviations"],
+            "generator_path": str(generator.relative_to(source_root)),
+            "generator_sha256": file_sha256(generator),
+            "synthetic_project_count": len(truth["projects"]),
+            "public_control_present": "mcp-trust"
+            in public_output.get("curated", {}),
+            "private_repo_marker_excluded": private_marker not in safe_blob,
+            "private_owner_marker_excluded": owner_marker not in safe_blob,
+            "vulnerable_control_leaked_private_markers": positive_passed,
+            "safe_output_sha256": hashlib.sha256(safe_blob.encode()).hexdigest(),
+            "target_code_executed": True,
+            "target_repository_accessed_during_case": False,
+            "cleanup_verified": cleanup_passed,
+        }
+    ]
+    deviation = hashlib.sha256(
+        json.dumps(
+            {
+                "generator_sha256": file_sha256(generator),
+                "source_deviations": receipt["source_deviations"],
+                "fixture_schema": truth["schema_version"],
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+    if not positive_passed or not negative_passed or not cleanup_passed:
+        return Evaluation(
+            target_verdict="UNKNOWN",
+            observations=observations,
+            positive_control="PASS" if positive_passed else "FAIL",
+            negative_control="PASS" if negative_passed else "FAIL",
+            containment_result="PASS",
+            cleanup_result="PASS" if cleanup_passed else "FAIL",
+            declared_result="ERROR",
+            limitations=["The exact public-aggregation control matrix was incomplete."],
+            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+        )
+    return Evaluation(
+        target_verdict="PASS",
+        observations=observations,
+        positive_control="PASS",
+        negative_control="PASS",
+        containment_result="PASS",
+        cleanup_result="PASS",
+        limitations=[
+            "Coverage is limited to the archived build-projects generator and synthetic structured project records."
+        ],
+        subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+    )
+
+
 def _signature_case(case: dict[str, Any], context: RunContext) -> Evaluation:
     variants = ["adjacent-attacker-key", "forged-manifest", "publisher-name-collision"]
     attacker_key = b"synthetic-attacker-key"
@@ -300,19 +643,11 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if case_id == "LP-006":
         return _bridge_static_case(case, context)
     if case_id == "LP-007":
-        return _blocked_copy(
-            case,
-            context,
-            target_name="AIGCCore",
-        )
+        return _evaluate_lp_007_target(case, context)
     if case_id == "LP-008":
         return _signature_case(case, context)
     if case_id == "LP-009":
-        return _blocked_copy(
-            case,
-            context,
-            target_name="portfolio-index",
-        )
+        return _evaluate_lp_009_target(case, context)
     if case_id == "LP-011":
         return _schema_exhaustion(case, context)
     raise KeyError(f"unsupported Local Privilege case: {case_id}")

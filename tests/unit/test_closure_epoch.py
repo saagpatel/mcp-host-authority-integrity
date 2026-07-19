@@ -242,6 +242,102 @@ class ClosureEpochTests(unittest.TestCase):
             checks,
         )
 
+    def test_closeout_accepts_archive_bound_source_owned_pass_paths(self) -> None:
+        receipt = synthetic_closure_epoch()
+        for target in receipt["target_observations"]:
+            target["archive"] = {
+                "created": True,
+                "fidelity_proven": True,
+                "sha256": target["head"][0] * 64,
+                "path": f"results/unit-{target['name']}.zip",
+            }
+        results = [
+            {
+                "case_id": "RT-012",
+                "result": "PASS",
+                "observations": [
+                    {
+                        "archive_sha256": "1" * 64,
+                        "target_mount": "read-only",
+                    }
+                ],
+            },
+            {
+                "case_id": "HC-011",
+                "result": "PASS",
+                "control_results": {"positive": "PASS", "negative": "PASS"},
+                "observations": [
+                    {
+                        "archive_sha256": "2" * 64,
+                        "actual_tauri_ipc_dispatcher_executed": True,
+                        "target_code_executed": True,
+                        "target_repository_accessed_during_case": False,
+                        "cleanup_verified": True,
+                    }
+                ],
+            },
+            {
+                "case_id": "HC-012",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {
+                        "archive_sha256": "2" * 64,
+                        "target_repository_accessed_during_case": False,
+                        "target_code_executed": False,
+                    }
+                ],
+            },
+            {
+                "case_id": "LP-007",
+                "result": "PASS",
+                "control_results": {"positive": "PASS", "negative": "PASS"},
+                "observations": [
+                    {
+                        "archive_sha256": "3" * 64,
+                        "frontend_contract_executed": True,
+                        "actual_tauri_ipc_dispatcher_executed": True,
+                        "production_adapter_runtime_executed": True,
+                        "socket_dependency_executed": True,
+                        "arbitrary_egress_succeeded": False,
+                        "target_code_executed": True,
+                        "target_repository_accessed_during_case": False,
+                        "cleanup_verified": True,
+                    }
+                ],
+            },
+            {
+                "case_id": "LP-009",
+                "result": "PASS",
+                "control_results": {"positive": "PASS", "negative": "PASS"},
+                "observations": [
+                    {
+                        "archive_sha256": "4" * 64,
+                        "private_repo_marker_excluded": True,
+                        "private_owner_marker_excluded": True,
+                        "vulnerable_control_leaked_private_markers": True,
+                        "target_code_executed": True,
+                        "target_repository_accessed_during_case": False,
+                        "cleanup_verified": True,
+                    }
+                ],
+            },
+        ]
+        checks = _target_access_checks(receipt, results)
+        self.assertEqual(len(checks), 4)
+        self.assertTrue(all(item["case_evidence_valid"] for item in checks))
+        self.assertEqual(
+            {
+                item["name"]: item["post_open_access"]
+                for item in checks
+            },
+            {
+                "mcp-trust": "PROGRAM_ARCHIVE_ONLY",
+                "PortfolioCommandCenter": "PROGRAM_ARCHIVE_RECEIPT_ONLY",
+                "AIGCCore": "PROGRAM_ARCHIVE_RECEIPT_ONLY",
+                "portfolio-index": "PROGRAM_ARCHIVE_RECEIPT_ONLY",
+            },
+        )
+
     def test_close_schema_accepts_archive_receipt_only_access(self) -> None:
         schema = load_json(ROOT / "schemas/closure-epoch-close.schema.json")
         allowed = schema["properties"]["target_access_checks"]["items"][

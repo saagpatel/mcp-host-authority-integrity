@@ -762,15 +762,31 @@ def _target_access_checks(
                     )
             elif case_id == "HC-011":
                 archive = target["archive"]
-                case_evidence_valid = case_evidence_valid and (
-                    result["result"] == "BLOCKED_BY_ACCESS"
-                    and observation.get("unsafe_fallback_refused") is True
-                    and observation.get("target_code_executed") is False
-                    and (
-                        not archive.get("created")
-                        or observation.get("archive_sha256") == archive.get("sha256")
+                if result["result"] == "PASS":
+                    case_evidence_valid = case_evidence_valid and (
+                        archive.get("created") is True
+                        and archive.get("fidelity_proven") is True
+                        and observation.get("archive_sha256") == archive.get("sha256")
+                        and observation.get("actual_tauri_ipc_dispatcher_executed")
+                        is True
+                        and observation.get("target_code_executed") is True
+                        and observation.get("target_repository_accessed_during_case")
+                        is False
+                        and observation.get("cleanup_verified") is True
+                        and result.get("control_results", {}).get("positive") == "PASS"
+                        and result.get("control_results", {}).get("negative") == "PASS"
                     )
-                )
+                else:
+                    case_evidence_valid = case_evidence_valid and (
+                        result["result"] == "BLOCKED_BY_ACCESS"
+                        and observation.get("unsafe_fallback_refused") is True
+                        and observation.get("target_code_executed") is False
+                        and (
+                            not archive.get("created")
+                            or observation.get("archive_sha256")
+                            == archive.get("sha256")
+                        )
+                    )
                 if archive.get("created"):
                     access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id == "HC-012":
@@ -816,20 +832,53 @@ def _target_access_checks(
                     access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id in {"LP-007", "LP-009"}:
                 archive = target["archive"]
-                expected_access = (
-                    "program archive receipt only"
-                    if archive.get("created")
-                    else "frozen closure-epoch identity only"
-                )
-                case_evidence_valid = case_evidence_valid and (
-                    result["result"] == "BLOCKED_BY_ACCESS"
-                    and observation.get("target_access") == expected_access
-                    and observation.get("target_code_executed") is False
-                    and (
-                        not archive.get("created")
-                        or observation.get("archive_sha256") == archive.get("sha256")
+                if result["result"] == "PASS":
+                    case_evidence_valid = case_evidence_valid and (
+                        archive.get("created") is True
+                        and archive.get("fidelity_proven") is True
+                        and observation.get("archive_sha256") == archive.get("sha256")
+                        and observation.get("target_code_executed") is True
+                        and observation.get("target_repository_accessed_during_case")
+                        is False
+                        and observation.get("cleanup_verified") is True
+                        and result.get("control_results", {}).get("positive") == "PASS"
+                        and result.get("control_results", {}).get("negative") == "PASS"
                     )
-                )
+                    if case_id == "LP-007":
+                        case_evidence_valid = case_evidence_valid and (
+                            observation.get("frontend_contract_executed") is True
+                            and observation.get("actual_tauri_ipc_dispatcher_executed")
+                            is True
+                            and observation.get("production_adapter_runtime_executed")
+                            is True
+                            and observation.get("socket_dependency_executed") is True
+                            and observation.get("arbitrary_egress_succeeded") is False
+                        )
+                    else:
+                        case_evidence_valid = case_evidence_valid and (
+                            observation.get("private_repo_marker_excluded") is True
+                            and observation.get("private_owner_marker_excluded") is True
+                            and observation.get(
+                                "vulnerable_control_leaked_private_markers"
+                            )
+                            is True
+                        )
+                else:
+                    expected_access = (
+                        "program archive receipt only"
+                        if archive.get("created")
+                        else "frozen closure-epoch identity only"
+                    )
+                    case_evidence_valid = case_evidence_valid and (
+                        result["result"] == "BLOCKED_BY_ACCESS"
+                        and observation.get("target_access") == expected_access
+                        and observation.get("target_code_executed") is False
+                        and (
+                            not archive.get("created")
+                            or observation.get("archive_sha256")
+                            == archive.get("sha256")
+                        )
+                    )
                 if archive.get("created"):
                     access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             else:
