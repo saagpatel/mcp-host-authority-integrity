@@ -42,9 +42,9 @@
       "verified_lock_record_aggregate_algorithm": "sha256 over registry packages sorted by name, version, checksum as '<name> <version> <Cargo.lock checksum>\\n'"
     },
     "portfolio_command_center": {
-      "target_commit": "eee2f2217ce1735eab321e3824452a22cda4d807",
-      "source_archive_sha256": "568f0dd465f7d4c91b39bd2e78ec956ff2570c8c3f86e800dd45c437514f9772",
-      "test_executable_sha256": "03c82a6c2877593ca9933364aff00667f157df84545303e719b01ff1870958d3",
+      "target_commit": "564bd41df34a959aaf3593aa01ea0b337334b4f3",
+      "source_archive_sha256": "ae5ba3f1ec77346500860a86bba1c2731f655aeb3d55992778c945d77d380e42",
+      "test_executable_sha256": "caed88ca409351d99273a147089ef3b50189b04351427f820e2716dfecd0760f",
       "cargo_lock_sha256": "c963d4103c730eddf6fe269f8b941623d1e70b7c4cc6ab9b71ac0cdf3c7b8445",
       "registry_package_count": 433,
       "git_package_count": 0,
@@ -56,7 +56,7 @@
     "aigc_core": {
       "target_commit": "94b28bff8fec69e25d1c761845764a95496b8dad",
       "source_archive_sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
-      "test_executable_sha256": "58ed70a0767a42e2d7a637b36a00ef99e53cb2631654ee1d7554ffc2cab25687",
+      "test_executable_sha256": "5900a14a5c032cca84a1109ca4e22372f0de200e79ab1df8f1b596d3d15c0dc1",
       "test_feature": "authority-integrity-test-hooks",
       "cargo_lock_sha256": "8d2e8b960ed4d6ee22818ad182200deccdf89fea5ddd2f060fc0e8b0763c7afc",
       "registry_package_count": 480,
