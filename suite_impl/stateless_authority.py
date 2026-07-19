@@ -1197,6 +1197,20 @@ const {spawnSync} = require("node:child_process");
                             f"{typescript['package']}@{typescript['version']}"
                         ),
                     },
+                    "current_version_verification": {
+                        "verified_on": "2026-07-19",
+                        "python_latest_stable": "mcp@1.28.1",
+                        "python_tag_commit": (
+                            "777b8d06710c140e3606b0d4598e2aa48546c266"
+                        ),
+                        "typescript_latest_stable": (
+                            "@modelcontextprotocol/sdk@1.29.0"
+                        ),
+                        "typescript_tag_commit": (
+                            "e12cbd7078db388152f6e839abdbe09ba01f3f32"
+                        ),
+                        "fresh_contained_reproduction": True,
+                    },
                     "minimal_reproducer": samples["conflicting_top_level_name"],
                     "expected_safe_contract": (
                         "Security-sensitive hosts must derive tool identity only from "
@@ -1216,6 +1230,18 @@ const {spawnSync} = require("node:child_process");
                         "Add a cross-SDK conformance case and either align top-level "
                         "unknown-member handling or document the intentional difference."
                     ),
+                    "upstream_disposition": {
+                        "new_issue_opened": False,
+                        "duplicate_avoided": True,
+                        "canonical_issue": (
+                            "https://github.com/modelcontextprotocol/"
+                            "modelcontextprotocol/issues/1898"
+                        ),
+                        "conformance_follow_up": (
+                            "https://github.com/modelcontextprotocol/"
+                            "conformance/pull/399"
+                        ),
+                    },
                     "compensating_host_control": (
                         "Apply one strict canonical request-envelope validator before "
                         "authorization or execution, reject unrecognized top-level fields "

@@ -376,6 +376,10 @@ def render_findings_markdown(
             "The machine-readable finding, controls, evidence, limitations, and "
             "alternative explanations are in `results/findings.json`.",
             "",
+            "No duplicate upstream issue was opened: the equivalent unknown-member "
+            "interoperability question is already tracked in "
+            "`modelcontextprotocol/modelcontextprotocol#1898`.",
+            "",
         ]
     )
     return "\n".join(lines)

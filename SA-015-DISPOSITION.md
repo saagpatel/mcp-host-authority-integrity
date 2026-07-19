@@ -17,6 +17,27 @@ a downstream host.
   - `JSONRPCMessageSchema.parse`
   - `CallToolRequestSchema.parse`
 
+## Current-version verification
+
+Rechecked on `2026-07-19` against the official release feeds:
+
+- Python `v1.28.1` remains the latest stable Python SDK release
+  (`777b8d06710c140e3606b0d4598e2aa48546c266`).
+- TypeScript `v1.29.0` remains the latest stable TypeScript SDK release
+  (`e12cbd7078db388152f6e839abdbe09ba01f3f32`).
+- Newer `v2` tags in both repositories are prereleases, so they do not replace
+  the latest supported stable lane for this disposition.
+
+The fresh no-network, read-only-container execution reproduced the same
+authority-relevant disagreement. Because the original exact versions are still
+the latest stable versions, this one execution covers both the pinned and
+current-stable questions.
+
+Release sources:
+
+- [Python SDK v1.28.1](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.28.1)
+- [TypeScript SDK v1.29.0](https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/v1.29.0)
+
 ## Minimal reproducer
 
 ```json
@@ -62,8 +83,19 @@ Add this envelope to the official cross-SDK conformance corpus. The SDK owners
 should either align top-level unknown-member handling or document the
 intentional compatibility difference and the expected server behavior.
 
-No upstream issue was opened because this program has no publication or
-disclosure authority.
+No new upstream issue was opened. The open protocol issue
+[`modelcontextprotocol/modelcontextprotocol#1898`](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1898)
+already owns the equivalent question: whether protocol objects are open-ended,
+whether receivers must ignore unknown wire fields for forward compatibility,
+and whether SDKs should strip or reject those fields. Its discussion explicitly
+identifies Zod `.strip()` as the expected TypeScript compatibility behavior.
+Opening another report would duplicate that live upstream lane.
+
+The official conformance repository does not yet expose a dedicated cross-SDK
+unknown-member scenario. Draft
+[`modelcontextprotocol/conformance#399`](https://github.com/modelcontextprotocol/conformance/pull/399)
+would validate wire messages against the per-version specification schema, but
+it does not replace a parser-equivalence control across official SDKs.
 
 ## Compensating host control
 

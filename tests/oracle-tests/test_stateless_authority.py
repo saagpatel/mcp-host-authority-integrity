@@ -273,6 +273,16 @@ class StatelessAuthorityOracleTests(unittest.TestCase):
             "strict canonical request-envelope validator",
             disposition["compensating_host_control"],
         )
+        self.assertTrue(
+            disposition["current_version_verification"][
+                "fresh_contained_reproduction"
+            ]
+        )
+        self.assertEqual(
+            disposition["upstream_disposition"]["canonical_issue"],
+            "https://github.com/modelcontextprotocol/modelcontextprotocol/issues/1898",
+        )
+        self.assertFalse(disposition["upstream_disposition"]["new_issue_opened"])
         self.assertTrue(observation["authority_relevant_disagreement"])
 
     def test_catalog_oracle_drift_fails_closed(self) -> None:
