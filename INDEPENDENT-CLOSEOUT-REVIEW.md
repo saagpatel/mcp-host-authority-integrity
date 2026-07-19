@@ -8,10 +8,10 @@ The latest receipt chain has no blocking independent-review findings for the
 safely obtainable coverage boundary.
 
 The accepted terminal candidate is closure epoch
-`closure-1784490408-99757098cc22`, qualification
-`cq-1784490433-13bcb61e4336`, and run
-`run-1784490450-7acf56fd73c9`. The program source checkpoint bound by the epoch
-is `0042ff4ec0586dfb3d3e1f6b2ca9425393faa2ba`.
+`closure-1784490790-fe8ae3d7b978`, qualification
+`cq-1784490811-c51d48e34461`, and run
+`run-1784490827-a6738e666761`. The program source checkpoint bound by the epoch
+is `61a2b69ba313cc6b88e9220e13b8b4607b061810`.
 
 ## Blocking findings
 
