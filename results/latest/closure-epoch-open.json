@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784496632-d0555fff0cc2",
+  "epoch_id": "closure-1784497810-bbbf336ce529",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -92,9 +92,9 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T21:30:45.767844Z",
+  "opened_at": "2026-07-19T21:50:22.132434Z",
   "phase": "OPEN",
-  "program_commit": "3e41dc1c8f4ab5ef1067cb906866b2ae6b46e0de",
+  "program_commit": "befb51006748e53b6d0e6efc0b780b782deba17a",
   "target_observations": [
     {
       "archive": {
@@ -103,7 +103,7 @@
         "file_count": 123,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/mcp-trust-f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462.zip",
+        "path": "results/closure-epochs/closure-1784497810-bbbf336ce529/archives/mcp-trust-f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462.zip",
         "sha256": "1dc9e806417403171b0060e580982310f4fb2845459b78aec63febeb440a1353",
         "tree_manifest_sha256": "9914fc7b1db6e819fe3f358304e91dfb7f16e82ec2117acaf8af091e91cabb3d"
       },
@@ -146,9 +146,9 @@
         "file_count": 61,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/PortfolioCommandCenter-eee2f2217ce1735eab321e3824452a22cda4d807.zip",
-        "sha256": "568f0dd465f7d4c91b39bd2e78ec956ff2570c8c3f86e800dd45c437514f9772",
-        "tree_manifest_sha256": "b48a9e5211d630083b82f678637eade4e7d9a00e84d667b87cbebd84f30c64f7"
+        "path": "results/closure-epochs/closure-1784497810-bbbf336ce529/archives/PortfolioCommandCenter-d05777e1553341cc6bf5d585ae85126456cd7a5d.zip",
+        "sha256": "efbe61ec64a2381e32b7497c936ca2ba3a750ea7b635c37a8d4f4cc8506eea6d",
+        "tree_manifest_sha256": "83947a777b4c8ec801b1b05d8019bc963f5b8bbd64f21b000534adb5867a53cf"
       },
       "branch": "codex/authority-integrity-ipc-hook",
       "case_ids": [
@@ -156,18 +156,18 @@
         "HC-012"
       ],
       "clean": true,
-      "head": "eee2f2217ce1735eab321e3824452a22cda4d807",
+      "head": "d05777e1553341cc6bf5d585ae85126456cd7a5d",
       "metadata": {
-        "git_entry_count": 14839,
-        "git_metadata_sha256": "cbda60dd296d894e3f91ce6457aae63913ab01bfcd650562f94cbe2a90bebfd3",
+        "git_entry_count": 18169,
+        "git_metadata_sha256": "0462846e67387bd6452e2b615c35d7fcc6a4b263d81ed14be55fe2931388568e",
         "git_scope": "included-in-worktree",
         "index": {
-          "inode": 235549696,
-          "mtime_ns": 1784494236069000438,
+          "inode": 235779130,
+          "mtime_ns": 1784497598261545059,
           "size": 5907
         },
-        "worktree_entry_count": 14839,
-        "worktree_metadata_sha256": "cbda60dd296d894e3f91ce6457aae63913ab01bfcd650562f94cbe2a90bebfd3"
+        "worktree_entry_count": 18169,
+        "worktree_metadata_sha256": "0462846e67387bd6452e2b615c35d7fcc6a4b263d81ed14be55fe2931388568e"
       },
       "name": "PortfolioCommandCenter",
       "owner_activity": {
@@ -181,7 +181,7 @@
       "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live preflight found no pending handoff, Git lock, or process rooted in this worktree. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
       "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "tree": "1354d615cc6779d200712a74d317aa3d6e733331"
+      "tree": "17dce6e582f17be3de01068cbf15d310a11365e7"
     },
     {
       "archive": {
@@ -190,7 +190,7 @@
         "file_count": 259,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
+        "path": "results/closure-epochs/closure-1784497810-bbbf336ce529/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
         "sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
         "tree_manifest_sha256": "a7f701a4476d3005dd050b4fa6c4d1375531867549d993deb4219d53d7d963fc"
       },
@@ -233,7 +233,7 @@
         "file_count": 866,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784496632-d0555fff0cc2/archives/portfolio-index-e28c9d12849dd3b27454e64f90e8a54cd3608807.zip",
+        "path": "results/closure-epochs/closure-1784497810-bbbf336ce529/archives/portfolio-index-e28c9d12849dd3b27454e64f90e8a54cd3608807.zip",
         "sha256": "58340e5688dae473a07771d80fc32ad807cbe3aac8b17bc02622afd9062e8c9e",
         "tree_manifest_sha256": "4e4403c92159448f1640bd4aa1d8f038576d461751f69d8583f19c810cc5b238"
       },
