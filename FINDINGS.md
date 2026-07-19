@@ -1,6 +1,6 @@
 # Findings
 
-The complete bound run `run-1784498058-14b2f644902d` validated one evidence-bounded finding.
+The complete bound run `run-1784499743-0d91c88f094f` validated one evidence-bounded finding.
 
 ## MHAI-SA-015-001 — Official Python and TypeScript SDKs diverge on a conflicting request envelope
 
@@ -12,3 +12,5 @@ The complete bound run `run-1784498058-14b2f644902d` validated one evidence-boun
 Python accepts and selects params.name='danger' for an envelope carrying a conflicting top-level name='safe', while TypeScript rejects the same envelope; cross-SDK execution equivalence is therefore unsafe to assume.
 
 This does not establish an authorization bypass in a downstream host. The machine-readable finding, controls, evidence, limitations, and alternative explanations are in `results/findings.json`.
+
+No duplicate upstream issue was opened: the equivalent unknown-member interoperability question is already tracked in `modelcontextprotocol/modelcontextprotocol#1898`.
