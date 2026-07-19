@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T14:10:07.930590Z",
+  "closed_at": "2026-07-19T17:28:22.740850Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784470121-d4dd8cc267c7",
+  "epoch_id": "closure-1784482012-610879302d78",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,9 +10,9 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "8fe602454993f2a674ea9e81d6e06f41620259acf2f260f1e02e620a2a866302",
+  "open_digest": "3b31ee9c8855e0ef59c1ec9682091062e124140dad486fecea653d10643d8886",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784470163-f60c0875aeca",
+  "qualification_run_id": "cq-1784482031-c4f3444192b7",
   "remaining_blockers": [
     {
       "case_id": "RT-012",
@@ -21,81 +21,33 @@
       "result": "BLOCKED_BY_ACCESS"
     },
     {
-      "case_id": "SA-014",
-      "detail": "No exact official Go MCP SDK is available from the frozen bounded cache discovery; network access and package installation remain forbidden.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "HC-001",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "HC-005",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "HC-006",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "HC-009",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
       "case_id": "HC-011",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
+      "detail": "An exact read-only PortfolioCommandCenter archive is available, but no qualified target webview-to-command-bridge executor or locked build dependency set is available.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     },
     {
       "case_id": "HC-012",
-      "detail": "PortfolioCommandCenter is clean at the frozen epoch identity; current branch ownership is not clear enough to create or execute an archive.",
+      "detail": "An exact read-only PortfolioCommandCenter archive is available, but its command-launch path cannot be executed without an independently qualified locked build dependency set.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     },
     {
       "case_id": "LP-007",
-      "detail": "AIGCCore is clean at the frozen epoch identity; source ownership is not clear enough to create or execute a program-owned archive.",
+      "detail": "An exact read-only AIGCCore archive is available, but no program-owned locked dependency set and qualified target executor can exercise the full claimed runtime paths.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     },
     {
       "case_id": "LP-009",
-      "detail": "portfolio-index is not clean at the frozen epoch identity; the shared feat/wave3-accretive worktree has an active owner.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "OA-004",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "OA-005",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "OA-006",
-      "detail": "CQ-012 is BROWSER_DISABLED; locally cached candidates failed repeatable bounded launcher qualification",
+      "detail": "portfolio-index is not clean at the frozen epoch identity; the shared feat/portfolio-index worktree has an active owner.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     }
   ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784470190-e2a14dc361fc",
-  "run_manifest_sha256": "7c5c54cf159a9e9138fcfeb755b248f39e0d1b52fdebda31ce4918791084f17c",
+  "run_id": "run-1784482060-36ca22ae9f0c",
+  "run_manifest_sha256": "b63de957ac6b600ef05c05056a780267fc60d7aa5f0c14e1a0befa2c1e81e19a",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {
@@ -110,14 +62,14 @@
       "final_observation": "none; no final target inventory or Git command",
       "name": "PortfolioCommandCenter",
       "opening_read_mutation_free": true,
-      "post_open_access": "NONE"
+      "post_open_access": "PROGRAM_ARCHIVE_RECEIPT_ONLY"
     },
     {
       "case_evidence_valid": true,
       "final_observation": "none; no final target inventory or Git command",
       "name": "AIGCCore",
       "opening_read_mutation_free": true,
-      "post_open_access": "NONE"
+      "post_open_access": "PROGRAM_ARCHIVE_RECEIPT_ONLY"
     },
     {
       "case_evidence_valid": true,

@@ -13,7 +13,7 @@ from harness.execution import (
 from harness.qualification import ROOT
 from harness.schema_validation import canonical_digest, load_json
 from suite_impl.local_privilege import evaluate
-from tests.helpers import closure_context_fields
+from tests.helpers import closure_context_fields, synthetic_closure_epoch
 
 
 class LocalPrivilegeOracleTests(unittest.TestCase):
@@ -86,6 +86,35 @@ class LocalPrivilegeOracleTests(unittest.TestCase):
                 )
                 self.assertFalse(evaluation.observations[0]["isolated_copy_created"])
                 self.assertTrue(evaluation.observations[0]["overclaim_refused"])
+
+    def test_dirty_owner_clear_copy_reports_only_cleanliness_blocker(self) -> None:
+        receipt = synthetic_closure_epoch()
+        target = next(
+            item
+            for item in receipt["target_observations"]
+            if item["name"] == "portfolio-index"
+        )
+        target["clean"] = False
+        target["ownership"] = "CLEAR"
+        target["owner_activity"]["clear"] = True
+        target["owner_activity"]["status"] = "CLEAR"
+        context = RunContext(
+            "local-copy-dirty-owner-clear",
+            ROOT / "work/unused-local-copy-dirty-owner-clear",
+            "BROWSER_DISABLED",
+            "0" * 64,
+            closure_epoch_id=receipt["epoch_id"],
+            closure_epoch_digest=canonical_digest(receipt),
+            closure_epoch_receipt_json=json.dumps(
+                receipt,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+        )
+        evaluation = evaluate(self.cases["LP-009"], context.for_case("LP-009"))
+        self.assertIn("not clean", evaluation.blocked_detail or "")
+        self.assertIn("ownership check was CLEAR", evaluation.blocked_detail or "")
+        self.assertNotIn("active owner", evaluation.blocked_detail or "")
 
 
 if __name__ == "__main__":

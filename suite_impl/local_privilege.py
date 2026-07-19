@@ -163,7 +163,6 @@ def _blocked_copy(
     context: RunContext,
     *,
     target_name: str,
-    ownership_detail: str,
 ) -> Evaluation:
     frozen = context.frozen_target(case["case_id"])
     commit = frozen["head"]
@@ -172,18 +171,28 @@ def _blocked_copy(
     archive_available = bool(
         archive.get("created") and archive.get("fidelity_proven")
     )
-    detail = (
-        (
+    if archive_available:
+        detail = (
             f"An exact read-only {target_name} archive is available, but no "
             "program-owned locked dependency set and qualified target executor "
             "can exercise the full claimed runtime paths."
         )
-        if archive_available
-        else (
+    elif not frozen["clean"]:
+        detail = (
             f"{target_name} is {cleanliness} at the frozen epoch identity; "
-            f"{ownership_detail}"
+            f"the ownership check was {frozen['ownership']} and does not override "
+            "the clean-source requirement."
         )
-    )
+    elif frozen["ownership"] != "CLEAR":
+        detail = (
+            f"{target_name} is clean at the frozen epoch identity, but "
+            f"ownership is {frozen['ownership']}."
+        )
+    else:
+        detail = (
+            f"{target_name} is clean and ownership is clear at the frozen epoch "
+            "identity, but no fidelity-proven immutable archive is available."
+        )
     deviation = hashlib.sha256(
         f"{case['case_id']}:{commit}:copy-not-created".encode()
     ).hexdigest()
@@ -288,10 +297,6 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             case,
             context,
             target_name="AIGCCore",
-            ownership_detail=(
-                "source ownership is not clear enough to create or execute a "
-                "program-owned archive."
-            ),
         )
     if case_id == "LP-008":
         return _signature_case(case, context)
@@ -300,10 +305,6 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             case,
             context,
             target_name="portfolio-index",
-            ownership_detail=(
-                f"the shared {context.frozen_target(case_id)['branch']} worktree "
-                "has an active owner."
-            ),
         )
     if case_id == "LP-011":
         return _schema_exhaustion(case, context)
