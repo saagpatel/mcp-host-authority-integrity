@@ -126,6 +126,7 @@ def prepare_rust_target(
     target: dict,
     *,
     manifest: str,
+    lockfile_path: str,
     executable_glob: str,
     required_tests: set[str],
     feature: str | None = None,
@@ -142,7 +143,7 @@ def prepare_rust_target(
         archive_path,
         destination,
     )
-    lockfile = destination / Path(manifest).parent / "Cargo.lock"
+    lockfile = destination / lockfile_path
     provenance_key = (
         "portfolio_command_center"
         if target["name"] == "PortfolioCommandCenter"
@@ -242,6 +243,7 @@ def main() -> int:
             lambda: prepare_rust_target(
                 targets["PortfolioCommandCenter"],
                 manifest="src-tauri/Cargo.toml",
+                lockfile_path="src-tauri/Cargo.lock",
                 executable_glob=(
                     "src-tauri/target/debug/deps/portfolio_command_center_lib-*"
                 ),
@@ -253,6 +255,7 @@ def main() -> int:
             lambda: prepare_rust_target(
                 targets["AIGCCore"],
                 manifest="src-tauri/Cargo.toml",
+                lockfile_path="Cargo.lock",
                 executable_glob="target/debug/deps/aigc_core_tauri-*",
                 required_tests=set(AIGC_LP007_TESTS.values()),
                 feature="authority-integrity-test-hooks",
