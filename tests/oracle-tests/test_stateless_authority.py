@@ -7,6 +7,7 @@ from pathlib import Path
 
 from harness.execution import RunContext, deterministic_declared_result
 from harness.qualification import ROOT as PROGRAM_ROOT
+from harness.redaction import redact
 from harness.schema_validation import canonical_digest, load_json
 from suite_impl.stateless_authority import evaluate
 from tests.helpers import closure_context_fields
@@ -259,7 +260,10 @@ class StatelessAuthorityOracleTests(unittest.TestCase):
             disposition["classification"], "cross-sdk-implementation-divergence"
         )
         self.assertFalse(disposition["protocol_violation_proven"])
-        self.assertFalse(disposition["downstream_authorization_bypass_proven"])
+        self.assertFalse(disposition["downstream_host_exploit_demonstrated"])
+        self.assertFalse(
+            redact(observation)["disposition"]["downstream_host_exploit_demonstrated"]
+        )
         self.assertIn("params.name='danger'", disposition["observed_behavior"]["python"])
         self.assertIn(
             "strict JSON-RPC request",

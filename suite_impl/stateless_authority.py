@@ -1190,7 +1190,7 @@ const {spawnSync} = require("node:child_process");
                 "disposition": {
                     "classification": "cross-sdk-implementation-divergence",
                     "protocol_violation_proven": False,
-                    "downstream_authorization_bypass_proven": False,
+                    "downstream_host_exploit_demonstrated": False,
                     "affected_versions": {
                         "python": f"{python['package']}@{python['version']}",
                         "typescript": (
