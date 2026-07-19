@@ -40,7 +40,7 @@ The new closure epoch `closure-1784467983-db5d77793fba` passed its own no-forbid
 - Exact Python and TypeScript SDK parsers executed from the qualified cached image with network disabled.
 - `RT-012` remained blocked because no fidelity-proven mcp-trust archive was available; the live target was not executed.
 - Other isolated-copy cases remained blocked where source ownership was unclear or active.
-- No target repair, content/ref/worktree edit, publication, external write, disclosure, push, or deploy was performed.
+- During this closure epoch, no target repair, content/ref/worktree edit, publication, external write, disclosure, push, or deploy was performed.
 - `SE-001` remains the historical Gate 7 violation. The new epoch's passing gate is separate evidence and does not repair it.
 - `SE-002` preserves the macOS crash-diagnostic writes caused by failed pre-epoch browser probes.
 - `SE-003` preserves the two diagnostic `/tmp` redirection files; neither file was opened for content inspection, altered, moved, or deleted.

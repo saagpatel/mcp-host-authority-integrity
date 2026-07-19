@@ -48,7 +48,7 @@ TARGET_POLICIES = (
         Path("/Users/d/Projects/mcp-trust"),
         ("RT-012",),
         "UNCLEAR",
-        "The source changed during the preceding closure window, so current ownership is not proven.",
+        "The worktree is not approved as disposable source, and current ownership is not proven.",
     ),
     TargetPolicy(
         "PortfolioCommandCenter",
@@ -69,7 +69,7 @@ TARGET_POLICIES = (
         Path("/Users/d/Projects/_claude-worktrees/portfolio-index-forge"),
         ("LP-009",),
         "ACTIVE",
-        "The shared worktree moved to feat/wave2-signature after the prior closeout.",
+        "The shared portfolio-index worktree has an active owner; no clean ownership window is authorized.",
     ),
 )
 

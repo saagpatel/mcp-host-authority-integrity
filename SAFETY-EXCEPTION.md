@@ -86,8 +86,8 @@ The command targeted a deliberately nonexistent process group and did not read
 or modify any target repository, normal browser profile, account, secret,
 connector, or external endpoint. The write locations nevertheless fell
 outside the program-owned sacrificial root and are preserved as a safety
-exception. Retiring the experimental launcher prevents this diagnostic path
-from recurring, but does not repair or erase `SE-003`.
+exception. Retiring the experimental launcher removes the active launcher path
+and reduces recurrence risk, but does not repair or erase `SE-003`.
 
 ## Later closure epochs
 

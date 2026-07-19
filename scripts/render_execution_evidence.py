@@ -194,8 +194,9 @@ def render_summary(
             ),
             "- Other isolated-copy cases remained blocked where source ownership "
             "was unclear or active.",
-            "- No target repair, content/ref/worktree edit, publication, external "
-            "write, disclosure, push, or deploy was performed.",
+            "- During this closure epoch, no target repair, content/ref/worktree "
+            "edit, publication, external write, disclosure, push, or deploy was "
+            "performed.",
             "- `SE-001` remains the historical Gate 7 violation. The new epoch's "
             "passing gate is separate evidence and does not repair it.",
             "- `SE-002` preserves the macOS crash-diagnostic writes caused by failed "
