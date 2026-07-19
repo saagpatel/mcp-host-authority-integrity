@@ -254,6 +254,21 @@ class StatelessAuthorityOracleTests(unittest.TestCase):
             observation["disagreements"],
             ["conflicting_top_level_name"],
         )
+        disposition = observation["disposition"]
+        self.assertEqual(
+            disposition["classification"], "cross-sdk-implementation-divergence"
+        )
+        self.assertFalse(disposition["protocol_violation_proven"])
+        self.assertFalse(disposition["downstream_authorization_bypass_proven"])
+        self.assertIn("params.name='danger'", disposition["observed_behavior"]["python"])
+        self.assertIn(
+            "strict JSON-RPC request",
+            disposition["observed_behavior"]["typescript"],
+        )
+        self.assertIn(
+            "strict canonical request-envelope validator",
+            disposition["compensating_host_control"],
+        )
         self.assertTrue(observation["authority_relevant_disagreement"])
 
     def test_catalog_oracle_drift_fails_closed(self) -> None:

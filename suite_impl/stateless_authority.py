@@ -1187,6 +1187,42 @@ const {spawnSync} = require("node:child_process");
                 "authority_relevant_disagreement": authority_relevant,
                 "synthetic_positive_control_detected": positive_control,
                 "valid_negative_control_agreed": negative_control,
+                "disposition": {
+                    "classification": "cross-sdk-implementation-divergence",
+                    "protocol_violation_proven": False,
+                    "downstream_authorization_bypass_proven": False,
+                    "affected_versions": {
+                        "python": f"{python['package']}@{python['version']}",
+                        "typescript": (
+                            f"{typescript['package']}@{typescript['version']}"
+                        ),
+                    },
+                    "minimal_reproducer": samples["conflicting_top_level_name"],
+                    "expected_safe_contract": (
+                        "Security-sensitive hosts must derive tool identity only from "
+                        "the validated tools/call params.name field and must not assume "
+                        "different SDK parsers make identical unknown-member decisions."
+                    ),
+                    "observed_behavior": {
+                        "python": "accepts the envelope and selects params.name='danger'",
+                        "typescript": "rejects the envelope as an invalid strict JSON-RPC request",
+                    },
+                    "protocol_basis": (
+                        "MCP defines the tools/call tool name inside params.name. "
+                        "JSON-RPC 2.0 enumerates Request Object members but does not "
+                        "normatively require one unknown-member policy."
+                    ),
+                    "recommended_upstream_action": (
+                        "Add a cross-SDK conformance case and either align top-level "
+                        "unknown-member handling or document the intentional difference."
+                    ),
+                    "compensating_host_control": (
+                        "Apply one strict canonical request-envelope validator before "
+                        "authorization or execution, reject unrecognized top-level fields "
+                        "for security-sensitive methods, and bind authorization to the "
+                        "validated params.name value."
+                    ),
+                },
             }
         ],
         positive_control="PASS" if positive_control else "FAIL",
