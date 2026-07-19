@@ -94,3 +94,6 @@ The bounded browser search is recorded in
 cache-only candidates remain rejected. The authorized official program-owned
 candidate becomes executable only when the current CQ-012 receipt records
 `QUALIFIED`; it never reads or reuses a normal profile.
+
+The accepted local evidence chain and the exact conditions that justify a new
+epoch are pinned in [REGRESSION-BASELINE.md](REGRESSION-BASELINE.md).
