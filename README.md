@@ -84,9 +84,10 @@ The completed evidence overlay is in [EXECUTION-SUMMARY.md](EXECUTION-SUMMARY.md
 and [EXECUTION-COVERAGE.md](EXECUTION-COVERAGE.md). `COVERAGE-MATRIX.md` remains
 the immutable pre-execution catalog view. [SAFETY-EXCEPTION.md](SAFETY-EXCEPTION.md)
 records the Gate 7 closeout boundary violation.
-It also records the pre-epoch browser exploration side effects. Historical
-`SE-001`, `SE-002`, and `SE-003` are permanent program history. A later closure
-epoch may pass its own gate, but cannot repair or reinterpret them.
+It also records pre-epoch side effects outside the program root. Historical
+`SE-001`, `SE-002`, `SE-003`, and `SE-004` are permanent program history. A
+later closure epoch may pass its own gate, but cannot repair or reinterpret
+them.
 
 The bounded browser search is recorded in
 [BROWSER-CANDIDATE-ASSESSMENT.md](BROWSER-CANDIDATE-ASSESSMENT.md). Existing

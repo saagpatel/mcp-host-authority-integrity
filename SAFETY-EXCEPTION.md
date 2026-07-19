@@ -89,10 +89,32 @@ outside the program-owned sacrificial root and are preserved as a safety
 exception. Retiring the experimental launcher removes the active launcher path
 and reduces recurrence risk, but does not repair or erase `SE-003`.
 
+## SE-004 — pre-epoch catalog verification wrote outside the program root
+
+- Classification: `PROGRAM_SIDE_EFFECT_OUTSIDE_PROGRAM_ROOT`
+- Phase: continuation preflight catalog verification
+- Observed at: `2026-07-19T07:05:51-07:00`
+- Command shape: `python3 -m harness.runner list` with stdout redirected to
+  `/tmp/mhai-case-list.txt`
+- Closure-gate effect: historical pre-epoch exception; excluded from the later
+  epoch window
+
+The preflight command created or truncated `/tmp/mhai-case-list.txt` outside
+the program-owned root. The file is 2,450 bytes, has SHA-256
+`5f6c1682873ca5c629b02ae25add57af54afcb018d654be742a955bda575013c`,
+and contained only the generated synthetic 57-case catalog listing.
+
+The file was subsequently read to verify its line count, final total, and
+digest. It was not altered after the initial redirection, moved, or deleted.
+No target repository, normal browser profile, account, secret, connector, or
+external endpoint was accessed by the command. Future catalog-list validation
+must stream directly between processes or use a path under the program-owned
+root. This exception remains preserved and is not repaired or erased.
+
 ## Later closure epochs
 
 A later, explicitly bounded closure epoch may establish that its own observation
 window caused no forbidden target mutation. That is separate evidence only.
 It cannot repair, erase, downgrade, or reinterpret `SE-001`; the historical
 Gate 7 outcome above remains `FAIL`. It likewise cannot erase or reinterpret
-the pre-epoch side effects recorded as `SE-002` and `SE-003`.
+the pre-epoch side effects recorded as `SE-002`, `SE-003`, and `SE-004`.

@@ -522,7 +522,7 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
                 "detail": "mypy 2.0.0 is installed locally.",
             },
         },
-        "historical_exceptions": ["SE-001", "SE-002", "SE-003"],
+        "historical_exceptions": ["SE-001", "SE-002", "SE-003", "SE-004"],
         "historical_exception_repaired": False,
     }
     validate(receipt, load_json(ROOT / "schemas/closure-epoch-open.schema.json"))
@@ -539,6 +539,7 @@ def validate_open_receipt(receipt: dict[str, Any]) -> None:
         ["SE-001"],
         ["SE-001", "SE-002"],
         ["SE-001", "SE-002", "SE-003"],
+        ["SE-001", "SE-002", "SE-003", "SE-004"],
     ):
         raise ClosureEpochError(
             "closure epoch must retain ordered historical exceptions beginning with SE-001"
@@ -729,7 +730,7 @@ def close_epoch() -> tuple[dict[str, Any], Path]:
         "no_forbidden_mutation_gate": forbidden_gate,
         "safely_obtainable_coverage_executed": safely_obtainable,
         "remaining_blockers": remaining,
-        "historical_exceptions": ["SE-001", "SE-002", "SE-003"],
+        "historical_exceptions": ["SE-001", "SE-002", "SE-003", "SE-004"],
         "historical_exception_repaired": False,
         "result": (
             "PASS_WITH_HISTORICAL_EXCEPTION"

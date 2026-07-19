@@ -63,7 +63,13 @@ def read_and_validate() -> tuple[
         or closure["result"] != "PASS_WITH_HISTORICAL_EXCEPTION"
         or closure["no_forbidden_mutation_gate"] != "PASS"
         or not closure["safely_obtainable_coverage_executed"]
-        or closure["historical_exceptions"] != ["SE-001", "SE-002", "SE-003"]
+        or closure["historical_exceptions"]
+        not in (
+            ["SE-001"],
+            ["SE-001", "SE-002"],
+            ["SE-001", "SE-002", "SE-003"],
+            ["SE-001", "SE-002", "SE-003", "SE-004"],
+        )
         or closure["historical_exception_repaired"]
     ):
         raise ValueError("latest run is not bound to a passing closure epoch")
@@ -136,8 +142,13 @@ def render_summary(
         "no-forbidden-mutation gate. Target identities were frozen once with both "
         "optional-lock controls; final checks performed no target inventory and "
         "did not invoke target Git. Historical `SE-001` remains a violation; "
-        "pre-epoch side effects `SE-002` and `SE-003` also remain preserved. "
-        "None is repaired or reinterpreted.",
+        + (
+            "pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain "
+            "preserved. None is repaired or reinterpreted."
+            if "SE-004" in closure["historical_exceptions"]
+            else "pre-epoch side effects `SE-002` and `SE-003` also remain preserved. "
+            "None is repaired or reinterpreted."
+        ),
         "",
         "## Suite totals",
         "",
@@ -204,6 +215,15 @@ def render_summary(
             "pre-epoch browser probes.",
             "- `SE-003` preserves the two diagnostic `/tmp` redirection files; neither "
             "file was opened for content inspection, altered, moved, or deleted.",
+            *(
+                [
+                    "- `SE-004` preserves the pre-epoch catalog-list redirection file; "
+                    "it was read only for bounded verification after creation and was "
+                    "not altered, moved, or deleted."
+                ]
+                if "SE-004" in closure["historical_exceptions"]
+                else []
+            ),
             "",
         ]
     )

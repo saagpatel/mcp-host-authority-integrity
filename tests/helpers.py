@@ -50,7 +50,7 @@ def synthetic_closure_epoch() -> dict[str, Any]:
             "cross_sdk": {"eligible": True},
             "type_checker": {"eligible": True},
         },
-        "historical_exceptions": ["SE-001", "SE-002", "SE-003"],
+        "historical_exceptions": ["SE-001", "SE-002", "SE-003", "SE-004"],
         "historical_exception_repaired": False,
     }
 
