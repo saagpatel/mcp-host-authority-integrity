@@ -10,12 +10,27 @@ back to simulated browser evidence.
 from __future__ import annotations
 
 import hashlib
+import json
+import os
 import posixpath
+import shutil
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from harness.execution import Evaluation, RunContext, browser_block
+from harness.process_control import run_argv, scrubbed_environment
+
+ROOT = Path(__file__).resolve().parents[1]
+PCC_HC012_COMMIT = "772be25eed8554defa55505cadd23e7fc61df982"
+PCC_HC012_ARCHIVE_SHA256 = (
+    "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9"
+)
+PCC_HC012_CARGO_LOCK_SHA256 = (
+    "c963d4103c730eddf6fe269f8b941623d1e70b7c4cc6ab9b71ac0cdf3c7b8445"
+)
+PCC_HC012_TEST_NAME = "tests::fake_producer_harness_covers_success_failure_cancellation_and_recovery"
 
 _BROWSER_CASES = frozenset({"HC-001", "HC-005", "HC-006", "HC-009", "HC-011"})
 _SYNTHETIC_CASES = frozenset({"HC-002", "HC-003", "HC-004", "HC-007", "HC-008", "HC-010"})
@@ -547,8 +562,8 @@ def _browser_refusal(case: dict[str, Any], context: RunContext) -> Evaluation:
             blocked_kind="ACCESS",
             blocked_detail=(
                 "An exact read-only PortfolioCommandCenter archive is available, "
-                "but no qualified target webview-to-command-bridge executor or "
-                "locked build dependency set is available."
+                "but no qualified target webview-to-command-bridge executor is "
+                "available for the actual Tauri IPC path."
                 if archive_available
                 else (
                     "No fidelity-proven PortfolioCommandCenter archive is available "
@@ -567,7 +582,7 @@ def _browser_refusal(case: dict[str, Any], context: RunContext) -> Evaluation:
                 }
             ],
             limitations=[
-                "Browser qualification alone cannot establish behavior of an unbuilt target command bridge."
+                "Browser qualification and successful target compilation cannot establish behavior of an unexercised Tauri webview command bridge."
             ],
             positive_control="NOT_RUN",
             negative_control="NOT_RUN",
@@ -594,6 +609,281 @@ def _browser_refusal(case: dict[str, Any], context: RunContext) -> Evaluation:
     )
 
 
+def _sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _single_pcc_test_executable(source_root: Path) -> Path | None:
+    candidates = sorted(
+        candidate
+        for candidate in (source_root / "target/debug/deps").glob("portfolio_command_center_lib-*")
+        if candidate.is_file() and os.access(candidate, os.X_OK)
+    )
+    return candidates[0] if len(candidates) == 1 else None
+
+
+def _write_fake_zsh(fake_bin: Path) -> Path:
+    fake_bin.mkdir(parents=True, exist_ok=False, mode=0o700)
+    fake = fake_bin / "zsh"
+    fake.write_text(
+        "\n".join(
+            (
+                "#!/bin/sh",
+                "set -eu",
+                ": \"${MHAI_HC012_FAKE_ZSH_LOG:?}\"",
+                "{",
+                "  printf 'fake_zsh_invoked=1\\n'",
+                "  printf 'cwd=%s\\n' \"$(pwd)\"",
+                "  printf 'argv='",
+                "  for arg in \"$@\"; do printf '[%s]' \"$arg\"; done",
+                "  printf '\\n'",
+                "} >> \"$MHAI_HC012_FAKE_ZSH_LOG\"",
+                "exec /bin/zsh \"$@\"",
+                "",
+            )
+        ),
+        encoding="utf-8",
+    )
+    fake.chmod(0o700)
+    return fake
+
+
+def _run_hc012_domain(
+    *,
+    domain_root: Path,
+    executable: Path | None,
+    use_hostile_path: bool,
+    vulnerable_control: bool = False,
+) -> dict[str, Any]:
+    if domain_root.exists():
+        shutil.rmtree(domain_root)
+    domain_root.mkdir(parents=True, mode=0o700)
+    fake_log = domain_root / "fake-zsh.log"
+    fake = _write_fake_zsh(domain_root / "fake-bin")
+    safe_path = "/bin:/usr/bin:/usr/local/bin"
+    path = f"{fake.parent}:{safe_path}" if use_hostile_path else safe_path
+    env = scrubbed_environment(
+        domain_root,
+        {
+            "PATH": path,
+            "MHAI_HC012_FAKE_ZSH_LOG": str(fake_log),
+            "RUST_TEST_THREADS": "1",
+        },
+    )
+    if vulnerable_control:
+        argv = [
+            "/usr/bin/env",
+            "zsh",
+            "-lc",
+            "printf 'hc012 vulnerable control reached\\n'",
+        ]
+        cwd = domain_root
+    else:
+        if executable is None:
+            raise FileNotFoundError("exact PortfolioCommandCenter test executable is unavailable")
+        argv = [str(executable), PCC_HC012_TEST_NAME, "--exact", "--nocapture"]
+        cwd = executable.parents[3]
+    completed = run_argv(
+        argv,
+        cwd=cwd,
+        environment=env,
+        timeout_seconds=20,
+        max_output_bytes=512 * 1024,
+        apply_resource_limits=False,
+    )
+    fake_log_bytes = fake_log.read_bytes() if fake_log.exists() else b""
+    payload = {
+        "domain": domain_root.name,
+        "argv_sha256": hashlib.sha256(json.dumps(argv, sort_keys=True).encode()).hexdigest(),
+        "returncode": completed.returncode,
+        "timed_out": completed.timed_out,
+        "stdout_sha256": hashlib.sha256(completed.stdout).hexdigest(),
+        "stderr_sha256": hashlib.sha256(completed.stderr).hexdigest(),
+        "stdout_tail": completed.stdout.decode(errors="replace")[-400:],
+        "stderr_tail": completed.stderr.decode(errors="replace")[-400:],
+        "fake_zsh_path": str(fake),
+        "fake_zsh_sha256": _sha256_file(fake),
+        "fake_zsh_followed": bool(fake_log_bytes),
+        "fake_zsh_log_sha256": hashlib.sha256(fake_log_bytes).hexdigest(),
+        "fake_zsh_log_tail": fake_log_bytes.decode(errors="replace")[-400:],
+        "path_mode": "hostile" if use_hostile_path else "safe-baseline",
+        "home_confined": env["HOME"].startswith(str(domain_root.resolve())),
+        "tmp_confined": env["TMPDIR"].startswith(str(domain_root.resolve())),
+    }
+    shutil.rmtree(domain_root)
+    payload["cleanup_verified"] = not domain_root.exists()
+    payload["cleanup_sha256"] = hashlib.sha256(
+        json.dumps(
+            {
+                "domain": domain_root.name,
+                "exists_after_cleanup": domain_root.exists(),
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+    return payload
+
+
+def _evaluate_hc_012_target(case: dict[str, Any], context: RunContext) -> Evaluation:
+    frozen = context.frozen_target(case["case_id"])
+    archive = frozen["archive"]
+    archive_available = bool(archive.get("created") and archive.get("fidelity_proven"))
+    archive_sha256 = archive.get("sha256")
+    source_root = ROOT / f"work/isolated-targets/executors/pcc-{PCC_HC012_COMMIT}"
+    lockfile = source_root / "src-tauri/Cargo.lock"
+    executable = _single_pcc_test_executable(source_root)
+    prerequisites = {
+        "source_commit_matches": frozen["head"] == PCC_HC012_COMMIT,
+        "archive_available": archive_available,
+        "archive_sha256_matches": archive_sha256 == PCC_HC012_ARCHIVE_SHA256,
+        "source_root_available": source_root.is_dir(),
+        "lockfile_sha256_matches": lockfile.is_file()
+        and _sha256_file(lockfile) == PCC_HC012_CARGO_LOCK_SHA256,
+        "test_executable_available": executable is not None,
+    }
+    if not all(prerequisites.values()):
+        deviation = hashlib.sha256(
+            f"HC-012:{frozen['head']}:target-command-launch-prerequisite-missing".encode()
+        ).hexdigest()
+        return Evaluation(
+            target_verdict="BLOCKED",
+            blocked_kind="ACCESS",
+            blocked_detail=(
+                "The exact PortfolioCommandCenter HC-012 executor prerequisites are "
+                "not all available under the program-owned archive boundary."
+            ),
+            observations=[
+                {
+                    "source_candidate_head": frozen["head"],
+                    "source_candidate_tree": frozen["tree"],
+                    "source_clean_at_epoch_open": frozen["clean"],
+                    "ownership": frozen["ownership"],
+                    "archive_sha256": archive_sha256,
+                    "required_archive_sha256": PCC_HC012_ARCHIVE_SHA256,
+                    "required_lockfile_sha256": PCC_HC012_CARGO_LOCK_SHA256,
+                    "prerequisites": prerequisites,
+                    "target_code_executed": False,
+                    "target_repository_accessed_during_case": False,
+                    "substitute_fixture_claimed": False,
+                }
+            ],
+            limitations=[
+                "No target command-launch behavior was executed because exact executor prerequisites were incomplete."
+            ],
+            positive_control="NOT_RUN",
+            negative_control="NOT_RUN",
+            containment_result="NOT_APPLICABLE",
+            cleanup_result="NOT_APPLICABLE",
+            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+        )
+
+    assert executable is not None
+    executable_sha256 = _sha256_file(executable)
+    case_root = context.case_root / "hc012-path-poisoning"
+    vulnerable = _run_hc012_domain(
+        domain_root=case_root / "vulnerable-control",
+        executable=None,
+        use_hostile_path=True,
+        vulnerable_control=True,
+    )
+    baseline = _run_hc012_domain(
+        domain_root=case_root / "safe-baseline",
+        executable=executable,
+        use_hostile_path=False,
+    )
+    hostile = _run_hc012_domain(
+        domain_root=case_root / "hostile-path",
+        executable=executable,
+        use_hostile_path=True,
+    )
+    positive_passed = (
+        vulnerable["returncode"] == 0
+        and vulnerable["fake_zsh_followed"]
+        and vulnerable["cleanup_verified"]
+    )
+    negative_passed = (
+        baseline["returncode"] == 0
+        and not baseline["fake_zsh_followed"]
+        and baseline["cleanup_verified"]
+    )
+    hostile_completed = hostile["returncode"] == 0 and not hostile["timed_out"]
+    hostile_fake_followed = hostile["fake_zsh_followed"]
+    if case_root.exists():
+        shutil.rmtree(case_root)
+    cleanup_passed = all(
+        item["cleanup_verified"] for item in (vulnerable, baseline, hostile)
+    ) and not case_root.exists()
+    observations = [
+        {
+            "source_candidate_head": frozen["head"],
+            "source_candidate_tree": frozen["tree"],
+            "source_clean_at_epoch_open": frozen["clean"],
+            "ownership": frozen["ownership"],
+            "archive_path": archive.get("path"),
+            "archive_sha256": archive_sha256,
+            "archive_fidelity_proven": archive.get("fidelity_proven"),
+            "lockfile_path": str(lockfile.relative_to(ROOT)),
+            "lockfile_sha256": PCC_HC012_CARGO_LOCK_SHA256,
+            "test_executable_path": str(executable.relative_to(ROOT)),
+            "test_executable_sha256": executable_sha256,
+            "test_name": PCC_HC012_TEST_NAME,
+            "instrumentation": {
+                "vulnerable_control": vulnerable,
+                "safe_baseline": baseline,
+                "hostile_path": hostile,
+            },
+            "target_code_executed": True,
+            "target_repository_accessed_during_case": False,
+            "substitute_fixture_claimed": False,
+            "ambient_fake_zsh_followed_without_detection": hostile_fake_followed
+            and hostile_completed,
+            "containment_domains": [
+                "vulnerable-control",
+                "safe-baseline",
+                "hostile-path",
+            ],
+            "cleanup_verified": cleanup_passed,
+        }
+    ]
+    subject_deviation = hashlib.sha256(
+        json.dumps(
+            {
+                "case_id": "HC-012",
+                "executor_sha256": executable_sha256,
+                "hostile_fake_zsh_followed": hostile_fake_followed,
+                "test_name": PCC_HC012_TEST_NAME,
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+    if not positive_passed or not negative_passed or not cleanup_passed:
+        return Evaluation(
+            target_verdict="UNKNOWN",
+            observations=observations,
+            positive_control="PASS" if positive_passed else "FAIL",
+            negative_control="PASS" if negative_passed else "FAIL",
+            containment_result="PASS",
+            cleanup_result="PASS" if cleanup_passed else "FAIL",
+            declared_result="ERROR",
+            limitations=[
+                "The HC-012 executor control matrix did not satisfy the vulnerable-control, safe-baseline, and cleanup oracles."
+            ],
+            subject_version=f"git:{PCC_HC012_COMMIT}+deviations:{subject_deviation}",
+        )
+    return Evaluation(
+        target_verdict="FAIL" if hostile_fake_followed and hostile_completed else "PASS",
+        observations=observations,
+        positive_control="PASS",
+        negative_control="PASS",
+        containment_result="PASS",
+        cleanup_result="PASS",
+        limitations=[
+            "This executes the archived PortfolioCommandCenter Rust command-spawn path via its compiled test harness; it does not exercise the separate Tauri webview IPC path required for HC-011."
+        ],
+        subject_version=f"git:{PCC_HC012_COMMIT}+deviations:{subject_deviation}",
+    )
+
+
 def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     """Evaluate one HC case without exceeding its declared evidence ceiling."""
 
@@ -603,51 +893,5 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if case_id in _BROWSER_CASES:
         return _browser_refusal(case, context)
     if case_id == "HC-012":
-        frozen = context.frozen_target(case_id)
-        cleanliness = "clean" if frozen["clean"] else "not clean"
-        archive = frozen["archive"]
-        archive_available = bool(
-            archive.get("created") and archive.get("fidelity_proven")
-        )
-        deviation = hashlib.sha256(
-            f"HC-012:{frozen['head']}:target-command-launch-not-executed".encode()
-        ).hexdigest()
-        return Evaluation(
-            target_verdict="BLOCKED",
-            blocked_kind="ACCESS",
-            blocked_detail=(
-                (
-                    "An exact read-only PortfolioCommandCenter archive is available, "
-                    "but its command-launch path cannot be executed without an "
-                    "independently qualified locked build dependency set."
-                )
-                if archive_available
-                else (
-                    f"PortfolioCommandCenter is {cleanliness} at the frozen epoch "
-                    "identity; no eligible exact archive is available."
-                )
-            ),
-            observations=[
-                {
-                    "source_candidate_head": frozen["head"],
-                    "source_candidate_tree": frozen["tree"],
-                    "source_clean_at_epoch_open": frozen["clean"],
-                    "ownership": frozen["ownership"],
-                    "ownership_basis": frozen["ownership_basis"],
-                    "isolated_copy_available": archive_available,
-                    "archive_sha256": archive.get("sha256"),
-                    "target_code_executed": False,
-                    "target_repository_accessed_during_case": False,
-                    "substitute_fixture_claimed": False,
-                }
-            ],
-            limitations=[
-                "No target source was read, copied, built, or executed for this evaluation."
-            ],
-            positive_control="NOT_RUN",
-            negative_control="NOT_RUN",
-            containment_result="NOT_APPLICABLE",
-            cleanup_result="NOT_APPLICABLE",
-            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
-        )
+        return _evaluate_hc_012_target(case, context)
     return _EVALUATORS[case_id]()

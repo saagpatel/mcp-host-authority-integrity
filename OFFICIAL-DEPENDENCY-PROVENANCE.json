@@ -32,6 +32,45 @@
     "browsers_metadata_sha256": "f9fcc742e33e0b12fe6650bf1f833c0cb1c391214a382d05c58c5e817f87e1ad",
     "path": "vendor/official/playwright-browsers/chromium_headless_shell-1234"
   },
+  "cargo_locked_archives": {
+    "registry": {
+      "index": "https://index.crates.io/",
+      "download_service": "https://static.crates.io/crates",
+      "protocol": "sparse",
+      "cache_path": "vendor/official/cargo-home",
+      "verification": "Cargo.lock checksum equals SHA-256 of each fetched .crate archive",
+      "verified_lock_record_aggregate_algorithm": "sha256 over registry packages sorted by name, version, checksum as '<name> <version> <Cargo.lock checksum>\\n'"
+    },
+    "portfolio_command_center": {
+      "target_commit": "772be25eed8554defa55505cadd23e7fc61df982",
+      "source_archive_sha256": "3494719b24d3ebfda24c97dbf363c1958f850f553fec98dd462094cb017111e9",
+      "cargo_lock_sha256": "c963d4103c730eddf6fe269f8b941623d1e70b7c4cc6ab9b71ac0cdf3c7b8445",
+      "registry_package_count": 433,
+      "git_package_count": 0,
+      "verified_crate_count": 433,
+      "missing_crate_count": 0,
+      "checksum_mismatch_count": 0,
+      "verified_lock_record_aggregate_sha256": "244c63fb3b9803af9938a37b5b41f45a735a4782da743342e2b045694f1722a2"
+    },
+    "aigc_core": {
+      "target_commit": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
+      "source_archive_sha256": "18b71db9ee9b2c01c25e87f60c1396fb11fa39a21a9b352d2a0c5203c7992ae2",
+      "cargo_lock_sha256": "8d2e8b960ed4d6ee22818ad182200deccdf89fea5ddd2f060fc0e8b0763c7afc",
+      "registry_package_count": 480,
+      "git_package_count": 0,
+      "verified_crate_count": 480,
+      "missing_crate_count": 0,
+      "checksum_mismatch_count": 0,
+      "verified_lock_record_aggregate_sha256": "7d5c29754379981dd22f3a70f433dcc72ec4faa18c0dce637f010edbe3e5af90"
+    },
+    "fetch_boundary": {
+      "locked_only": true,
+      "official_registry_only": true,
+      "program_owned_home_and_cache": true,
+      "global_install_performed": false,
+      "target_repository_write_performed": false
+    }
+  },
   "scope": {
     "network_used": true,
     "normal_browser_profile_used": false,

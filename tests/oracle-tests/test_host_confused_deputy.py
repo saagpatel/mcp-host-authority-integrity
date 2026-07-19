@@ -139,8 +139,8 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
         result = evaluate(self.cases["HC-012"], self.context())
         self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
         self.assertEqual(result.blocked_kind, "ACCESS")
-        self.assertIn("no eligible exact archive", result.blocked_detail or "")
-        self.assertFalse(result.observations[0]["isolated_copy_available"])
+        self.assertIn("executor prerequisites", result.blocked_detail or "")
+        self.assertFalse(result.observations[0]["prerequisites"]["archive_available"])
         self.assertFalse(result.observations[0]["target_repository_accessed_during_case"])
         self.assertFalse(result.observations[0]["substitute_fixture_claimed"])
 

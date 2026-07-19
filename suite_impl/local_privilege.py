@@ -174,8 +174,8 @@ def _blocked_copy(
     if archive_available:
         detail = (
             f"An exact read-only {target_name} archive is available, but no "
-            "program-owned locked dependency set and qualified target executor "
-            "can exercise the full claimed runtime paths."
+            "qualified target executor with a proven network-attempt sensor can "
+            "exercise the full UI, command, adapter, and dependency paths."
         )
     elif not frozen["clean"]:
         detail = (

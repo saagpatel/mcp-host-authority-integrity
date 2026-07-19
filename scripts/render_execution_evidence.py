@@ -216,9 +216,18 @@ def render_summary(
                 else "- `RT-012` remained blocked because no fidelity-proven "
                 "mcp-trust archive was available; the live target was not executed."
             ),
-            "- Fidelity-proven PortfolioCommandCenter and AIGCCore archives did not "
-            "become behavioral proof: their locked build/runtime dependency lanes "
-            "remained unavailable, so the target cases stayed blocked.",
+            (
+                "- `HC-012` executed the exact archived PortfolioCommandCenter "
+                "command-spawn path and recorded a hostile `PATH` failure."
+                if results_by_id["HC-012"]["result"] == "FAIL"
+                else "- `HC-012` remained blocked because no qualified exact target "
+                "command-spawn executor was available."
+            ),
+            "- `HC-011` remained blocked because no actual archived Tauri "
+            "webview-to-command IPC executor was available.",
+            "- `LP-007` remained blocked because no complete AIGCCore UI, Tauri "
+            "command, core adapter, dependency-path executor with a proven "
+            "network-attempt sensor was available.",
             "- During this closure epoch, no target repair, content/ref/worktree "
             "edit, publication, external write, disclosure, push, or deploy was "
             "performed.",
