@@ -63,7 +63,7 @@ def read_and_validate() -> tuple[
         or closure["result"] != "PASS_WITH_HISTORICAL_EXCEPTION"
         or closure["no_forbidden_mutation_gate"] != "PASS"
         or not closure["safely_obtainable_coverage_executed"]
-        or closure["historical_exceptions"] != ["SE-001"]
+        or closure["historical_exceptions"] != ["SE-001", "SE-002"]
         or closure["historical_exception_repaired"]
     ):
         raise ValueError("latest run is not bound to a passing closure epoch")
@@ -135,8 +135,9 @@ def render_summary(
         f"The new closure epoch `{closure['epoch_id']}` passed its own "
         "no-forbidden-mutation gate. Target identities were frozen once with both "
         "optional-lock controls; final checks performed no target inventory and "
-        "did not invoke target Git. Historical `SE-001` remains a violation and "
-        "is not repaired or reinterpreted.",
+        "did not invoke target Git. Historical `SE-001` remains a violation, and "
+        "pre-epoch browser lifecycle exception `SE-002` also remains preserved. "
+        "Neither is repaired or reinterpreted.",
         "",
         "## Suite totals",
         "",
@@ -177,8 +178,11 @@ def render_summary(
             "",
             "## Evidence boundary",
             "",
-            "- Browser-required cases blocked because the disposable browser launcher "
-            "was not qualified; no normal user browser profile was read.",
+            "- Seven fixture-host browser cases executed through the exact CQ-012 "
+            "qualified disposable launcher. `HC-011` remained blocked because no "
+            "owned, fidelity-proven PortfolioCommandCenter archive was available.",
+            "- No normal user browser profile was read, mounted, inherited, or named "
+            "in a browser child command or environment.",
             "- The Go SDK case remains blocked because no exact official Go SDK exists "
             "in bounded local caches.",
             "- Exact Python and TypeScript SDK parsers executed from the qualified "
@@ -192,10 +196,13 @@ def render_summary(
             ),
             "- Other isolated-copy cases remained blocked where source ownership "
             "was unclear or active.",
-            "- No target repair, content/ref/worktree edit, publication, external "
-            "write, disclosure, push, or deploy was performed.",
+            "- During the new epoch, no target repair, content/ref/worktree edit, "
+            "publication, external write, disclosure, push, or deploy was performed.",
             "- `SE-001` remains the historical Gate 7 violation. The new epoch's "
             "passing gate is separate evidence and does not repair it.",
+            "- `SE-002` preserves the macOS crash-diagnostic lifecycle writes caused "
+            "by failed pre-epoch browser probes; those files were not deleted or "
+            "reinterpreted.",
             "",
         ]
     )

@@ -38,6 +38,12 @@
 - Start the watchdog before the subject and revoke the lease on heartbeat loss.
 - Use an ephemeral browser profile with no accounts, sync, extensions, saved
   state, devices, clipboard authority, or normal-profile reuse.
+- Browser content runs only through the exact CQ-012-qualified headless-shell
+  identity. Its outer macOS sandbox denies all network, all non-profile writes,
+  and all user-home reads except the exact browser cache and run-owned inputs.
+  Chromium's incompatible nested sandbox is disabled explicitly; the outer
+  sandbox, single renderer domain, resource observer, and independent watchdog
+  are therefore mandatory and fail closed.
 - Keep result storage outside fixture-writable paths.
 
 ## Default numeric ceilings

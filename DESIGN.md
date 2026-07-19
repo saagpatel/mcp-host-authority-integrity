@@ -111,7 +111,7 @@ that later execution used only frozen identities or a fidelity-proven
 program-owned archive. Concurrent target drift is outside that claim and is
 neither attributed to this program nor represented as stability. A passing
 later epoch is separate evidence; it never erases or repairs historical safety
-exception `SE-001`.
+exception `SE-001` or pre-epoch lifecycle exception `SE-002`.
 
 ## Integrated chain
 

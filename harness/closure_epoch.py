@@ -15,6 +15,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from harness.process_control import cleanup_labeled_containers, docker
 from harness.redaction import redact
 from harness.schema_validation import (
     canonical_digest,
@@ -281,7 +282,141 @@ def _write_once(path: Path, value: Any) -> None:
     _atomic_replace(path, value)
 
 
+def _discover_exact_go_sdk(root: Path, run_id: str) -> dict[str, Any]:
+    discovery_root = root / "go-sdk-discovery"
+    discovery_root.mkdir(parents=True, mode=0o700)
+    module_root = Path.home() / "go" / "pkg" / "mod"
+    host_go_mod_files_scanned = 0
+    host_exact_versions: set[str] = set()
+    if module_root.is_dir():
+        for path in module_root.rglob("go.mod"):
+            try:
+                if path.stat().st_size > 1024 * 1024:
+                    continue
+                first_line = path.read_text(encoding="utf-8", errors="strict").splitlines()[0]
+            except (OSError, UnicodeDecodeError, IndexError):
+                continue
+            host_go_mod_files_scanned += 1
+            if first_line.strip() == "module github.com/modelcontextprotocol/go-sdk":
+                parent = path.parent.name
+                host_exact_versions.add(parent.split("@", 1)[-1] if "@" in parent else parent)
+
+    listed = docker(
+        ["image", "ls", "--format", "{{.Repository}}:{{.Tag}}"],
+        cwd=discovery_root,
+    )
+    if listed.returncode != 0:
+        raise ClosureEpochError("cached image inventory failed during Go SDK discovery")
+    images = sorted(
+        {
+            line
+            for line in listed.stdout.decode().splitlines()
+            if line and line != "<none>:<none>"
+        }
+    )
+    script = r"""
+for base in /app /workspace /usr/local /usr/share /opt /go/pkg/mod /root/go/pkg/mod; do
+  if [ -d "$base" ]; then
+    find "$base" -type f -name go.mod -print 2>/dev/null
+  fi
+done | while IFS= read -r file; do
+  first="$(sed -n '1p' "$file" 2>/dev/null || true)"
+  if [ "$first" = "module github.com/modelcontextprotocol/go-sdk" ]; then
+    printf '%s\n' "$file"
+  fi
+done
+"""
+    image_results: list[dict[str, Any]] = []
+    image_exact_matches: list[str] = []
+    label = f"{run_id}-go-cache"
+    try:
+        for index, image in enumerate(images):
+            completed = docker(
+                [
+                    "run",
+                    "--rm",
+                    "--name",
+                    f"mhai-go-cache-{run_id[-8:]}-{index}",
+                    "--label",
+                    f"mhai.run_id={label}",
+                    "--network",
+                    "none",
+                    "--read-only",
+                    "--tmpfs",
+                    "/tmp:rw,noexec,nosuid,size=8m",
+                    "--cap-drop",
+                    "ALL",
+                    "--security-opt",
+                    "no-new-privileges",
+                    "--pids-limit",
+                    "16",
+                    "--memory",
+                    "256m",
+                    "--cpus",
+                    "0.5",
+                    "--ulimit",
+                    "nofile=64:64",
+                    "--user",
+                    "65534:65534",
+                    "--workdir",
+                    "/tmp",
+                    "--entrypoint",
+                    "/bin/sh",
+                    image,
+                    "-c",
+                    script,
+                ],
+                cwd=discovery_root,
+                timeout_seconds=30,
+            )
+            matches = sorted(line for line in completed.stdout.decode().splitlines() if line)
+            image_exact_matches.extend(f"{image}:{match}" for match in matches)
+            image_results.append(
+                {
+                    "image": image,
+                    "scan_result": "PASS" if completed.returncode == 0 else "UNAVAILABLE",
+                    "exact_module_matches": len(matches),
+                }
+            )
+    finally:
+        cleanup_labeled_containers(label, discovery_root)
+
+    exact_versions = sorted(host_exact_versions)
+    exact_available = bool(exact_versions or image_exact_matches)
+    unavailable_images = [
+        item["image"] for item in image_results if item["scan_result"] == "UNAVAILABLE"
+    ]
+    return {
+        "eligible": exact_available,
+        "detail": (
+            "An exact official github.com/modelcontextprotocol/go-sdk module is cached."
+            if exact_available
+            else (
+                "No exact official github.com/modelcontextprotocol/go-sdk version "
+                "exists in the bounded host module cache or inspectable cached images; "
+                "any unavailable image remains an explicit access limitation."
+            )
+        ),
+        "host_go_mod_files_scanned": host_go_mod_files_scanned,
+        "host_exact_versions": exact_versions,
+        "cached_images_considered": len(images),
+        "cached_image_results": image_results,
+        "image_exact_module_matches": len(image_exact_matches),
+        "unavailable_images": unavailable_images,
+        "network_access_used": False,
+        "package_install_used": False,
+    }
+
+
 def open_epoch() -> tuple[dict[str, Any], Path]:
+    from harness.qualification import qualification_receipt_is_current
+
+    qualification = load_json(ROOT / "results/latest/containment-qualification.json")
+    qualification_current, browser_mode = qualification_receipt_is_current(qualification)
+    if not qualification_current:
+        raise ClosureEpochError(
+            f"closure epoch requires a current qualification: {browser_mode}"
+        )
     epoch_id = f"closure-{int(datetime.now(UTC).timestamp())}-{secrets.token_hex(6)}"
     epoch_root = ROOT / "results" / "closure-epochs" / epoch_id
     home = epoch_root / "git-home"
@@ -351,6 +486,7 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
             }
         )
 
+    go_sdk_discovery = _discover_exact_go_sdk(epoch_root, epoch_id)
     receipt = {
         "closure_version": CLOSURE_VERSION,
         "phase": "OPEN",
@@ -364,16 +500,16 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
         "target_observations": observations,
         "lane_discovery": {
             "browser": {
-                "eligible": False,
+                "eligible": browser_mode == "QUALIFIED",
                 "detail": (
-                    "No browser executable exists in the cached containment image; "
-                    "the normal host Chrome profile remains forbidden."
+                    "CQ-012 qualified exact cached Chromium headless shell revision "
+                    "1228 under the disposable macOS sandbox launcher; normal browser "
+                    "profiles remain forbidden."
+                    if browser_mode == "QUALIFIED"
+                    else "CQ-012 retained the hard-refusal browser mode."
                 ),
             },
-            "go_sdk": {
-                "eligible": False,
-                "detail": "No exact official Go MCP SDK exists in the bounded local caches.",
-            },
+            "go_sdk": go_sdk_discovery,
             "cross_sdk": {
                 "eligible": True,
                 "detail": (
@@ -386,7 +522,7 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
                 "detail": "mypy 2.0.0 is installed locally.",
             },
         },
-        "historical_exceptions": ["SE-001"],
+        "historical_exceptions": ["SE-001", "SE-002"],
         "historical_exception_repaired": False,
     }
     validate(receipt, load_json(ROOT / "schemas/closure-epoch-open.schema.json"))
@@ -399,8 +535,13 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
 
 def validate_open_receipt(receipt: dict[str, Any]) -> None:
     validate(receipt, load_json(ROOT / "schemas/closure-epoch-open.schema.json"))
-    if receipt["historical_exceptions"] != ["SE-001"]:
-        raise ClosureEpochError("closure epoch must retain historical SE-001")
+    if receipt["historical_exceptions"] not in (
+        ["SE-001"],
+        ["SE-001", "SE-002"],
+    ):
+        raise ClosureEpochError(
+            "closure epoch must retain ordered historical exceptions beginning with SE-001"
+        )
     if receipt["historical_exception_repaired"]:
         raise ClosureEpochError("historical SE-001 cannot be marked repaired")
 
@@ -587,7 +728,7 @@ def close_epoch() -> tuple[dict[str, Any], Path]:
         "no_forbidden_mutation_gate": forbidden_gate,
         "safely_obtainable_coverage_executed": safely_obtainable,
         "remaining_blockers": remaining,
-        "historical_exceptions": ["SE-001"],
+        "historical_exceptions": ["SE-001", "SE-002"],
         "historical_exception_repaired": False,
         "result": (
             "PASS_WITH_HISTORICAL_EXCEPTION"

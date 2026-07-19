@@ -1,10 +1,11 @@
-"""Deterministic, synthetic Host Confused Deputy suite oracles.
+"""Deterministic and browser-executed Host Confused Deputy suite oracles.
 
 The non-browser cases in this module are pure in-memory models. They exercise a
 deliberately vulnerable positive control and a fail-closed negative control
 without opening sockets, reading target repositories, or touching a filesystem.
-Browser-dependent cases route through the shared browser policy and never fall
-back to simulated browser evidence.
+Browser-dependent fixture cases route through the separately qualified launcher.
+The isolated-target case remains blocked unless its frozen source archive exists
+with proven ownership and fidelity.
 """
 
 from __future__ import annotations
@@ -16,6 +17,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from harness.execution import Evaluation, RunContext, browser_block
+from suite_impl import browser_fixtures
 
 _BROWSER_CASES = frozenset({"HC-001", "HC-005", "HC-006", "HC-009", "HC-011"})
 _SYNTHETIC_CASES = frozenset({"HC-002", "HC-003", "HC-004", "HC-007", "HC-008", "HC-010"})
@@ -525,22 +527,37 @@ _EVALUATORS: dict[str, Callable[[], Evaluation]] = {
 }
 
 
-def _browser_refusal(case: dict[str, Any], context: RunContext) -> Evaluation:
+def _browser_evaluation(case: dict[str, Any], context: RunContext) -> Evaluation:
     blocked = browser_block(case, context)
     if blocked is not None:
         return blocked
+    if case["case_id"] != "HC-011":
+        return browser_fixtures.evaluate_hc(case, context)
+    frozen = context.frozen_target("HC-011")
     return Evaluation(
         target_verdict="BLOCKED",
         blocked_kind="ACCESS",
-        blocked_detail="No browser or embedded-webview executor is implemented for this suite.",
+        blocked_detail=(
+            "PortfolioCommandCenter has no immutable program-owned archive with "
+            "current ownership authority and proven source fidelity."
+        ),
         observations=[
             {
                 "browser_required": True,
                 "browser_mode": context.browser_mode,
                 "unsafe_fallback_refused": True,
+                "target_repository_accessed_during_case": False,
+                "frozen_target_head": frozen["head"],
+                "frozen_target_tree": frozen["tree"],
+                "source_clean_at_epoch_open": frozen["clean"],
+                "source_ownership": frozen["ownership"],
+                "archive_created": frozen["archive"].get("created") is True,
             }
         ],
-        limitations=["No browser or embedded-webview behavior was executed."],
+        limitations=[
+            "The browser launcher is qualified, but target-specific webview evidence "
+            "cannot be substituted with a generic fixture."
+        ],
         positive_control="NOT_RUN",
         negative_control="NOT_RUN",
         containment_result="NOT_APPLICABLE",
@@ -555,7 +572,7 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if case_id not in _SUPPORTED_CASES:
         raise ValueError(f"unsupported Host Confused Deputy case: {case_id or '<missing>'}")
     if case_id in _BROWSER_CASES:
-        return _browser_refusal(case, context)
+        return _browser_evaluation(case, context)
     if case_id == "HC-012":
         frozen = context.frozen_target(case_id)
         cleanliness = "clean" if frozen["clean"] else "not clean"

@@ -788,10 +788,15 @@ _RUNNERS: dict[
 }
 
 
-def _official_go_sdk_block(case_id: str, contract: _Contract) -> Evaluation:
+def _official_go_sdk_block(
+    case_id: str,
+    contract: _Contract,
+    context: RunContext,
+) -> Evaluation:
+    discovery = context.bound_closure_epoch()["lane_discovery"]["go_sdk"]
     detail = (
-        "No exact official Go MCP SDK exists in the bounded local caches; network access "
-        "and package installation remain forbidden."
+        "No exact official Go MCP SDK is available from the frozen bounded cache "
+        "discovery; network access and package installation remain forbidden."
     )
     return Evaluation(
         target_verdict="BLOCKED",
@@ -804,6 +809,7 @@ def _official_go_sdk_block(case_id: str, contract: _Contract) -> Evaluation:
                 "fail_oracle": contract.fail_oracle,
                 "coverage_level": "OFFICIAL_SDK",
                 "exact_official_sdk_available": False,
+                "cache_discovery": discovery,
                 "simulated_official_sdk_refused": True,
                 "synthetic_positive_control_executed": False,
                 "synthetic_negative_control_executed": False,
@@ -1061,7 +1067,7 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             limitations=["The exact cases.json oracle contract was not executed."],
         )
     if case_id == "SA-014":
-        return _official_go_sdk_block(case_id, contract)
+        return _official_go_sdk_block(case_id, contract, context)
     if case_id == "SA-015":
         return _cross_sdk_parser(case, context)
 

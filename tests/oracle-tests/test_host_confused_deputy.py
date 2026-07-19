@@ -48,11 +48,12 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
                     ],
                 )
 
-    def test_browser_cases_never_fall_back_to_simulation(self) -> None:
-        result = evaluate(self.cases["HC-001"], self.context("QUALIFIED"))
+    def test_target_browser_case_still_requires_exact_owned_archive(self) -> None:
+        result = evaluate(self.cases["HC-011"], self.context("QUALIFIED"))
         self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
-        self.assertIn("No browser", result.blocked_detail or "")
+        self.assertIn("immutable program-owned archive", result.blocked_detail or "")
         self.assertTrue(result.observations[0]["unsafe_fallback_refused"])
+        self.assertFalse(result.observations[0]["target_repository_accessed_during_case"])
 
     def test_synthetic_cases_have_valid_positive_and_negative_controls(self) -> None:
         for case_id in ("HC-002", "HC-003", "HC-004", "HC-007", "HC-008", "HC-010"):

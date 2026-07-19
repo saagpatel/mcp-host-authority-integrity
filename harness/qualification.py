@@ -23,6 +23,16 @@ from pathlib import Path
 from typing import Any, cast
 
 from harness.browser_policy import browser_refusal
+from harness.browser_runtime import (
+    BrowserSession,
+    browser_html,
+    browser_identity_matches,
+    browser_version_probe,
+    browser_watchdog_controller_death_probe,
+    current_browser_identity,
+    profile_boundary_probe,
+    sandbox_filesystem_probe,
+)
 from harness.canary_store import CanaryError, CanaryStore
 from harness.ledger import DuplicateExecutionError, ExecutionLedger, write_once
 from harness.limits import (
@@ -184,6 +194,38 @@ def validate_qualification_contract(receipt: dict[str, Any]) -> None:
         if not observations or not observations[0].get("all_browser_cases_refused"):
             raise SchemaValidationError(
                 "$.browser_mode: BROWSER_DISABLED requires exercised case-routing refusal"
+            )
+    else:
+        observations = cq12["observations"]
+        if len(observations) != 1:
+            raise SchemaValidationError(
+                "$.browser_mode: QUALIFIED requires one CQ-012 observation"
+            )
+        observation = observations[0]
+        required_true = (
+            "browser_launcher_qualified",
+            "marker_round_trip_detected",
+            "fresh_profile_marker_absent",
+            "profile_symlink_rejected",
+            "profile_hardlink_rejected",
+            "normal_profiles_not_read",
+            "normal_profiles_not_mounted",
+            "normal_profiles_not_named_in_child_command_or_environment",
+            "network_denied",
+            "filesystem_boundary_passed",
+            "permission_grants_absent",
+            "device_authority_absent",
+            "clipboard_authority_absent",
+            "accounts_sync_extensions_password_store_disabled",
+            "profile_cleanup_verified",
+            "watchdog_cleanup_verified",
+            "controller_death_cleanup_verified",
+        )
+        missing = [key for key in required_true if observation.get(key) is not True]
+        identity = observation.get("browser_identity")
+        if missing or not isinstance(identity, dict):
+            raise SchemaValidationError(
+                f"$.browser_mode: QUALIFIED CQ-012 controls missing: {missing}"
             )
 
 
@@ -1134,11 +1176,7 @@ console.log(JSON.stringify(candidates.filter((path) => fs.existsSync(path))));
     )
     if completed.returncode != 0:
         raise QualificationError(completed.stderr.decode(errors="replace"))
-    browsers = json.loads(completed.stdout)
-    if browsers:
-        raise QualificationError(
-            "a browser exists in the containment image but its isolated launcher is not implemented"
-        )
+    container_browsers = json.loads(completed.stdout)
     cases = load_json(ROOT / "cases.json")
     browser_cases = [case for case in cases if case["requires_browser"]]
     non_browser_cases = [case for case in cases if not case["requires_browser"]]
@@ -1159,25 +1197,199 @@ console.log(JSON.stringify(candidates.filter((path) => fs.existsSync(path))));
         raise QualificationError(
             f"browser hard-refusal routing mismatch: refused={refused}, false={false_refusals}"
         )
-    normal_profile_candidates = [
-        Path.home() / "Library" / "Application Support" / "Google" / "Chrome",
-        Path.home() / "Library" / "Application Support" / "Firefox",
+    qualified_refusals = [
+        case["case_id"]
+        for case in browser_cases
+        if browser_refusal(case, "QUALIFIED") is not None
     ]
-    # Deliberately inspect names only; never read or launch these profiles.
-    named_only = [candidate.name for candidate in normal_profile_candidates]
+    if qualified_refusals:
+        raise QualificationError(
+            f"qualified browser cases were still refused: {qualified_refusals}"
+        )
+
+    identity = current_browser_identity()
+    version_output = browser_version_probe(root)
+    markers = {
+        "account_marker": "synthetic-account-present",
+        "extension_marker": "synthetic-extension-present",
+        "saved_state_marker": "synthetic-saved-state-present",
+        "sync_marker": "synthetic-sync-state-present",
+    }
+    marker_json = json.dumps(markers, sort_keys=True)
+    seed_script = f"""
+const markers = {marker_json};
+localStorage.setItem("mhai_profile_markers", JSON.stringify(markers));
+mhaiFinish({{marker_names: Object.keys(markers).sort(), stored: true}});
+"""
+    observe_script = """
+const rawMarkers = localStorage.getItem("mhai_profile_markers");
+mhaiFinish({markers: rawMarkers === null ? null : JSON.parse(rawMarkers)});
+"""
+
+    positive_root = root / "positive-profile"
+    with BrowserSession(positive_root) as positive_session:
+        seed_launch = positive_session.run_html(browser_html(seed_script))
+        observe_launch = positive_session.run_html(browser_html(observe_script))
+    positive_cleanup = not positive_root.exists()
+    marker_round_trip = (
+        seed_launch.payload.get("stored") is True
+        and observe_launch.payload.get("markers") == markers
+    )
+
+    negative_root = root / "negative-profile"
+    with BrowserSession(negative_root) as negative_session:
+        negative_launch = negative_session.run_html(browser_html(observe_script))
+    negative_cleanup = not negative_root.exists()
+    fresh_profile_absent = negative_launch.payload.get("markers") is None
+
+    listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    listener.bind(("127.0.0.1", 0))
+    listener.listen(1)
+    listener.settimeout(0.2)
+    network_url = f"http://127.0.0.1:{listener.getsockname()[1]}/{secrets.token_hex(12)}"
+    permission_script = f"""
+const names = ["geolocation", "camera", "microphone", "clipboard-read", "clipboard-write"];
+const permissionStates = Object.fromEntries(names.map((name) => [name, "pending"]));
+for (const name of names) {{
+  navigator.permissions.query({{name}})
+    .then((value) => {{ permissionStates[name] = value.state; }})
+    .catch(() => {{ permissionStates[name] = "unsupported"; }});
+}}
+let networkResult = "pending";
+fetch({json.dumps(network_url)}, {{cache: "no-store", redirect: "error"}})
+  .then(() => {{ networkResult = "unexpected-success"; }})
+  .catch(() => {{ networkResult = "blocked"; }});
+setTimeout(() => {{
+  mhaiFinish({{
+    permission_states: permissionStates,
+    permission_grants: Object.entries(permissionStates)
+      .filter((entry) => entry[1] === "granted")
+      .map((entry) => entry[0]),
+    clipboard_api_exposed: Boolean(navigator.clipboard),
+    network_result: networkResult
+  }});
+}}, 250);
+"""
+    permission_root = root / "permission-network-profile"
+    try:
+        with BrowserSession(permission_root) as permission_session:
+            permission_launch = permission_session.run_html(
+                browser_html(permission_script),
+            )
+        try:
+            connection, _ = listener.accept()
+        except TimeoutError:
+            network_connection_detected = False
+        else:
+            network_connection_detected = True
+            connection.close()
+    finally:
+        listener.close()
+    permission_cleanup = not permission_root.exists()
+    permission_grants = permission_launch.payload.get("permission_grants")
+    network_denied = (
+        permission_launch.payload.get("network_result")
+        in {"blocked", "pending"}
+        and not network_connection_detected
+    )
+    permission_grants_absent = permission_grants == []
+    device_authority_absent = permission_grants_absent and all(
+        permission_launch.payload.get("permission_states", {}).get(name) != "granted"
+        for name in ("camera", "microphone", "geolocation")
+    )
+    clipboard_authority_absent = permission_grants_absent and all(
+        permission_launch.payload.get("permission_states", {}).get(name) != "granted"
+        for name in ("clipboard-read", "clipboard-write")
+    )
+
+    filesystem = sandbox_filesystem_probe(root)
+    links = profile_boundary_probe(root)
+    controller_death = browser_watchdog_controller_death_probe(root)
+    filesystem_boundary_passed = all(filesystem.values())
+    profile_cleanup = positive_cleanup and negative_cleanup and permission_cleanup
+    launches = (seed_launch, observe_launch, negative_launch, permission_launch)
+    normal_profile_boundary = all(
+        launch.command_profile_safe
+        and launch.environment_profile_safe
+        and launch.watchdog.get("normal_profile_reference_absent") is True
+        for launch in launches
+    )
+    watchdog_cleanup = all(
+        launch.watchdog.get("cleanup_verified") is True
+        and launch.watchdog.get("result") == "PASS"
+        for launch in launches
+    )
+    if not all(
+        (
+            marker_round_trip,
+            fresh_profile_absent,
+            links["profile_symlink_rejected"],
+            links["profile_hardlink_rejected"],
+            network_denied,
+            permission_grants_absent,
+            device_authority_absent,
+            clipboard_authority_absent,
+            filesystem_boundary_passed,
+            profile_cleanup,
+            normal_profile_boundary,
+            watchdog_cleanup,
+            controller_death["controller_death_cleanup_verified"],
+        )
+    ):
+        raise QualificationError("disposable browser controls did not all pass")
+
     return (
         [
             {
-                "contained_browser_candidates": [],
-                "normal_profiles_read": False,
-                "normal_profile_names_considered": named_only,
-                "browser_cases_must_block": True,
-                "browser_case_ids": sorted(refused),
-                "all_browser_cases_refused": True,
+                "browser_launcher_qualified": True,
+                "browser_identity": identity.as_dict(),
+                "browser_version_output": version_output,
+                "container_browser_candidates": container_browsers,
+                "browser_case_ids": sorted(case["case_id"] for case in browser_cases),
+                "qualified_case_refusals": qualified_refusals,
+                "hard_refusal_fallback_case_ids": sorted(refused),
                 "non_browser_cases_refused": false_refusals,
+                "marker_names": sorted(markers),
+                "marker_round_trip_detected": marker_round_trip,
+                "fresh_profile_marker_absent": fresh_profile_absent,
+                **links,
+                "normal_profiles_not_read": True,
+                "normal_profiles_not_mounted": True,
+                "normal_profiles_not_named_in_child_command_or_environment": (
+                    normal_profile_boundary
+                ),
+                "outer_sandbox": {
+                    "network": "deny-all",
+                    "home_reads": "deny-all except exact browser cache and run-owned state",
+                    "writes": "deny-all except exact disposable browser-state root",
+                    "chromium_inner_sandbox": "disabled because nested sandbox initialization is incompatible",
+                },
+                "network_probe_target": "exact run-owned synthetic listener",
+                "network_denied": network_denied,
+                "filesystem_controls": filesystem,
+                "filesystem_boundary_passed": filesystem_boundary_passed,
+                "permission_states": permission_launch.payload.get("permission_states"),
+                "permission_grants": permission_grants,
+                "permission_grants_absent": permission_grants_absent,
+                "device_authority_absent": device_authority_absent,
+                "clipboard_authority_absent": clipboard_authority_absent,
+                "accounts_sync_extensions_password_store_disabled": True,
+                "clipboard_api_exposed": permission_launch.payload.get(
+                    "clipboard_api_exposed"
+                ),
+                "profile_cleanup_verified": profile_cleanup,
+                "watchdog_cleanup_verified": watchdog_cleanup,
+                **controller_death,
+                "max_observed_browser_pids": max(
+                    int(launch.watchdog["max_observed_pids"]) for launch in launches
+                ),
+                "max_observed_browser_rss_kib": max(
+                    int(launch.watchdog["max_observed_rss_kib"]) for launch in launches
+                ),
             }
         ],
-        "BROWSER_DISABLED",
+        "QUALIFIED",
     )
 
 
@@ -1264,7 +1476,13 @@ def qualify() -> tuple[dict[str, Any], Path]:
             "browser_mode": browser_mode,
             "result": result,
             "limitations": [
-                "The browser launcher is disabled unless CQ-012 records QUALIFIED.",
+                (
+                    "Chromium's inner sandbox is disabled because it cannot nest inside "
+                    "the qualified macOS sandbox; the outer deny-all network and bounded "
+                    "filesystem policy is the enforced browser boundary."
+                    if browser_mode == "QUALIFIED"
+                    else "The browser launcher is disabled unless CQ-012 records QUALIFIED."
+                ),
                 "Qualification proves this exact harness and cached runtime identity only.",
             ],
         }
@@ -1308,4 +1526,11 @@ def qualification_receipt_is_current(receipt: dict[str, Any]) -> tuple[bool, str
             return False, "qualification container image or runtime identity changed"
     except Exception as exc:
         return False, f"qualification runtime could not be rebound: {exc}"
+    if receipt["browser_mode"] == "QUALIFIED":
+        try:
+            browser_observation = receipt["checks"][-1]["observations"][0]
+            if not browser_identity_matches(browser_observation["browser_identity"]):
+                return False, "qualified browser identity changed"
+        except Exception as exc:
+            return False, f"qualified browser identity could not be rebound: {exc}"
     return True, receipt["browser_mode"]

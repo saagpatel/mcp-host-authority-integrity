@@ -32,9 +32,47 @@ failed.
 No restoration or target-side repair was attempted. Further target Git reads
 must use `git --no-optional-locks` or `GIT_OPTIONAL_LOCKS=0`.
 
+## SE-002 — pre-epoch browser crash diagnostics outside the program root
+
+- Classification: `LIFECYCLE_SIDE_EFFECT_OUTSIDE_PROGRAM_ROOT`
+- Phase: pre-epoch disposable-browser launcher qualification exploration
+- Observed at: `2026-07-19T05:07:40-07:00` through
+  `2026-07-19T05:08:14-07:00`
+- External writer: macOS `ReportCrash` / `osanalyticshelper`
+- Closure-gate effect: historical pre-epoch exception; excluded from no later
+  epoch window
+
+Two deliberately over-tight `sandbox-exec` trials caused Chromium and GPU
+subprocess failures while the launcher boundary was being derived. macOS
+lifecycle services then created six diagnostic reports under
+`/<HOME>/Library/Logs/DiagnosticReports`:
+
+- `chrome-headless-shell-2026-07-19-050740.ips`
+- `chrome-headless-shell-2026-07-19-050811.ips`
+- `chrome-headless-shell-2026-07-19-050812.000.ips`
+- `chrome-headless-shell-2026-07-19-050812.ips`
+- `chrome-headless-shell-2026-07-19-050814.000.ips`
+- `chrome-headless-shell-2026-07-19-050814.ips`
+
+Those writes were performed by the operating system rather than by the
+launcher process, but they are attributable to the program's failed probes and
+occurred outside the program-owned sacrificial root. They therefore cannot be
+described as perfectly no-write.
+
+No target repository, normal browser profile, account, saved browser state,
+connector, or external network endpoint was opened by the probes. Browser
+writes were otherwise confined to fresh program-owned profiles. The reports
+were not opened for content inspection, altered, moved, or deleted.
+
+The qualified launcher avoids the incompatible nested Chromium sandbox, uses
+one renderer process under the outer deny-all network/filesystem policy, and
+disables Chromium crash reporting. This reduces recurrence risk but does not
+repair or erase `SE-002`.
+
 ## Later closure epochs
 
 A later, explicitly bounded closure epoch may establish that its own observation
 window caused no forbidden target mutation. That is separate evidence only.
 It cannot repair, erase, downgrade, or reinterpret `SE-001`; the historical
-Gate 7 outcome above remains `FAIL`.
+Gate 7 outcome above remains `FAIL`. It likewise cannot erase or reinterpret
+the pre-epoch lifecycle side effect recorded as `SE-002`.

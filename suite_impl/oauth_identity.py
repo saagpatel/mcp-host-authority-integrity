@@ -1,4 +1,4 @@
-"""OAuth authority-binding fixtures with browser-required cases hard refused."""
+"""OAuth authority-binding fixtures, including qualified browser controls."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 from harness.execution import Evaluation, RunContext, browser_block
+from suite_impl import browser_fixtures
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
 
 
@@ -121,6 +122,8 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if blocked is not None:
         return blocked
     case_id = case["case_id"]
+    if case_id in {"OA-004", "OA-005", "OA-006"}:
+        return browser_fixtures.evaluate_oa(case, context)
     if case_id == "OA-001":
         return _metadata_ssrf(case, context)
     if case_id == "OA-002":

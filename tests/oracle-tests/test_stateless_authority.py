@@ -9,6 +9,7 @@ from harness.execution import RunContext, deterministic_declared_result
 from harness.qualification import ROOT as PROGRAM_ROOT
 from harness.schema_validation import canonical_digest, load_json
 from suite_impl.stateless_authority import evaluate
+from tests.helpers import closure_context_fields
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -32,6 +33,7 @@ def _context() -> RunContext:
         run_root=Path("/synthetic/in-memory-only"),
         browser_mode="BROWSER_DISABLED",
         qualification_digest="0" * 64,
+        **closure_context_fields(),
     )
 
 
