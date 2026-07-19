@@ -7,13 +7,11 @@ import hmac
 from pathlib import Path
 from typing import Any
 
-from harness.execution import Evaluation, RunContext, git_head
+from harness.execution import Evaluation, RunContext
 from harness.limits import SCHEMA_DEPTH, LimitExceeded, enforce_schema_depth
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
 
 BRIDGE_DB = Path("/Users/d/Projects/bridge-db")
-AIGC_CORE = Path("/Users/d/Projects/AIGCCore")
-PORTFOLIO_INDEX = Path("/Users/d/Projects/_claude-worktrees/portfolio-index-forge")
 
 
 def _matrix_case(case: dict[str, Any], context: RunContext) -> Evaluation:
@@ -164,10 +162,10 @@ def _blocked_copy(
     case: dict[str, Any],
     context: RunContext,
     *,
-    path: Path,
     detail: str,
 ) -> Evaluation:
-    commit = git_head(path)
+    frozen = context.frozen_target(case["case_id"])
+    commit = frozen["head"]
     deviation = hashlib.sha256(
         f"{case['case_id']}:{commit}:copy-not-created".encode()
     ).hexdigest()
@@ -178,8 +176,12 @@ def _blocked_copy(
         observations=[
             {
                 "source_candidate_head": commit,
+                "source_candidate_tree": frozen["tree"],
+                "source_clean_at_epoch_open": frozen["clean"],
+                "ownership": frozen["ownership"],
+                "ownership_basis": frozen["ownership_basis"],
                 "isolated_copy_created": False,
-                "target_access": "read-only Git identity only",
+                "target_access": "frozen closure-epoch identity only",
                 "overclaim_refused": True,
             }
         ],
@@ -261,8 +263,10 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _blocked_copy(
             case,
             context,
-            path=AIGC_CORE,
-            detail="No approved isolated AIGCCore copy exists at a stable Gate 0 pin.",
+            detail=(
+                "AIGCCore is clean at the frozen epoch identity, but source ownership "
+                "is not clear enough to create or execute a program-owned archive."
+            ),
         )
     if case_id == "LP-008":
         return _signature_case(case, context)
@@ -270,8 +274,10 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _blocked_copy(
             case,
             context,
-            path=PORTFOLIO_INDEX,
-            detail="No approved clean portfolio-index source worktree was pinned for an isolated copy.",
+            detail=(
+                "portfolio-index is clean at the frozen epoch identity, but the shared "
+                "feat/wave2-signature worktree has an active owner."
+            ),
         )
     if case_id == "LP-011":
         return _schema_exhaustion(case, context)

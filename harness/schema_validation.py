@@ -54,16 +54,17 @@ def validate(instance: Any, schema: dict[str, Any], path: str = "$") -> None:
             raise SchemaValidationError(f"{path}: no anyOf option matched; {errors}")
     if "oneOf" in schema:
         successes = 0
-        errors: list[str] = []
+        one_of_errors: list[str] = []
         for option in schema["oneOf"]:
             try:
                 validate(instance, option, path)
                 successes += 1
             except SchemaValidationError as exc:
-                errors.append(str(exc))
+                one_of_errors.append(str(exc))
         if successes != 1:
             raise SchemaValidationError(
-                f"{path}: expected exactly one oneOf match, got {successes}; {errors}"
+                f"{path}: expected exactly one oneOf match, got {successes}; "
+                f"{one_of_errors}"
             )
         return
 

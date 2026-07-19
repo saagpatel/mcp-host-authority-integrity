@@ -11,6 +11,7 @@ from harness.execution import Evaluation, RunContext
 from harness.program import ProgramExecutionError, run_complete_program
 from harness.qualification import ROOT
 from harness.schema_validation import canonical_digest, load_json
+from tests.helpers import closure_context_fields
 
 
 class ProgramFailClosedTests(unittest.TestCase):
@@ -44,6 +45,7 @@ class ProgramFailClosedTests(unittest.TestCase):
                     separators=(",", ":"),
                 ),
                 fixture_digest="0" * 64,
+                **closure_context_fields(),
             )
             evaluator_calls: list[str] = []
 

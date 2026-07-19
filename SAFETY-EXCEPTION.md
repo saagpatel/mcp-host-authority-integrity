@@ -31,3 +31,10 @@ failed.
 
 No restoration or target-side repair was attempted. Further target Git reads
 must use `git --no-optional-locks` or `GIT_OPTIONAL_LOCKS=0`.
+
+## Later closure epochs
+
+A later, explicitly bounded closure epoch may establish that its own observation
+window caused no forbidden target mutation. That is separate evidence only.
+It cannot repair, erase, downgrade, or reinterpret `SE-001`; the historical
+Gate 7 outcome above remains `FAIL`.

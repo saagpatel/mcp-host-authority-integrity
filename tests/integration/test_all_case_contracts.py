@@ -11,6 +11,7 @@ from harness.execution import RunContext, build_result, fixture_digest, utc_now
 from harness.program import evaluator_for
 from harness.qualification import ROOT
 from harness.schema_validation import canonical_digest, load_json
+from tests.helpers import closure_context_fields
 
 
 class AllCaseContractTests(unittest.TestCase):
@@ -33,6 +34,7 @@ class AllCaseContractTests(unittest.TestCase):
                     separators=(",", ":"),
                 ),
                 fixture_digest=fixture_digest(),
+                **closure_context_fields(),
             )
             for case in cases:
                 with self.subTest(case_id=case["case_id"]):
@@ -47,7 +49,7 @@ class AllCaseContractTests(unittest.TestCase):
         self.assertEqual(len({item["case_id"] for item in results}), 57)
         self.assertEqual(
             Counter(item["result"] for item in results),
-            Counter({"PASS": 43, "BLOCKED_BY_ACCESS": 14}),
+            Counter({"PASS": 43, "BLOCKED_BY_ACCESS": 13, "FAIL": 1}),
         )
         blocked_browser = {
             item["case_id"]

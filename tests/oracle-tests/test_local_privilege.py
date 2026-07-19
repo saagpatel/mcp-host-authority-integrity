@@ -13,6 +13,7 @@ from harness.execution import (
 from harness.qualification import ROOT
 from harness.schema_validation import canonical_digest, load_json
 from suite_impl.local_privilege import evaluate
+from tests.helpers import closure_context_fields
 
 
 class LocalPrivilegeOracleTests(unittest.TestCase):
@@ -74,6 +75,7 @@ class LocalPrivilegeOracleTests(unittest.TestCase):
             ROOT / "work/unused-local-copy-refusal",
             "BROWSER_DISABLED",
             "0" * 64,
+            **closure_context_fields(),
         )
         for case_id in ("LP-007", "LP-009"):
             with self.subTest(case_id=case_id):

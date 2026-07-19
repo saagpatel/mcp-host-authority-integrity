@@ -1055,7 +1055,8 @@
     "requires_browser": false,
     "result": "NOT_RUN",
     "source_citations": [
-      "GO-MCP-SDK",
+      "MCP-PYTHON-SDK",
+      "MCP-TYPESCRIPT-SDK",
       "JSON-SCHEMA-2020-12"
     ],
     "suite": "Stateless Authority",

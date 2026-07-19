@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
 from harness.execution import RunContext, deterministic_declared_result
+from harness.qualification import ROOT as PROGRAM_ROOT
+from harness.schema_validation import canonical_digest, load_json
 from suite_impl.stateless_authority import evaluate
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -202,24 +205,54 @@ class StatelessAuthorityOracleTests(unittest.TestCase):
         self.assertEqual(facts["rotations_restoring_budget"], [])
         self.assertTrue(facts["principal_operation_budget_exhausted"])
 
-    def test_official_sdk_cases_block_instead_of_simulating_evidence(self) -> None:
-        for case_id in ("SA-014", "SA-015"):
-            with self.subTest(case_id=case_id):
-                result = evaluate(self.cases[case_id], self.context)
-                self.assertEqual(result.target_verdict, "BLOCKED")
-                self.assertEqual(result.blocked_kind, "ACCESS")
-                self.assertEqual(
-                    deterministic_declared_result(result),
-                    "BLOCKED_BY_ACCESS",
-                )
-                self.assertEqual(result.positive_control, "NOT_RUN")
-                self.assertEqual(result.negative_control, "NOT_RUN")
-                observation = result.observations[0]
-                self.assertEqual(observation["coverage_level"], "OFFICIAL_SDK")
-                self.assertFalse(observation["exact_official_sdk_available"])
-                self.assertTrue(observation["simulated_official_sdk_refused"])
-                self.assertFalse(observation["synthetic_positive_control_executed"])
-                self.assertFalse(observation["synthetic_negative_control_executed"])
+    def test_go_sdk_case_blocks_without_simulating_evidence(self) -> None:
+        result = evaluate(self.cases["SA-014"], self.context)
+        self.assertEqual(result.target_verdict, "BLOCKED")
+        self.assertEqual(result.blocked_kind, "ACCESS")
+        self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
+        self.assertEqual(result.positive_control, "NOT_RUN")
+        self.assertEqual(result.negative_control, "NOT_RUN")
+        observation = result.observations[0]
+        self.assertEqual(observation["coverage_level"], "OFFICIAL_SDK")
+        self.assertFalse(observation["exact_official_sdk_available"])
+        self.assertTrue(observation["simulated_official_sdk_refused"])
+
+    def test_cross_sdk_case_executes_exact_cached_parsers(self) -> None:
+        qualification = load_json(
+            PROGRAM_ROOT / "results/latest/containment-qualification.json"
+        )
+        with tempfile.TemporaryDirectory(dir=PROGRAM_ROOT / "work") as temporary:
+            context = RunContext(
+                run_id="stateless-authority-sdk-test",
+                run_root=Path(temporary),
+                browser_mode="BROWSER_DISABLED",
+                qualification_digest=canonical_digest(qualification),
+                qualification_run_id=qualification["run_id"],
+                qualification_receipt_json=json.dumps(
+                    qualification,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+            ).for_case("SA-015")
+            context.case_root.mkdir(parents=True)
+            result = evaluate(self.cases["SA-015"], context)
+        self.assertEqual(result.target_verdict, "FAIL")
+        self.assertEqual(deterministic_declared_result(result), "FAIL")
+        self.assertEqual(result.positive_control, "PASS")
+        self.assertEqual(result.negative_control, "PASS")
+        observation = result.observations[0]
+        self.assertEqual(
+            observation["package_versions"],
+            {
+                "python": "mcp@1.28.1",
+                "typescript": "@modelcontextprotocol/sdk@1.29.0",
+            },
+        )
+        self.assertEqual(
+            observation["disagreements"],
+            ["conflicting_top_level_name"],
+        )
+        self.assertTrue(observation["authority_relevant_disagreement"])
 
     def test_catalog_oracle_drift_fails_closed(self) -> None:
         drifted = dict(self.cases["SA-001"])

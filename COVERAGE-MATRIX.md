@@ -30,7 +30,7 @@ Generated from the immutable catalog. Execution status and result remain `NOT_RU
 | SA-012 | Stateless Authority | CATALOGUED | NOT_RUN | FIXTURE_SERVER | RELEASED_CORE | MCP-TOOLS-2025-11-25 | NOT_RUN | Fixture evidence cannot prove an untested installed host. |
 | SA-013 | Stateless Authority | CATALOGUED | NOT_RUN | FIXTURE_SERVER | FIXTURE_SECURITY_INVARIANT | MHAI-SAFETY | NOT_RUN | Fixture evidence cannot prove an untested installed host. |
 | SA-014 | Stateless Authority | CATALOGUED | NOT_RUN | OFFICIAL_SDK | OFFICIAL_GUIDANCE | GO-MCP-SDK | NOT_RUN | Applies only to the exact SDK version and configuration. |
-| SA-015 | Stateless Authority | CATALOGUED | NOT_RUN | OFFICIAL_SDK | OFFICIAL_GUIDANCE | GO-MCP-SDK, JSON-SCHEMA-2020-12 | NOT_RUN | Applies only to the exact SDK version and configuration. |
+| SA-015 | Stateless Authority | CATALOGUED | NOT_RUN | OFFICIAL_SDK | OFFICIAL_GUIDANCE | MCP-PYTHON-SDK, MCP-TYPESCRIPT-SDK, JSON-SCHEMA-2020-12 | NOT_RUN | Applies only to the exact SDK version and configuration. |
 | HC-001 | Host Confused Deputy | CATALOGUED | NOT_RUN | FIXTURE_HOST | STABLE_EXTENSION | MCP-APPS-2026-01-26 | NOT_RUN | Fixture evidence cannot prove an untested installed host. |
 | HC-002 | Host Confused Deputy | CATALOGUED | NOT_RUN | FIXTURE_HOST | STABLE_EXTENSION | MCP-APPS-2026-01-26 | NOT_RUN | Fixture evidence cannot prove an untested installed host. |
 | HC-003 | Host Confused Deputy | CATALOGUED | NOT_RUN | FIXTURE_HOST | STABLE_EXTENSION | MCP-APPS-2026-01-26 | NOT_RUN | Fixture evidence cannot prove an untested installed host. |
@@ -64,4 +64,4 @@ Generated from the immutable catalog. Execution status and result remain `NOT_RU
 
 ## Catalog digest
 
-`sha256:c9385883745d7c781097eb219774ad79a8192862c257397a4131503175775194`
+`sha256:efed9ded61528eedc953e3291c1dbc3c3ed1c35053e8d120e96ad494c4eb75bb`

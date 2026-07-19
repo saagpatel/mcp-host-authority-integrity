@@ -12,6 +12,8 @@
     "qualification_digest",
     "qualification_run_id",
     "fixture_digest",
+    "closure_epoch_id",
+    "closure_epoch_digest",
     "case_count",
     "case_ids",
     "result_counts",
@@ -28,6 +30,8 @@
     "qualification_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "qualification_run_id": {"type": "string", "minLength": 1},
     "fixture_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "closure_epoch_id": {"type": "string", "pattern": "^closure-[a-z0-9-]+$"},
+    "closure_epoch_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "case_count": {"const": 57},
     "case_ids": {
       "type": "array",

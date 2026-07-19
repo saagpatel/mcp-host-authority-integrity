@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import hashlib
-from pathlib import Path
+import json
 from typing import Any
 
-from harness.execution import Evaluation, RunContext, git_head
+from harness.execution import ROOT, Evaluation, RunContext
+from harness.process_control import (
+    cleanup_labeled_containers,
+    docker,
+    safe_container_arguments,
+)
+from harness.qualification import IMAGE
 from suite_impl.common import ScenarioDecision, controlled_evaluation, deny_all
-
-MCP_TRUST = Path("/Users/d/Projects/mcp-trust")
 
 
 def _fixture_matrix(case: dict[str, Any], context: RunContext) -> Evaluation:
@@ -143,38 +147,171 @@ def _qualified_runtime_case(case: dict[str, Any], context: RunContext) -> Evalua
 
 
 def _registry_self_scan(case: dict[str, Any], context: RunContext) -> Evaluation:
-    head = git_head(MCP_TRUST)
-    boundary_digest = hashlib.sha256(
-        f"{case['case_id']}:{head}:live-target-code-not-executed".encode()
-    ).hexdigest()
-    return Evaluation(
-        target_verdict="BLOCKED",
-        blocked_kind="ACCESS",
-        blocked_detail=(
-            "Live mcp-trust code cannot execute outside the qualified containment and "
-            "effect boundary; no immutable isolated copy was approved."
-        ),
+    frozen = context.frozen_target(case["case_id"])
+    archive = frozen["archive"]
+    if not archive.get("created") or not archive.get("fidelity_proven"):
+        return Evaluation(
+            target_verdict="BLOCKED",
+            blocked_kind="ACCESS",
+            blocked_detail="No fidelity-proven immutable mcp-trust archive is bound to this run.",
+            observations=[
+                {
+                    "target_head": frozen["head"],
+                    "archive_created": archive.get("created", False),
+                    "archive_fidelity_proven": archive.get("fidelity_proven", False),
+                    "target_code_executed": False,
+                }
+            ],
+            positive_control="NOT_RUN",
+            negative_control="NOT_RUN",
+            containment_result="NOT_APPLICABLE",
+            cleanup_result="NOT_APPLICABLE",
+            subject_version=f"git:{frozen['head']}",
+        )
+    archive_path = (ROOT / archive["path"]).resolve()
+    if ROOT.resolve() not in archive_path.parents:
+        raise RuntimeError("frozen mcp-trust archive escaped the program root")
+    if hashlib.sha256(archive_path.read_bytes()).hexdigest() != archive["sha256"]:
+        raise RuntimeError("frozen mcp-trust archive digest changed")
+
+    python_code = r"""
+import asyncio
+import hashlib
+import json
+import sys
+
+sys.path.insert(0, "/opt/uv-tools/mcp-server-fetch/lib/python3.11/site-packages")
+sys.path.insert(0, "/subject/mcp-trust.zip/src")
+
+from mcp_trust.mcp_server import build_server
+
+def plain(value):
+    if hasattr(value, "model_dump"):
+        return value.model_dump(mode="json", by_alias=True, exclude_none=True)
+    if isinstance(value, (list, tuple)):
+        return [plain(item) for item in value]
+    if isinstance(value, dict):
+        return {key: plain(item) for key, item in value.items()}
+    return value
+
+def text_from(value):
+    candidate = plain(value)
+    queue = [candidate]
+    while queue:
+        current = queue.pop(0)
+        if isinstance(current, dict):
+            if isinstance(current.get("text"), str):
+                return current["text"]
+            queue.extend(current.values())
+        elif isinstance(current, list):
+            queue.extend(current)
+    raise RuntimeError("tool call did not return text")
+
+async def main():
+    app = build_server()
+    tools = await app.list_tools()
+    listed_raw = text_from(await app.call_tool("list_servers", {}))
+    listed = json.loads(listed_raw)
+    if listed["server_count"] < 1:
+        raise RuntimeError("registry returned no public records")
+    slug = listed["servers"][0]["slug"]
+    known_raw = text_from(await app.call_tool("check_server", {"slug": slug}))
+    known = json.loads(known_raw)
+    missing_raw = text_from(
+        await app.call_tool("check_server", {"slug": "synthetic-missing-server"})
+    )
+    missing = json.loads(missing_raw)
+    print(json.dumps({
+        "tool_names": sorted(tool.name for tool in tools),
+        "tool_annotations": {
+            tool.name: plain(tool.annotations) if tool.annotations is not None else None
+            for tool in tools
+        },
+        "server_count": listed["server_count"],
+        "known_slug_round_trip": known.get("slug") == slug,
+        "known_record_has_grade": isinstance(known.get("grade"), str),
+        "missing_record_rejected": isinstance(missing.get("error"), str),
+        "list_payload_sha256": hashlib.sha256(listed_raw.encode()).hexdigest(),
+        "known_payload_sha256": hashlib.sha256(known_raw.encode()).hexdigest(),
+        "missing_payload_sha256": hashlib.sha256(missing_raw.encode()).hexdigest(),
+    }, sort_keys=True))
+
+asyncio.run(main())
+"""
+    node_code = (
+        "const {spawnSync}=require('node:child_process');"
+        f"const code={json.dumps(python_code)};"
+        "const result=spawnSync('/usr/bin/python3',['-I','-c',code],"
+        "{encoding:'utf8',env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});"
+        "if(result.status!==0){process.stderr.write(result.stderr);process.exit(2);}"
+        "process.stdout.write(result.stdout);"
+    )
+    try:
+        completed = docker(
+            safe_container_arguments(
+                name=f"mhai-{context.run_id[-8:]}-rt012",
+                run_id=context.run_id,
+                image=IMAGE,
+                command=["node", "-e", node_code],
+                readonly_mounts=((archive_path, "/subject/mcp-trust.zip"),),
+            ),
+            cwd=context.case_root,
+            timeout_seconds=case["timeout_seconds"],
+        )
+    finally:
+        cleanup_labeled_containers(context.run_id, context.case_root)
+    if completed.returncode != 0 or completed.timed_out:
+        raise RuntimeError(
+            "contained mcp-trust observation failed: "
+            + completed.stderr.decode(errors="replace")
+        )
+    observed = json.loads(completed.stdout)
+    expected_tools = ["check_server", "get_methodology", "list_servers"]
+    runtime_satisfied = (
+        observed["tool_names"] == expected_tools
+        and observed["server_count"] > 0
+        and observed["known_slug_round_trip"]
+        and observed["known_record_has_grade"]
+        and observed["missing_record_rejected"]
+    )
+    evaluation = controlled_evaluation(
+        case,
+        context,
+        attack_variants=["represent-unobserved-mutation-or-isolation-as-proven"],
+        safe_decisions=[
+            ScenarioDecision(
+                False,
+                "only exact read behavior and public annotations are reported",
+            )
+        ],
+        vulnerable_accepts=["represent-unobserved-mutation-or-isolation-as-proven"],
         observations=[
             {
-                "live_target": str(MCP_TRUST),
-                "target_head": head,
-                "target_code_executed": False,
-                "isolated_copy_created": False,
-                "effect_broker_bypassed": False,
-                "blocked_boundary_digest": boundary_digest,
-                "overclaim_refused": True,
+                "target_head": frozen["head"],
+                "target_tree": frozen["tree"],
+                "archive_sha256": archive["sha256"],
+                "archive_tree_manifest_sha256": archive["tree_manifest_sha256"],
+                "archive_fidelity_proven": True,
+                "qualified_container_image": context.bound_qualification()["runtime"][
+                    "container_image"
+                ],
+                "network_mode": "none",
+                "target_mount": "read-only",
+                "observable_read_behavior": observed,
+                "runtime_oracle_satisfied": runtime_satisfied,
+                "mutation_behavior_proven": False,
+                "isolation_behavior_proven": False,
             }
         ],
-        positive_control="NOT_RUN",
-        negative_control="NOT_RUN",
-        containment_result="NOT_APPLICABLE",
-        cleanup_result="NOT_APPLICABLE",
-        subject_version=f"git:{head}",
         limitations=[
-            "No public annotation or observable live read behavior was exercised.",
-            "The LIVE_TARGET claim remains unproven until an approved immutable contained copy exists.",
+            "The result covers the exact archived commit and exercised read-only tool paths only.",
+            "No mutation, credential, live database, deployment, or runtime isolation claim was tested.",
         ],
     )
+    evaluation.subject_version = f"git:{frozen['head']}"
+    if not runtime_satisfied:
+        evaluation.target_verdict = "FAIL"
+    return evaluation
 
 
 def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:

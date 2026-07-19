@@ -5,13 +5,13 @@ from __future__ import annotations
 import hashlib
 import json
 import secrets
-import subprocess
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 from harness.browser_policy import browser_refusal
+from harness.closure_epoch import target_observation, validate_open_receipt
 from harness.ledger import write_once
 from harness.qualification import (
     qualification_receipt_is_current,
@@ -53,6 +53,9 @@ class RunContext:
     qualification_run_id: str = ""
     qualification_receipt_json: str = "{}"
     fixture_digest: str = ""
+    closure_epoch_id: str = ""
+    closure_epoch_digest: str = ""
+    closure_epoch_receipt_json: str = "{}"
 
     @property
     def case_root(self) -> Path:
@@ -70,6 +73,9 @@ class RunContext:
             qualification_run_id=self.qualification_run_id,
             qualification_receipt_json=self.qualification_receipt_json,
             fixture_digest=self.fixture_digest,
+            closure_epoch_id=self.closure_epoch_id,
+            closure_epoch_digest=self.closure_epoch_digest,
+            closure_epoch_receipt_json=self.closure_epoch_receipt_json,
         )
 
     def bound_qualification(self) -> dict[str, Any]:
@@ -81,6 +87,19 @@ class RunContext:
         ):
             raise RuntimeError("qualification snapshot no longer matches the run binding")
         return receipt
+
+    def bound_closure_epoch(self) -> dict[str, Any]:
+        receipt = json.loads(self.closure_epoch_receipt_json)
+        validate_open_receipt(receipt)
+        if (
+            canonical_digest(receipt) != self.closure_epoch_digest
+            or receipt["epoch_id"] != self.closure_epoch_id
+        ):
+            raise RuntimeError("closure epoch snapshot no longer matches the run binding")
+        return receipt
+
+    def frozen_target(self, case_id: str) -> dict[str, Any]:
+        return target_observation(self.bound_closure_epoch(), case_id)
 
 
 def utc_now() -> str:
@@ -108,29 +127,6 @@ def fixture_digest() -> str:
     return file_digest(paths)
 
 
-def git_head(path: Path) -> str:
-    completed = subprocess.run(
-        ["git", "--no-optional-locks", "-C", str(path), "rev-parse", "HEAD"],
-        check=False,
-        capture_output=True,
-        env={
-            "PATH": "/usr/local/bin:/usr/bin:/bin",
-            "HOME": str(ROOT / "work" / "temporary-state"),
-            "GIT_OPTIONAL_LOCKS": "0",
-            "LANG": "C.UTF-8",
-            "LC_ALL": "C.UTF-8",
-        },
-        timeout=5,
-    )
-    value = completed.stdout.decode().strip()
-    if completed.returncode != 0 or len(value) not in {40, 64}:
-        raise RuntimeError(
-            f"could not bind read-only Git subject at {path}: "
-            f"{completed.stderr.decode(errors='replace')}"
-        )
-    return value
-
-
 def subject_version(
     case: dict[str, Any],
     evaluation: Evaluation,
@@ -140,16 +136,9 @@ def subject_version(
         return evaluation.subject_version
     coverage = case["coverage_level"]
     if coverage == "LIVE_TARGET":
-        targets = {"RT-012": Path("/Users/d/Projects/mcp-trust")}
-        return f"git:{git_head(targets[case['case_id']])}"
+        return f"git:{context.frozen_target(case['case_id'])['head']}"
     if coverage == "ISOLATED_TARGET_COPY":
-        targets = {
-            "HC-011": Path("/Users/d/Projects/PortfolioCommandCenter"),
-            "HC-012": Path("/Users/d/Projects/PortfolioCommandCenter"),
-            "LP-007": Path("/Users/d/Projects/AIGCCore"),
-            "LP-009": Path("/Users/d/Projects/_claude-worktrees/portfolio-index-forge"),
-        }
-        commit = git_head(targets[case["case_id"]])
+        commit = context.frozen_target(case["case_id"])["head"]
         deviations = hashlib.sha256(
             f"{case['case_id']}:{commit}:no-copy-created-blocked".encode()
         ).hexdigest()
@@ -269,6 +258,26 @@ def new_context() -> RunContext:
         separators=(",", ":"),
         ensure_ascii=True,
     )
+    closure_path = ROOT / "results" / "latest" / "closure-epoch-open.json"
+    closure_epoch = load_json(closure_path)
+    validate_open_receipt(closure_epoch)
+    closure_digest = canonical_digest(closure_epoch)
+    immutable_closure_path = (
+        ROOT
+        / "results"
+        / "closure-epochs"
+        / closure_epoch["epoch_id"]
+        / "open.json"
+    )
+    immutable_closure = load_json(immutable_closure_path)
+    if canonical_digest(immutable_closure) != closure_digest:
+        raise RuntimeError("latest closure epoch differs from its immutable receipt")
+    closure_json = json.dumps(
+        closure_epoch,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    )
     run_id = f"run-{int(datetime.now(UTC).timestamp())}-{secrets.token_hex(6)}"
     run_root = ROOT / "work" / "temporary-state" / run_id
     run_root.mkdir(parents=True, mode=0o700)
@@ -280,6 +289,9 @@ def new_context() -> RunContext:
         qualification_run_id=qualification["run_id"],
         qualification_receipt_json=qualification_json,
         fixture_digest=fixture_digest(),
+        closure_epoch_id=closure_epoch["epoch_id"],
+        closure_epoch_digest=closure_digest,
+        closure_epoch_receipt_json=closure_json,
     )
 
 

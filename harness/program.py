@@ -142,6 +142,21 @@ def _assert_qualification_binding(context: RunContext) -> dict[str, Any]:
     return receipt
 
 
+def _assert_closure_epoch_binding(context: RunContext) -> dict[str, Any]:
+    receipt = context.bound_closure_epoch()
+    immutable_path = (
+        ROOT
+        / "results"
+        / "closure-epochs"
+        / context.closure_epoch_id
+        / "open.json"
+    )
+    immutable = load_json(immutable_path)
+    if canonical_digest(immutable) != context.closure_epoch_digest:
+        raise ProgramExecutionError("bound per-epoch opening receipt changed")
+    return receipt
+
+
 def _validate_manifest(
     manifest: dict[str, Any],
     cases: list[dict[str, Any]],
@@ -178,6 +193,7 @@ def run_complete_program() -> tuple[dict[str, Any], Path]:
         raise ProgramExecutionError(f"expected 57 cases, found {len(cases)}")
     context = new_context()
     qualification = context.bound_qualification()
+    closure_epoch = context.bound_closure_epoch()
     started_at = utc_now()
     ledger = ExecutionLedger(ROOT / "results/ledger")
     result_schema = load_json(ROOT / "schemas/result.schema.json")
@@ -244,6 +260,7 @@ def run_complete_program() -> tuple[dict[str, Any], Path]:
     if abort_reason is None:
         try:
             qualification = _assert_qualification_binding(context)
+            closure_epoch = _assert_closure_epoch_binding(context)
         except Exception as exc:
             abort_reason = str(exc)
     result_counts = dict(sorted(Counter(item["result"] for item in records).items()))
@@ -264,6 +281,8 @@ def run_complete_program() -> tuple[dict[str, Any], Path]:
         "qualification_digest": canonical_digest(qualification),
         "qualification_run_id": qualification["run_id"],
         "fixture_digest": context.fixture_digest,
+        "closure_epoch_id": closure_epoch["epoch_id"],
+        "closure_epoch_digest": canonical_digest(closure_epoch),
         "case_count": len(cases),
         "case_ids": [case["case_id"] for case in cases],
         "result_counts": result_counts,
@@ -281,5 +300,6 @@ def run_complete_program() -> tuple[dict[str, Any], Path]:
             f"program aborted; incomplete manifest preserved at {run_path}: {abort_reason}"
         )
     _assert_qualification_binding(context)
+    _assert_closure_epoch_binding(context)
     _atomic_replace(latest_path, manifest)
     return manifest, latest_path

@@ -557,17 +557,23 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if case_id in _BROWSER_CASES:
         return _browser_refusal(case, context)
     if case_id == "HC-012":
+        frozen = context.frozen_target(case_id)
         return Evaluation(
             target_verdict="BLOCKED",
             blocked_kind="ACCESS",
             blocked_detail=(
-                "The pinned isolated PortfolioCommandCenter source drifted and no approved "
-                "program-owned copy exists; target access and substitute reproduction are refused."
+                "PortfolioCommandCenter is clean at the frozen epoch identity, but current "
+                "security-branch ownership is not clear enough to create or execute an archive."
             ),
             observations=[
                 {
+                    "source_candidate_head": frozen["head"],
+                    "source_candidate_tree": frozen["tree"],
+                    "source_clean_at_epoch_open": frozen["clean"],
+                    "ownership": frozen["ownership"],
+                    "ownership_basis": frozen["ownership_basis"],
                     "isolated_copy_available": False,
-                    "target_repository_accessed": False,
+                    "target_repository_accessed_during_case": False,
                     "substitute_fixture_claimed": False,
                 }
             ],

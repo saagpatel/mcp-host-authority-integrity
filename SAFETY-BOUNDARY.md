@@ -11,6 +11,8 @@
   cached images.
 - Read-only source inspection and pinned isolated copies when the live target is
   clean and ownership is clear.
+- A closure-epoch opening inventory only when every target Git read carries
+  both `GIT_OPTIONAL_LOCKS=0` and `git --no-optional-locks`.
 
 ## Forbidden
 
@@ -73,3 +75,13 @@ escaped. Cleanup failure aborts further execution and marks the affected case
 If safe containment, source-copy fidelity, a required runtime, or non-mutating
 authority is unavailable, the case is not weakened. It is recorded as
 `BLOCKED_BY_ACCESS`, `BLOCKED_BY_AUTHORITY`, or `UNKNOWN`.
+
+## Closure epochs
+
+Target identities are observed once at epoch open and persisted in
+program-owned evidence. Execution uses only those frozen identities. Final
+closure invokes no target Git command and compares frozen lstat metadata
+digests instead. A clean, clearly owned target may be archived at its frozen
+commit only after complete tree/blob/mode fidelity verification; a missing
+dependency, unclear owner, dirty source, or incomplete fidelity proof remains
+blocked.

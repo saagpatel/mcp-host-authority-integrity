@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/closure-epoch-close.schema.json",
+  "title": "MHAI closure epoch closing receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "closure_version",
+    "phase",
+    "epoch_id",
+    "closed_at",
+    "open_digest",
+    "qualification_run_id",
+    "run_id",
+    "run_manifest_sha256",
+    "target_metadata_checks",
+    "no_forbidden_mutation_gate",
+    "safely_obtainable_coverage_executed",
+    "remaining_blockers",
+    "historical_exceptions",
+    "historical_exception_repaired",
+    "result"
+  ],
+  "properties": {
+    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-1"},
+    "phase": {"const": "CLOSE"},
+    "epoch_id": {"type": "string", "pattern": "^closure-[a-z0-9-]+$"},
+    "closed_at": {"type": "string", "minLength": 1},
+    "open_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "qualification_run_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "run_manifest_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "target_metadata_checks": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "opening_metadata_sha256",
+          "closing_metadata_sha256",
+          "stable",
+          "final_observation"
+        ],
+        "properties": {
+          "name": {"type": "string"},
+          "opening_metadata_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "closing_metadata_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "stable": {"type": "boolean"},
+          "final_observation": {
+            "const": "lstat metadata digest only; no final Git command"
+          }
+        }
+      }
+    },
+    "no_forbidden_mutation_gate": {"enum": ["PASS", "FAIL"]},
+    "safely_obtainable_coverage_executed": {"type": "boolean"},
+    "remaining_blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "result", "kind", "detail"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "result": {"enum": ["BLOCKED_BY_ACCESS", "BLOCKED_BY_AUTHORITY"]},
+          "kind": {"enum": ["ACCESS", "AUTHORITY"]},
+          "detail": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "historical_exceptions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {"const": "SE-001"}
+    },
+    "historical_exception_repaired": {"const": false},
+    "result": {"enum": ["PASS_WITH_HISTORICAL_EXCEPTION", "FAIL"]}
+  }
+}

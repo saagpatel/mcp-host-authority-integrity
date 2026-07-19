@@ -24,16 +24,29 @@ profiles are read-only or out of scope.
 ## Quick start
 
 ```sh
-python3 scripts/generate_cases.py --check
+ruff check .
+mypy harness suite_impl scripts
 python3 -m unittest discover -s tests -v
+python3 scripts/generate_cases.py --check
 python3 -m harness.runner list
+git commit  # create a clean, program-owned local checkpoint
+python3 -m harness.runner epoch-open
 python3 -m harness.runner qualify
 python3 -m harness.runner run-safe
+python3 -m harness.runner epoch-close
+python3 scripts/render_execution_evidence.py --write
+python3 scripts/render_execution_evidence.py --check
 ```
 
 `run-safe` refuses to start when qualification is missing, stale, or failed.
 Case results distinguish target behavior from harness containment and control
 health. A harness exit code is never treated as a security verdict by itself.
+`epoch-open` also refuses a dirty program worktree. It freezes target identities
+with `GIT_OPTIONAL_LOCKS=0` and `git --no-optional-locks`, creates an immutable
+program-owned target archive only when cleanliness and ownership permit, and
+binds the resulting receipt into qualification and execution. `epoch-close`
+performs no target Git command; it compares frozen lstat metadata and the
+hash-bound run instead.
 
 ## Suites
 
@@ -70,3 +83,5 @@ The completed evidence overlay is in [EXECUTION-SUMMARY.md](EXECUTION-SUMMARY.md
 and [EXECUTION-COVERAGE.md](EXECUTION-COVERAGE.md). `COVERAGE-MATRIX.md` remains
 the immutable pre-execution catalog view. [SAFETY-EXCEPTION.md](SAFETY-EXCEPTION.md)
 records the Gate 7 closeout boundary violation.
+That historical `SE-001` violation is permanent program history. A later
+closure epoch may pass its own gate, but cannot repair or reinterpret it.

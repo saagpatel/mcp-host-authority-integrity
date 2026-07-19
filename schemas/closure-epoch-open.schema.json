@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/closure-epoch-open.schema.json",
+  "title": "MHAI closure epoch opening receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "closure_version",
+    "phase",
+    "epoch_id",
+    "opened_at",
+    "program_commit",
+    "git_read_contract",
+    "target_observations",
+    "lane_discovery",
+    "historical_exceptions",
+    "historical_exception_repaired"
+  ],
+  "properties": {
+    "closure_version": {"const": "MHAI-CLOSURE-EPOCH-1"},
+    "phase": {"const": "OPEN"},
+    "epoch_id": {"type": "string", "pattern": "^closure-[a-z0-9-]+$"},
+    "opened_at": {"type": "string", "minLength": 1},
+    "program_commit": {"type": "string", "pattern": "^[a-f0-9]{40}([a-f0-9]{24})?$"},
+    "git_read_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment", "argument"],
+      "properties": {
+        "environment": {"const": "GIT_OPTIONAL_LOCKS=0"},
+        "argument": {"const": "git --no-optional-locks"}
+      }
+    },
+    "target_observations": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "case_ids",
+          "head",
+          "tree",
+          "branch",
+          "clean",
+          "status_sha256",
+          "ownership",
+          "ownership_basis",
+          "metadata",
+          "read_mutation_free",
+          "archive"
+        ],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "case_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "head": {"type": "string", "pattern": "^[a-f0-9]{40}([a-f0-9]{24})?$"},
+          "tree": {"type": "string", "pattern": "^[a-f0-9]{40}([a-f0-9]{24})?$"},
+          "branch": {"type": "string", "minLength": 1},
+          "clean": {"type": "boolean"},
+          "status_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "ownership": {"enum": ["CLEAR", "UNCLEAR", "ACTIVE"]},
+          "ownership_basis": {"type": "string", "minLength": 1},
+          "metadata": {"type": "object"},
+          "read_mutation_free": {"const": true},
+          "archive": {"type": "object"}
+        }
+      }
+    },
+    "lane_discovery": {"type": "object"},
+    "historical_exceptions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {"const": "SE-001"}
+    },
+    "historical_exception_repaired": {"const": false}
+  }
+}

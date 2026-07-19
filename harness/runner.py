@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from harness.closure_epoch import close_epoch, open_epoch
 from harness.program import run_complete_program
 from harness.qualification import qualify
 from harness.schema_validation import load_json, validate_case_contract
@@ -62,18 +63,60 @@ def run_safe() -> int:
     return 0
 
 
+def run_epoch_open() -> int:
+    receipt, path = open_epoch()
+    print(
+        json.dumps(
+            {
+                "result": "OPEN",
+                "epoch_id": receipt["epoch_id"],
+                "program_commit": receipt["program_commit"],
+                "receipt": str(path),
+            },
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
+def run_epoch_close() -> int:
+    receipt, path = close_epoch()
+    print(
+        json.dumps(
+            {
+                "result": receipt["result"],
+                "epoch_id": receipt["epoch_id"],
+                "run_id": receipt["run_id"],
+                "no_forbidden_mutation_gate": receipt[
+                    "no_forbidden_mutation_gate"
+                ],
+                "remaining_blockers": len(receipt["remaining_blockers"]),
+                "receipt": str(path),
+            },
+            sort_keys=True,
+        )
+    )
+    return 0 if receipt["result"] == "PASS_WITH_HISTORICAL_EXCEPTION" else 4
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="mhai")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("list")
     commands.add_parser("qualify")
     commands.add_parser("run-safe")
+    commands.add_parser("epoch-open")
+    commands.add_parser("epoch-close")
     args = parser.parse_args()
     if args.command == "list":
         return list_cases()
     if args.command == "qualify":
         return run_qualification()
-    return run_safe()
+    if args.command == "run-safe":
+        return run_safe()
+    if args.command == "epoch-open":
+        return run_epoch_open()
+    return run_epoch_close()
 
 
 if __name__ == "__main__":

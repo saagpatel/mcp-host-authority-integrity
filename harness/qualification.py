@@ -20,7 +20,7 @@ import time
 from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from harness.browser_policy import browser_refusal
 from harness.canary_store import CanaryError, CanaryStore
@@ -50,7 +50,7 @@ from harness.redaction import MAX_EVIDENCE_BYTES, RedactionError, redact
 from harness.schema_validation import SchemaValidationError, load_json, validate
 
 ROOT = Path(__file__).resolve().parents[1]
-IMAGE = "node:22-slim"
+IMAGE = "mcp-trust-live-batch:20260628"
 QUALIFICATION_VERSION = "MHAI-CONTAINMENT-1"
 QUALIFICATION_LABEL_SUFFIXES = ("", "-04", "-05", "-06", "-08", "-09", "-11", "-12")
 
@@ -93,6 +93,8 @@ def harness_digest() -> str:
             ROOT / "schemas" / "result.schema.json",
             ROOT / "schemas" / "run-manifest.schema.json",
             ROOT / "schemas" / "test-case.schema.json",
+            ROOT / "schemas" / "closure-epoch-open.schema.json",
+            ROOT / "schemas" / "closure-epoch-close.schema.json",
         ]
     )
     return digest_paths(paths)
@@ -589,8 +591,14 @@ console.log(JSON.stringify({trusted_write: trustedWrite, forged_written: true}))
     contained_result = json.loads(contained.stdout)
     if contained_result["trusted_write"] or not (fixture / "forged.json").exists():
         raise QualificationError("contained forged-result control did not exercise separation")
-    observation = redact({"kind": "fixture-output", "payload": forged})
-    if observation["payload"]["nested"]["authorization"] == forged["nested"]["authorization"]:
+    observation = cast(
+        dict[str, Any],
+        redact({"kind": "fixture-output", "payload": forged}),
+    )
+    redacted_payload = cast(dict[str, Any], observation["payload"])
+    redacted_nested = cast(dict[str, Any], redacted_payload["nested"])
+    forged_nested = cast(dict[str, Any], forged["nested"])
+    if redacted_nested["authorization"] == forged_nested["authorization"]:
         raise QualificationError("forged sensitive value was not redacted")
     if any(trusted.iterdir()):
         raise QualificationError("fixture created a trusted result")

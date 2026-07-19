@@ -15,5 +15,7 @@ work/isolated-targets/*
 !work/isolated-targets/.gitkeep
 results/latest/*
 results/runs/*
+results/closure-epochs/*
 !results/latest/.gitkeep
 !results/runs/.gitkeep
+!results/closure-epochs/.gitkeep

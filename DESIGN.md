@@ -31,6 +31,7 @@ oracles, evidence, cleanup, and result validation across every suite.
    - Uses argv-only process execution, a synthetic environment, explicit
      resource ceilings, an out-of-process watchdog, and monotonic leases.
    - Risky cases remain serial until containment qualification passes.
+   - Binds every run to one immutable closure-epoch receipt.
 
 4. **Deny-by-default effect broker**
    - Is the only path to filesystem, network, command, approval, browser, or
@@ -89,6 +90,25 @@ detached-process emergency stop, path containment, redaction, resource ceilings,
 result-channel separation, duplicate rejection, PID-reuse resistance, and cleanup
 all pass against the exact oracles in `CONTAINMENT-QUALIFICATION.md`. Attack
 execution is impossible before this gate.
+
+### Gate 7 — bounded closure epoch
+
+A closure epoch starts only from a clean program-owned checkpoint. Its opening
+receipt freezes every target identity using both `GIT_OPTIONAL_LOCKS=0` and
+`git --no-optional-locks`; ordinary execution consumes those frozen identities
+and does not reinventory targets.
+
+When a target is clean and ownership is clear, the opener may create a
+program-owned immutable `git archive` at the frozen commit. The archive is
+accepted only after its file set, modes, and every blob object ID match the
+frozen Git tree. Archive contents are made read-only and their digest is bound
+into the epoch.
+
+The close step invokes no target Git command. It compares lstat metadata
+digests for the frozen repository and linked Git directory, validates every
+case result and manifest hash, and passes only when no target observation
+surface changed during the epoch. A passing later epoch is separate evidence;
+it never erases or repairs historical safety exception `SE-001`.
 
 ## Integrated chain
 

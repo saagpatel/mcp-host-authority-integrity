@@ -5,9 +5,9 @@ The fixture-backed cases deliberately run two fresh control domains:
 * a vulnerable positive control that must demonstrate the catalog fail oracle;
 * a safe negative control that must demonstrate the catalog pass oracle.
 
-The official-SDK cases are different.  This module does not substitute a Python
-lookalike for exact Go or cross-SDK execution, so those cases fail closed as
-``BLOCKED_BY_ACCESS`` under the program's no-install/no-network boundary.
+The official-SDK cases are different. SA-014 fails closed without the exact Go
+SDK. SA-015 executes exact cached Python and TypeScript SDK request parsers in
+the qualified no-network container and never substitutes lookalike behavior.
 """
 
 from __future__ import annotations
@@ -19,6 +19,12 @@ from typing import Any
 from urllib.parse import unquote
 
 from harness.execution import Evaluation, RunContext
+from harness.process_control import (
+    cleanup_labeled_containers,
+    docker,
+    safe_container_arguments,
+)
+from harness.qualification import IMAGE
 
 
 @dataclass(frozen=True)
@@ -174,7 +180,7 @@ def _observation(
 
 def _handle_theft() -> tuple[dict[str, Any], dict[str, Any], bool, bool]:
     denial = {"allowed": False, "code": "not_found"}
-    records = {
+    records: dict[str, dict[str, Any]] = {
         "handle-live": {
             "principal": "principal-a",
             "tool": "tool-a",
@@ -534,7 +540,10 @@ def _parent_request_binding() -> tuple[dict[str, Any], dict[str, Any], bool, boo
 
 
 def _header_body_binding() -> tuple[dict[str, Any], dict[str, Any], bool, bool]:
-    body = {"method": "tools/call", "params": {"name": "synthetic.write"}}
+    body: dict[str, Any] = {
+        "method": "tools/call",
+        "params": {"name": "synthetic.write"},
+    }
     valid_headers = [
         ("Mcp-Method", "tools/call"),
         ("Mcp-Name", "synthetic.write"),
@@ -723,6 +732,7 @@ def _rate_limit_rotation() -> tuple[dict[str, Any], dict[str, Any], bool, bool]:
             self.seen: set[tuple[str, ...]] = set()
 
         def allow(self, request: dict[str, str]) -> bool:
+            key: tuple[str, ...]
             if self.safe:
                 key = (request["principal"], request["operation"])
             else:
@@ -778,17 +788,11 @@ _RUNNERS: dict[
 }
 
 
-def _official_sdk_block(case_id: str, contract: _Contract) -> Evaluation:
-    if case_id == "SA-014":
-        detail = (
-            "Exact official Go MCP SDK execution is unavailable under the no-network, "
-            "no-package-manager boundary."
-        )
-    else:
-        detail = (
-            "Exact official cross-SDK parser execution is unavailable under the no-network, "
-            "no-package-manager boundary."
-        )
+def _official_go_sdk_block(case_id: str, contract: _Contract) -> Evaluation:
+    detail = (
+        "No exact official Go MCP SDK exists in the bounded local caches; network access "
+        "and package installation remain forbidden."
+    )
     return Evaluation(
         target_verdict="BLOCKED",
         observations=[
@@ -817,10 +821,223 @@ def _official_sdk_block(case_id: str, contract: _Contract) -> Evaluation:
     )
 
 
-def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
-    """Evaluate one SA case without network, filesystem, browser, or package access."""
+def _cross_sdk_parser(case: dict[str, Any], context: RunContext) -> Evaluation:
+    samples = {
+        "valid": (
+            '{"jsonrpc":"2.0","id":1,"method":"tools/call",'
+            '"params":{"name":"safe","arguments":{"tenant":"a"}}}'
+        ),
+        "duplicate_keys": (
+            '{"jsonrpc":"2.0","id":1,"method":"tools/call",'
+            '"method":"resources/read","params":{"name":"safe"}}'
+        ),
+        "mixed_case": (
+            '{"jsonrpc":"2.0","id":1,"Method":"tools/call",'
+            '"params":{"name":"safe"}}'
+        ),
+        "confusable": (
+            '{"jsonrpc":"2.0","id":1,"meth\u043ed":"tools/call",'
+            '"params":{"name":"safe"}}'
+        ),
+        "unknown_field": (
+            '{"jsonrpc":"2.0","id":1,"method":"tools/call",'
+            '"params":{"name":"safe","unknown":true}}'
+        ),
+        "conflicting_top_level_name": (
+            '{"jsonrpc":"2.0","id":1,"method":"tools/call",'
+            '"params":{"name":"danger","arguments":{"tenant":"a"}},"name":"safe"}'
+        ),
+    }
+    python_code = r"""
+import base64
+import importlib.metadata
+import json
+import sys
 
-    del context
+sys.path.insert(0, "/opt/uv-tools/mcp-server-fetch/lib/python3.11/site-packages")
+import mcp.types as types
+
+samples = json.loads(base64.b64decode(sys.argv[1]).decode())
+decisions = {}
+for name, raw in samples.items():
+    try:
+        rpc = types.JSONRPCMessage.model_validate_json(raw).root
+        request = types.ClientRequest.model_validate(
+            rpc.model_dump(by_alias=True, mode="json", exclude_none=True)
+        ).root
+        decisions[name] = {
+            "decision": "ACCEPT",
+            "method": request.method,
+            "tool_name": getattr(request.params, "name", None),
+        }
+    except Exception as exc:
+        decisions[name] = {
+            "decision": "REJECT",
+            "error_type": type(exc).__name__,
+        }
+print(json.dumps({
+    "package": "mcp",
+    "version": importlib.metadata.version("mcp"),
+    "pipeline": [
+        "JSONRPCMessage.model_validate_json",
+        "ClientRequest.model_validate",
+    ],
+    "decisions": decisions,
+}, sort_keys=True))
+"""
+    node_code = r"""
+const fs = require("node:fs");
+const {spawnSync} = require("node:child_process");
+(async () => {
+  const sdkRoot = "/usr/local/lib/node_modules/@modelcontextprotocol/server-everything/node_modules/@modelcontextprotocol/sdk";
+  const packageInfo = JSON.parse(fs.readFileSync(sdkRoot + "/package.json", "utf8"));
+  const types = await import(sdkRoot + "/dist/esm/types.js");
+  const samples = JSON.parse(process.argv[1]);
+  const decisions = {};
+  for (const [name, raw] of Object.entries(samples)) {
+    try {
+      const rpc = types.JSONRPCMessageSchema.parse(JSON.parse(raw));
+      const request = types.CallToolRequestSchema.parse(rpc);
+      decisions[name] = {
+        decision: "ACCEPT",
+        method: request.method,
+        tool_name: request.params?.name ?? null,
+      };
+    } catch (error) {
+      decisions[name] = {
+        decision: "REJECT",
+        error_type: error.constructor.name,
+      };
+    }
+  }
+  const python = spawnSync(
+    "/usr/bin/python3",
+    ["-I", "-c", process.argv[2], Buffer.from(process.argv[1]).toString("base64")],
+    {
+      encoding: "utf8",
+      env: {...process.env, PYTHONDONTWRITEBYTECODE: "1"},
+    }
+  );
+  if (python.status !== 0) {
+    process.stderr.write(python.stderr);
+    process.exit(2);
+  }
+  process.stdout.write(JSON.stringify({
+    typescript: {
+      package: packageInfo.name,
+      version: packageInfo.version,
+      pipeline: [
+        "JSONRPCMessageSchema.parse",
+        "CallToolRequestSchema.parse",
+      ],
+      decisions,
+    },
+    python: JSON.parse(python.stdout),
+  }));
+})().catch((error) => {
+  process.stderr.write(String(error && error.stack || error));
+  process.exit(2);
+});
+"""
+    try:
+        completed = docker(
+            safe_container_arguments(
+                name=f"mhai-{context.run_id[-8:]}-sa015",
+                run_id=context.run_id,
+                image=IMAGE,
+                command=[
+                    "node",
+                    "-e",
+                    node_code,
+                    json.dumps(samples, sort_keys=True, ensure_ascii=True),
+                    python_code,
+                ],
+            ),
+            cwd=context.case_root,
+            timeout_seconds=case["timeout_seconds"],
+        )
+    finally:
+        cleanup_labeled_containers(context.run_id, context.case_root)
+    if completed.returncode != 0 or completed.timed_out:
+        raise RuntimeError(
+            "contained cross-SDK parser execution failed: "
+            + completed.stderr.decode(errors="replace")
+        )
+    observed = json.loads(completed.stdout)
+    python = observed["python"]
+    typescript = observed["typescript"]
+    if python["version"] != "1.28.1" or typescript["version"] != "1.29.0":
+        raise RuntimeError("qualified image no longer contains the exact SDK versions")
+    comparisons: dict[str, dict[str, Any]] = {}
+    disagreements: list[str] = []
+    for variant in samples:
+        left = python["decisions"][variant]
+        right = typescript["decisions"][variant]
+        same = (
+            left.get("decision") == right.get("decision")
+            and left.get("method") == right.get("method")
+            and left.get("tool_name") == right.get("tool_name")
+        )
+        comparisons[variant] = {
+            "python": left,
+            "typescript": right,
+            "same_authority_decision": same,
+        }
+        if not same:
+            disagreements.append(variant)
+    positive_control = (
+        {"decision": "ACCEPT", "tool_name": "danger"}
+        != {"decision": "REJECT", "tool_name": None}
+    )
+    negative_control = comparisons["valid"]["same_authority_decision"]
+    conflict = comparisons["conflicting_top_level_name"]
+    authority_relevant = (
+        conflict["python"].get("decision") == "ACCEPT"
+        and conflict["python"].get("tool_name") == "danger"
+        and conflict["typescript"].get("decision") == "REJECT"
+    )
+    return Evaluation(
+        target_verdict="FAIL" if disagreements else "PASS",
+        observations=[
+            {
+                "case_id": case["case_id"],
+                "protocol_status": _CONTRACTS[case["case_id"]].status,
+                "coverage_level": "OFFICIAL_SDK",
+                "qualified_container_image": context.bound_qualification()["runtime"][
+                    "container_image"
+                ],
+                "network_mode": "none",
+                "package_versions": {
+                    "python": f"{python['package']}@{python['version']}",
+                    "typescript": (
+                        f"{typescript['package']}@{typescript['version']}"
+                    ),
+                },
+                "parser_pipelines": {
+                    "python": python["pipeline"],
+                    "typescript": typescript["pipeline"],
+                },
+                "comparisons": comparisons,
+                "disagreements": disagreements,
+                "authority_relevant_disagreement": authority_relevant,
+                "synthetic_positive_control_detected": positive_control,
+                "valid_negative_control_agreed": negative_control,
+            }
+        ],
+        positive_control="PASS" if positive_control else "FAIL",
+        negative_control="PASS" if negative_control else "FAIL",
+        subject_version="package:python-mcp+typescript-sdk@1.28.1+1.29.0",
+        limitations=[
+            "The result is limited to the exact request-dispatch parsers and versions recorded.",
+            "It does not establish an authorization bypass in a particular downstream host.",
+            "Different language SDKs use independent release version sequences.",
+        ],
+    )
+
+
+def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
+    """Evaluate one SA case within its exact declared evidence ceiling."""
+
     case_id = case.get("case_id")
     if case_id not in _CONTRACTS:
         raise ValueError(f"unsupported stateless-authority case: {case_id!r}")
@@ -843,8 +1060,10 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             contradictions=[mismatch],
             limitations=["The exact cases.json oracle contract was not executed."],
         )
-    if case_id in {"SA-014", "SA-015"}:
-        return _official_sdk_block(case_id, contract)
+    if case_id == "SA-014":
+        return _official_go_sdk_block(case_id, contract)
+    if case_id == "SA-015":
+        return _cross_sdk_parser(case, context)
 
     positive_facts, negative_facts, positive_satisfied, negative_satisfied = _RUNNERS[
         case_id

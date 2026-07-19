@@ -5,9 +5,11 @@ fixtures remain disabled until every required qualification below passes in one
 run against the same harness digest and recorded runtime identity.
 
 The qualification receipt records `MHAI-CONTAINMENT-1`, the harness source
-digest, OS/runtime versions, cached container image ID, start/finish times,
-individual observations, cleanup state, and an overall verdict. Any missing,
-contradictory, or invalid record fails the gate.
+digest, OS/runtime versions, exact cached container image ID, start/finish
+times, individual observations, cleanup state, and an overall verdict. The
+qualified image must also contain every runtime later used for exact official
+SDK or read-only target-archive execution. Any missing, contradictory, or
+invalid record fails the gate.
 
 ## Exact qualification cases
 

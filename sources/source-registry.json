@@ -1,7 +1,7 @@
 {
   "registry_version": "MHAI-SOURCES-1",
   "retrieved_at": "2026-07-19",
-  "sources_digest": "3cb03f0666cafd52120038f7adcd56dcbdcb161a650c6487ba9497dd68b6e99c",
+  "sources_digest": "c6336ac508abe58192232d133875eb695960b67c315119f8180c26c11600e341",
   "sources": [
     {
       "source_id": "MCP-TOOLS-2025-11-25",
@@ -173,6 +173,24 @@
       "publication_or_update_date": "2026-05-22",
       "exact_requirement_used": "Cross-origin behavior is version- and configuration-specific and must be tested against an exact installed version.",
       "local_implementation_claims_support": "None until an isolated exact SDK version is available."
+    },
+    {
+      "source_id": "MCP-PYTHON-SDK",
+      "title": "Official MCP Python SDK",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "UNKNOWN (exact package locally observed 2026-07-19)",
+      "exact_requirement_used": "Request-envelope behavior is version- and dispatch-path-specific and must be tested through the exact installed SDK schemas.",
+      "local_implementation_claims_support": "Exact cached mcp 1.28.1 transport and ClientRequest schemas are exercised in qualified containment."
+    },
+    {
+      "source_id": "MCP-TYPESCRIPT-SDK",
+      "title": "Official MCP TypeScript SDK",
+      "url": "https://github.com/modelcontextprotocol/typescript-sdk",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2026-03-30",
+      "exact_requirement_used": "Request-envelope behavior is version- and dispatch-path-specific and must be tested through the exact installed SDK schemas.",
+      "local_implementation_claims_support": "Exact cached @modelcontextprotocol/sdk 1.29.0 JSONRPCMessageSchema and CallToolRequestSchema are exercised in qualified containment."
     },
     {
       "source_id": "MCP-RUNTIME-SCANNER-STUDY",

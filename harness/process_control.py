@@ -10,7 +10,7 @@ import subprocess
 import time
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 class ProcessControlError(RuntimeError):
@@ -205,6 +205,7 @@ def safe_container_arguments(
     image: str,
     command: Sequence[str],
     canary_mount: Path | None = None,
+    readonly_mounts: Sequence[tuple[Path, str]] = (),
     detached: bool = False,
 ) -> list[str]:
     arguments = [
@@ -255,6 +256,19 @@ def safe_container_arguments(
     if canary_mount is not None:
         arguments.extend(
             ["--mount", f"type=bind,src={canary_mount.resolve()},dst=/canary"]
+        )
+    for source, destination in readonly_mounts:
+        resolved = source.resolve(strict=True)
+        if source.is_symlink() or resolved.stat().st_nlink != 1:
+            raise ProcessControlError("read-only mount source must be a single-link real path")
+        target = PurePosixPath(destination)
+        if not target.is_absolute() or ".." in target.parts or destination == "/":
+            raise ProcessControlError("read-only mount destination must be an absolute child path")
+        arguments.extend(
+            [
+                "--mount",
+                f"type=bind,src={resolved},dst={destination},readonly",
+            ]
         )
     if len(command) < 3 or command[0:2] != ["node", "-e"]:
         raise ProcessControlError("safe container commands must be Node inline programs")

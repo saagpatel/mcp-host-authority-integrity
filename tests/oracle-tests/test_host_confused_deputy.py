@@ -6,6 +6,7 @@ from pathlib import Path
 from harness.execution import RunContext, deterministic_declared_result
 from harness.schema_validation import load_json
 from suite_impl.host_confused_deputy import evaluate
+from tests.helpers import closure_context_fields
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -22,6 +23,7 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
             run_root=ROOT / "work" / "unused-hc-oracle-unit-run",
             browser_mode=browser_mode,
             qualification_digest="0" * 64,
+            **closure_context_fields(),
         )
 
     def test_browser_cases_use_fail_closed_policy(self) -> None:
@@ -112,13 +114,13 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
         self.assertTrue(observation["safe_legitimate_authorization"])
         self.assertFalse(observation["filesystem_access_performed"])
 
-    def test_hc_012_refuses_drifted_unapproved_copy(self) -> None:
+    def test_hc_012_refuses_unclear_owner_copy(self) -> None:
         result = evaluate(self.cases["HC-012"], self.context())
         self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
         self.assertEqual(result.blocked_kind, "ACCESS")
-        self.assertIn("source drifted", result.blocked_detail or "")
+        self.assertIn("ownership is not clear", result.blocked_detail or "")
         self.assertFalse(result.observations[0]["isolated_copy_available"])
-        self.assertFalse(result.observations[0]["target_repository_accessed"])
+        self.assertFalse(result.observations[0]["target_repository_accessed_during_case"])
         self.assertFalse(result.observations[0]["substitute_fixture_claimed"])
 
     def test_non_hc_case_is_rejected(self) -> None:
