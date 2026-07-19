@@ -1,0 +1,91 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "676d0e1363d6e59664b982541b2e21b86a1412fd449124d324494760bbec5152",
+  "case_id": "LP-002",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "ac52545ee36701ce3d1455fa7ca0664de404490ff0fb84139c66a7c8becf6685",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.257778Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "child-outside-subtree",
+        "sibling-authority",
+        "parent-authority-escalation"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-002",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "delegation is intersected with the granted subtree and principal",
+          "variant": "child-outside-subtree"
+        },
+        {
+          "accepted": false,
+          "reason": "delegation is intersected with the granted subtree and principal",
+          "variant": "sibling-authority"
+        },
+        {
+          "accepted": false,
+          "reason": "delegation is intersected with the granted subtree and principal",
+          "variant": "parent-authority-escalation"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "child-outside-subtree",
+        "parent-authority-escalation",
+        "sibling-authority"
+      ]
+    },
+    {
+      "authority_tuple_dimensions": [
+        "principal",
+        "server",
+        "operation",
+        "arguments",
+        "scope",
+        "expiry"
+      ],
+      "exact_tuple_required": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.256621Z",
+  "subject": "A fixture child cannot exceed the parent's sacrificial directory and read-only capability.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

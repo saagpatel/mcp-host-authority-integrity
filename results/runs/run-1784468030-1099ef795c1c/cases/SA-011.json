@@ -1,0 +1,71 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "816da723fbfd966193df610bf9d0aac972c0b24e03729e40c59cd50a8fce10d7",
+  "case_id": "SA-011",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "1cc054376151d8e31ac4a4f157b8fcb6fe082bb5fde17a17b36b53378a5adab1",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:51.041175Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "MCP does not define this cache key; the oracle is fixture-only."
+  ],
+  "observations": [
+    {
+      "case_id": "SA-011",
+      "control_domains": {
+        "negative": {
+          "domain_id": "sa-011-negative",
+          "facts": {
+            "changed_dimension_hits": [],
+            "exact_tuple_hit": true,
+            "expired_at_time_101_hit": false
+          },
+          "pass_oracle_observed": true,
+          "safe_fixture": true
+        },
+        "positive": {
+          "deliberately_vulnerable": true,
+          "domain_id": "sa-011-positive",
+          "facts": {
+            "crossed_authority_dimensions": [
+              "authorization",
+              "expiry",
+              "scope",
+              "server",
+              "user"
+            ]
+          },
+          "fail_oracle_observed": true
+        }
+      },
+      "evidence_basis": "MCP does not define this cache key; the oracle is fixture-only.",
+      "fail_oracle": "A private synthetic result crosses any changed authority dimension.",
+      "pass_oracle": "Every boundary change causes a miss and only the exact original authority tuple hits.",
+      "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+      "synthetic_only": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:51.040532Z",
+  "subject": "Private cached results are keyed by user, scope, server, authorization state, and expiry.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

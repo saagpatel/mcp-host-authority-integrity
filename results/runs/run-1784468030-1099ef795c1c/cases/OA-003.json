@@ -1,0 +1,87 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "de1b73038cff3b3d5c6f90af61b4f2e40e1279fed7e54202860cdf5bcb97cc88",
+  "case_id": "OA-003",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "27e986f8dfe6498aea0d3834c766774856a35416f73952680b75851a8774ffa5",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.313825Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "audience-a-token-at-resource-b",
+        "resource-a-token-forwarded-by-b",
+        "resource-parameter-a-under-b"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "OA-003",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "token audience must equal the receiving resource URI",
+          "variant": "audience-a-token-at-resource-b"
+        },
+        {
+          "accepted": false,
+          "reason": "token audience must equal the receiving resource URI",
+          "variant": "resource-a-token-forwarded-by-b"
+        },
+        {
+          "accepted": false,
+          "reason": "token audience must equal the receiving resource URI",
+          "variant": "resource-parameter-a-under-b"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "audience-a-token-at-resource-b",
+        "resource-a-token-forwarded-by-b",
+        "resource-parameter-a-under-b"
+      ]
+    },
+    {
+      "accepted": false,
+      "disclosed": false,
+      "forwarded": false,
+      "receiving_resource": "https://resource-b.fixture.invalid",
+      "token_audience": "[REDACTED_SYNTHETIC_SECRET]"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.312433Z",
+  "subject": "A synthetic token for resource A is rejected by resource B and is never forwarded.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

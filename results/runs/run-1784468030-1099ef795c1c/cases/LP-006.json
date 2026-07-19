@@ -1,0 +1,90 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "289acaecedc9037103e32328d63f6a9d3d697eb0fc36d6cd1d82f0459df07671",
+  "case_id": "LP-006",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "STATIC_EVIDENCE_ONLY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "86e95ac2713c4b00738bc3f48367bba0f4d93d9a9f80f35a8a2aeefdb078f080",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.276622Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Static evidence cannot prove BridgeDB runtime read isolation.",
+    "No BridgeDB tool call or database mutation was made for this case."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "fixture-authorization-represented-as-live-isolation-proof"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-006",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "static and fixture evidence cannot establish live tenant isolation",
+          "variant": "fixture-authorization-represented-as-live-isolation-proof"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "fixture-authorization-represented-as-live-isolation-proof"
+      ]
+    },
+    {
+      "claim_boundary_preserved": true,
+      "fixture_authorization_matrix_scope": "[REDACTED_SYNTHETIC_SECRET]",
+      "read_only_contract_files": [
+        {
+          "path_name": "auth.py",
+          "principal_reference_count": 56,
+          "sha256": "273d75d82ea9e212f86c6073391baf8b439a73b2fd4c7c6b213947be2bba2d99"
+        },
+        {
+          "path_name": "activity.py",
+          "principal_reference_count": 10,
+          "sha256": "51660fe35b73e915b7dcd0ecb3e7facd3f0e1be31deffa2ef27edbe61e82b1a2"
+        },
+        {
+          "path_name": "snapshots.py",
+          "principal_reference_count": 0,
+          "sha256": "e0d5220ba8ccfd2a0502489b6940163001db126d264466c7df3d2e533369b560"
+        }
+      ],
+      "runtime_tenant_isolation_proven": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.274960Z",
+  "subject": "BridgeDB read isolation is claimed only where an independently enforceable principal boundary is observable.",
+  "subject_version": "snapshot:sha256:a66e7cc20ba971e721a5c6e34e111be11d7dbdb193734adea571f8dd9c085208",
+  "target_verdict": "PASS"
+}

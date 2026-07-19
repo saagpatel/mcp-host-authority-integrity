@@ -1,0 +1,105 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "d9cff7b198c9a5e6b21ca2d0f963f865d889e596dc13ca76b3045f6f04e6e066",
+  "case_id": "LP-010",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "8f257d61d219f385c1eb02789b8f84179d7f1beb8d3f81223c0daf6adfbcc9bd",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.291606Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "https-ref",
+        "file-ref",
+        "loopback-ref",
+        "private-address-ref",
+        "redirected-ref"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-010",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "external references are rejected before resolver I/O",
+          "variant": "https-ref"
+        },
+        {
+          "accepted": false,
+          "reason": "external references are rejected before resolver I/O",
+          "variant": "file-ref"
+        },
+        {
+          "accepted": false,
+          "reason": "external references are rejected before resolver I/O",
+          "variant": "loopback-ref"
+        },
+        {
+          "accepted": false,
+          "reason": "external references are rejected before resolver I/O",
+          "variant": "private-address-ref"
+        },
+        {
+          "accepted": false,
+          "reason": "external references are rejected before resolver I/O",
+          "variant": "redirected-ref"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "file-ref",
+        "https-ref",
+        "loopback-ref",
+        "private-address-ref",
+        "redirected-ref"
+      ]
+    },
+    {
+      "authority_tuple_dimensions": [
+        "principal",
+        "server",
+        "operation",
+        "arguments",
+        "scope",
+        "expiry"
+      ],
+      "exact_tuple_required": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.288708Z",
+  "subject": "Schema validation does not silently access network, loopback, files, or redirecting references.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

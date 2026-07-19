@@ -1,0 +1,205 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "4d18e5759853fc5666f275dbbdfc18e45224b699c92300c8d9249bc7b7579974",
+  "case_id": "LP-004",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "dbc87f4a79d31313261075eaad89e63e0077973c470b4b1ba131af29d8dc3a87",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.267917Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "Environment inheritance evidence is bound to the exact qualified container image."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "secret-shaped-environment-key",
+        "undeclared-descriptor",
+        "socket-descriptor",
+        "host-working-directory",
+        "ambient-control-endpoint"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-004",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "exact scrubbed environment and descriptor allowlist",
+          "variant": "secret-shaped-environment-key"
+        },
+        {
+          "accepted": false,
+          "reason": "exact scrubbed environment and descriptor allowlist",
+          "variant": "undeclared-descriptor"
+        },
+        {
+          "accepted": false,
+          "reason": "exact scrubbed environment and descriptor allowlist",
+          "variant": "socket-descriptor"
+        },
+        {
+          "accepted": false,
+          "reason": "exact scrubbed environment and descriptor allowlist",
+          "variant": "host-working-directory"
+        },
+        {
+          "accepted": false,
+          "reason": "exact scrubbed environment and descriptor allowlist",
+          "variant": "ambient-control-endpoint"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "ambient-control-endpoint",
+        "host-working-directory",
+        "secret-shaped-environment-key",
+        "socket-descriptor",
+        "undeclared-descriptor"
+      ]
+    },
+    {
+      "active_inventory": {
+        "cwd": "/tmp",
+        "descriptor_allowlist_passed": true,
+        "descriptor_inventory": [
+          {
+            "fd": 0,
+            "target": "/dev/null"
+          },
+          {
+            "fd": 1,
+            "target": "pipe:[287365]"
+          },
+          {
+            "fd": 2,
+            "target": "pipe:[287366]"
+          },
+          {
+            "fd": 3,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 4,
+            "target": "pipe:[287472]"
+          },
+          {
+            "fd": 5,
+            "target": "pipe:[287472]"
+          },
+          {
+            "fd": 6,
+            "target": "pipe:[287473]"
+          },
+          {
+            "fd": 7,
+            "target": "pipe:[287473]"
+          },
+          {
+            "fd": 8,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 9,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 10,
+            "target": "pipe:[288307]"
+          },
+          {
+            "fd": 11,
+            "target": "pipe:[288307]"
+          },
+          {
+            "fd": 12,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 13,
+            "target": "anon_inode:[eventpoll]"
+          },
+          {
+            "fd": 14,
+            "target": "pipe:[287474]"
+          },
+          {
+            "fd": 15,
+            "target": "pipe:[287474]"
+          },
+          {
+            "fd": 16,
+            "target": "anon_inode:[eventfd]"
+          },
+          {
+            "fd": 17,
+            "target": "closed-during-inventory"
+          }
+        ],
+        "forbidden_key_names": [],
+        "gid": 65534,
+        "groups": [
+          65534
+        ],
+        "positive_control_detected": true,
+        "process_limit_checks": {
+          "cpu_half": true,
+          "memory_256m": true,
+          "nofile_64": true,
+          "pids_16": true
+        },
+        "safe_key_names": [
+          "HOME",
+          "HOSTNAME",
+          "NODE_VERSION",
+          "PATH",
+          "PWD",
+          "TMPDIR",
+          "UV_TOOL_BIN_DIR",
+          "UV_TOOL_DIR",
+          "XDG_CACHE_HOME",
+          "XDG_CONFIG_HOME",
+          "XDG_STATE_HOME",
+          "YARN_VERSION"
+        ],
+        "uid": 65534,
+        "umask": "77"
+      },
+      "cq_011_result": "PASS",
+      "qualification_run_id": "cq-1784468010-d4f4d6f7396a"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.265729Z",
+  "subject": "A hostile fixture MCP server inherits only an explicit minimum environment and descriptor allowlist.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

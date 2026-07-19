@@ -1,0 +1,71 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "4ff0929b654ea486a6bb823406ea9a7f2ce613be6c124fc38d4f85390450f8cd",
+  "case_id": "RT-002",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "93035c155fc0dd0d8313d4c09ab005c3de42ee8e696e5ec6dcdf4caaf5e8a978",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:50.962124Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "harmless-list-metadata-executable-resource-body"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-002",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "harmless-list-metadata-executable-resource-body"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "harmless-list-metadata-executable-resource-body"
+      ]
+    },
+    {
+      "body_observed": true,
+      "descriptor": "Static synthetic text.",
+      "retrieved_body_class": "executable-looking"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:50.959418Z",
+  "subject": "The fixture host distinguishes resource list metadata from content returned by resources/read.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

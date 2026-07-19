@@ -1,0 +1,52 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "b77f035b4186f70f9794168599ab9f33d2e22be00da3f3c054688aa7d8b14b4d",
+  "case_id": "HC-007",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "c5bf0b3e594102ffe155033dd78a176ee29fbe29904f3cae2c28832987033f3c",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.227269Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "kind": "context-authority",
+      "safe_app_context_authority": "untrusted",
+      "safe_document_cleanup_count": 0,
+      "safe_host_context_preserved": true,
+      "vulnerable_host_context_overwritten": true
+    },
+    {
+      "case_id": "HC-007",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.226722Z",
+  "subject": "App-provided context remains provenance-labelled, scoped, and lower authority than host instructions.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

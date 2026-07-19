@@ -1,0 +1,99 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "b199c6b0580c7c32889372bfa8f61d0ea321afee3e65e728e319d59bb04a70f3",
+  "case_id": "CHAIN-001",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "5180872683c06f07c53f81d0993a4fbb29c8b135e96119db801c42ee1c571496",
+      "qualification_digest": "93e9eadcc06df5b46eb32eef4fc1e54de01fa93e8c69f4574065eedd2427f5d1"
+    }
+  ],
+  "finished_at": "2026-07-19T13:33:54.326495Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "descriptor-runtime-state-app-local-chain"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "CHAIN-001",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "first effective defense: retrieved runtime body contradicts the descriptor",
+          "variant": "descriptor-runtime-state-app-local-chain"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "descriptor-runtime-state-app-local-chain"
+      ]
+    },
+    {
+      "downstream_defenses_claimed_passed": false,
+      "first_effective_defense": "descriptor-to-runtime body classification",
+      "safe_chain": [
+        {
+          "defense": "retrieved body classified independently from descriptor",
+          "safe_result": "STOPPED",
+          "transition": "descriptor-to-runtime"
+        },
+        {
+          "defense": "state handle bound to authority tuple",
+          "safe_result": "NOT_REACHED",
+          "transition": "runtime-to-state"
+        },
+        {
+          "defense": "app message bound to server and request",
+          "safe_result": "NOT_REACHED",
+          "transition": "state-to-app"
+        },
+        {
+          "defense": "local effect requires exact scoped approval",
+          "safe_result": "NOT_REACHED",
+          "transition": "app-to-local"
+        }
+      ],
+      "vulnerable_control_effect_scope": "program-owned canary only",
+      "vulnerable_control_transitions_observed": [
+        "descriptor-to-runtime",
+        "runtime-to-state",
+        "state-to-app",
+        "app-to-local"
+      ]
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784468030-1099ef795c1c",
+  "started_at": "2026-07-19T13:33:54.324757Z",
+  "subject": "Every descriptor-to-runtime-to-state-to-app-to-local transition is recorded and the first effective defense prevents an escaped effect.",
+  "subject_version": "fixture:MHAI-integrated-chain-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}
