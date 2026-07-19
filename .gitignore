@@ -9,10 +9,12 @@ work/canaries/*
 work/temporary-state/*
 work/browser-profiles/*
 work/isolated-targets/*
+work/official-downloads/*
 !work/canaries/.gitkeep
 !work/temporary-state/.gitkeep
 !work/browser-profiles/.gitkeep
 !work/isolated-targets/.gitkeep
+vendor/official/*
 results/latest/*
 results/runs/*
 results/closure-epochs/*

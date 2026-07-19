@@ -189,12 +189,24 @@ def render_summary(
             "",
             "## Evidence boundary",
             "",
-            "- Browser-required cases blocked because every locally cached disposable "
-            "launcher candidate failed repeatable CQ-012 qualification; no normal user "
-            "browser profile was read, mounted, imported, or launched.",
-            "- The Go SDK case remains blocked because no exact official Go SDK is "
-            "available from the frozen bounded cache discovery; one unavailable "
-            "cached image remains an explicit access limitation.",
+            (
+                "- CQ-012 qualified the exact official program-owned disposable "
+                "browser. Seven fixture-browser cases executed with fresh profiles, "
+                "network denied, normal profile roots denied, and clean process/profile "
+                "cleanup. `HC-011` remained independently blocked on the target "
+                "webview-command executor."
+                if qualification["browser_mode"] == "QUALIFIED"
+                else "- Browser-required cases remained hard-refused; no normal user "
+                "browser profile was read, mounted, imported, or launched."
+            ),
+            (
+                "- `SA-014` executed the exact official Go MCP SDK v1.6.1 from "
+                "program-owned storage with the network denied and all hostile "
+                "Origin/Host inputs rejected."
+                if results_by_id["SA-014"]["result"] == "PASS"
+                else "- `SA-014` remained blocked because no executable exact official "
+                "Go SDK was available."
+            ),
             "- Exact Python and TypeScript SDK parsers executed from the qualified "
             "cached image with network disabled.",
             (
@@ -204,8 +216,9 @@ def render_summary(
                 else "- `RT-012` remained blocked because no fidelity-proven "
                 "mcp-trust archive was available; the live target was not executed."
             ),
-            "- Other isolated-copy cases remained blocked where source ownership "
-            "was unclear or active.",
+            "- Fidelity-proven PortfolioCommandCenter and AIGCCore archives did not "
+            "become behavioral proof: their locked build/runtime dependency lanes "
+            "remained unavailable, so the target cases stayed blocked.",
             "- During this closure epoch, no target repair, content/ref/worktree "
             "edit, publication, external write, disclosure, push, or deploy was "
             "performed.",

@@ -90,6 +90,7 @@ later closure epoch may pass its own gate, but cannot repair or reinterpret
 them.
 
 The bounded browser search is recorded in
-[BROWSER-CANDIDATE-ASSESSMENT.md](BROWSER-CANDIDATE-ASSESSMENT.md). Existing
-cached candidates failed repeatable CQ-012 qualification, so browser cases
-remain hard-refused without reading or reusing normal profiles.
+[BROWSER-CANDIDATE-ASSESSMENT.md](BROWSER-CANDIDATE-ASSESSMENT.md). Historical
+cache-only candidates remain rejected. The authorized official program-owned
+candidate becomes executable only when the current CQ-012 receipt records
+`QUALIFIED`; it never reads or reuses a normal profile.

@@ -47,29 +47,48 @@ TARGET_POLICIES = (
         "mcp-trust",
         Path("/Users/d/Projects/mcp-trust"),
         ("RT-012",),
-        "UNCLEAR",
-        "The worktree is not approved as disposable source, and current ownership is not proven.",
+        "CLEAR",
+        (
+            "The operator authorized a read-only archive when clean and owner-free; "
+            "the live bridge preflight found no pending handoff."
+        ),
+        archive_allowed=True,
     ),
     TargetPolicy(
         "PortfolioCommandCenter",
         Path("/Users/d/Projects/PortfolioCommandCenter"),
         ("HC-011", "HC-012"),
-        "UNCLEAR",
-        "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+        "CLEAR",
+        (
+            "The operator authorized a read-only archive when clean and owner-free; "
+            "the live preflight found no pending handoff, Git lock, or process rooted "
+            "in this worktree."
+        ),
+        archive_allowed=True,
     ),
     TargetPolicy(
         "AIGCCore",
         Path("/Users/d/Projects/AIGCCore"),
         ("LP-007",),
-        "UNCLEAR",
-        "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+        "CLEAR",
+        (
+            "The operator authorized a read-only archive when clean and owner-free; "
+            "the live preflight found no pending handoff, Git lock, or process rooted "
+            "in this worktree."
+        ),
+        archive_allowed=True,
     ),
     TargetPolicy(
         "portfolio-index",
         Path("/Users/d/Projects/_claude-worktrees/portfolio-index-forge"),
         ("LP-009",),
-        "ACTIVE",
-        "The shared portfolio-index worktree has an active owner; no clean ownership window is authorized.",
+        "CLEAR",
+        (
+            "The operator authorized a read-only archive when clean and owner-free; "
+            "the live bridge preflight found the prior owner lifecycle ended and no "
+            "pending handoff."
+        ),
+        archive_allowed=True,
     ),
 )
 
@@ -179,6 +198,50 @@ def _target_metadata(path: Path, git_dir: Path) -> dict[str, Any]:
     }
 
 
+def _owner_activity(path: Path, git_dir: Path) -> dict[str, Any]:
+    lock_paths = sorted(
+        str(candidate.relative_to(git_dir))
+        for candidate in git_dir.rglob("*.lock")
+        if candidate.is_file()
+    )
+    completed = subprocess.run(
+        ["/usr/sbin/lsof", "-a", "-d", "cwd", "+D", str(path), "-F", "p"],
+        check=False,
+        capture_output=True,
+        env={
+            "PATH": "/usr/bin:/bin:/usr/sbin",
+            "LANG": "C",
+            "LC_ALL": "C",
+        },
+        timeout=20,
+    )
+    if completed.returncode not in {0, 1}:
+        return {
+            "clear": False,
+            "status": "UNCLEAR",
+            "detail": "owner-process inventory was unavailable",
+            "git_lock_count": len(lock_paths),
+            "cwd_process_count": None,
+        }
+    pids = {
+        line[1:]
+        for line in completed.stdout.decode(errors="replace").splitlines()
+        if line.startswith("p") and line[1:].isdigit()
+    }
+    clear = not lock_paths and not pids
+    return {
+        "clear": clear,
+        "status": "CLEAR" if clear else "ACTIVE",
+        "detail": (
+            "no Git lock and no process with cwd inside the worktree"
+            if clear
+            else "a Git lock or process cwd indicates active ownership"
+        ),
+        "git_lock_count": len(lock_paths),
+        "cwd_process_count": len(pids),
+    }
+
+
 def _git_blob_oid(data: bytes, object_format: str) -> str:
     algorithm = hashlib.sha1 if object_format == "sha1" else hashlib.sha256
     digest = algorithm()
@@ -285,6 +348,31 @@ def _write_once(path: Path, value: Any) -> None:
 def _discover_exact_go_sdk(root: Path, run_id: str) -> dict[str, Any]:
     discovery_root = root / "go-sdk-discovery"
     discovery_root.mkdir(parents=True, mode=0o700)
+    official_module = (
+        ROOT
+        / "vendor"
+        / "official"
+        / "go-mod-cache"
+        / "github.com"
+        / "modelcontextprotocol"
+        / "go-sdk@v1.6.1"
+    )
+    provenance_path = ROOT / "OFFICIAL-DEPENDENCY-PROVENANCE.json"
+    official_available = False
+    official_version = None
+    official_module_sha256 = None
+    if official_module.is_dir() and provenance_path.is_file():
+        provenance = load_json(provenance_path)
+        go_provenance = provenance.get("go_sdk", {})
+        official_version = go_provenance.get("version")
+        official_module_sha256 = go_provenance.get("zip_sha256")
+        official_available = (
+            official_version == "v1.6.1"
+            and isinstance(official_module_sha256, str)
+            and len(official_module_sha256) == 64
+            and (official_module / "go.mod").read_text(encoding="utf-8").splitlines()[0]
+            == "module github.com/modelcontextprotocol/go-sdk"
+        )
     module_root = Path.home() / "go" / "pkg" / "mod"
     host_go_mod_files_scanned = 0
     host_exact_versions: set[str] = set()
@@ -391,7 +479,7 @@ done
         cleanup_labeled_containers(label, discovery_root)
 
     exact_versions = sorted(host_exact_versions)
-    exact_available = bool(exact_versions or image_exact_matches)
+    exact_available = bool(official_available or exact_versions or image_exact_matches)
     unavailable_images = [
         item["image"]
         for item in image_results
@@ -400,7 +488,10 @@ done
     return {
         "eligible": exact_available,
         "detail": (
-            "An exact official github.com/modelcontextprotocol/go-sdk module is cached."
+            (
+                "The authorized exact official github.com/modelcontextprotocol/go-sdk "
+                "v1.6.1 module is present in program-owned storage."
+            )
             if exact_available
             else (
                 "No exact official github.com/modelcontextprotocol/go-sdk version "
@@ -410,12 +501,19 @@ done
         ),
         "host_go_mod_files_scanned": host_go_mod_files_scanned,
         "host_exact_versions": exact_versions,
+        "program_owned_official_available": official_available,
+        "program_owned_official_version": official_version,
+        "program_owned_module_zip_sha256": official_module_sha256,
+        "program_owned_module_path": (
+            str(official_module.relative_to(ROOT)) if official_available else None
+        ),
         "cached_images_considered": len(images),
         "cached_image_results": image_results,
         "image_exact_module_matches": len(image_exact_matches),
         "unavailable_images": unavailable_images,
         "network_access_used": False,
         "package_install_used": False,
+        "authorized_download_previously_completed": official_available,
     }
 
 
@@ -452,12 +550,22 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
             timeout=30,
         )
         clean = not status_output
+        owner_activity = _owner_activity(policy.path, git_dir)
+        ownership = (
+            owner_activity["status"]
+            if policy.ownership == "CLEAR"
+            else policy.ownership
+        )
+        ownership_basis = (
+            f"{policy.ownership_basis} Exact open-time evidence: "
+            f"{owner_activity['detail']}."
+        )
         archive: dict[str, Any] = {
             "created": False,
             "fidelity_proven": False,
             "reason": "source ownership is not clear",
         }
-        if policy.archive_allowed and policy.ownership == "CLEAR" and clean:
+        if policy.archive_allowed and ownership == "CLEAR" and clean:
             archive = _archive_and_verify(
                 policy,
                 head=head,
@@ -481,8 +589,9 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
                 "branch": branch,
                 "clean": clean,
                 "status_sha256": hashlib.sha256(status_output).hexdigest(),
-                "ownership": policy.ownership,
-                "ownership_basis": policy.ownership_basis,
+                "ownership": ownership,
+                "ownership_basis": ownership_basis,
+                "owner_activity": owner_activity,
                 "metadata": before,
                 "read_mutation_free": True,
                 "archive": archive,
@@ -490,6 +599,25 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
         )
 
     go_sdk_discovery = _discover_exact_go_sdk(epoch_root, epoch_id)
+    try:
+        from harness.browser_runtime import current_browser_identity
+
+        browser_identity = current_browser_identity().as_dict()
+        browser_discovery = {
+            "eligible": True,
+            "detail": (
+                "An official disposable Playwright Chromium headless-shell is "
+                "present in program-owned storage and awaits CQ-012 repeatability."
+            ),
+            "identity": browser_identity,
+            "normal_profile_use_authorized": False,
+        }
+    except Exception as exc:
+        browser_discovery = {
+            "eligible": False,
+            "detail": f"Program-owned browser identity validation failed: {exc}",
+            "normal_profile_use_authorized": False,
+        }
     receipt = {
         "closure_version": CLOSURE_VERSION,
         "phase": "OPEN",
@@ -502,13 +630,7 @@ def open_epoch() -> tuple[dict[str, Any], Path]:
         },
         "target_observations": observations,
         "lane_discovery": {
-            "browser": {
-                "eligible": False,
-                "detail": (
-                    "Locally cached candidates failed repeatable bounded launcher "
-                    "qualification; CQ-012 must retain hard refusal."
-                ),
-            },
+            "browser": browser_discovery,
             "go_sdk": go_sdk_discovery,
             "cross_sdk": {
                 "eligible": True,
@@ -639,21 +761,49 @@ def _target_access_checks(
                         and observation.get("target_code_executed") is False
                     )
             elif case_id == "HC-011":
+                archive = target["archive"]
                 case_evidence_valid = case_evidence_valid and (
                     result["result"] == "BLOCKED_BY_ACCESS"
                     and observation.get("unsafe_fallback_refused") is True
+                    and observation.get("target_code_executed") is False
+                    and (
+                        not archive.get("created")
+                        or observation.get("archive_sha256") == archive.get("sha256")
+                    )
                 )
+                if archive.get("created"):
+                    access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id == "HC-012":
+                archive = target["archive"]
                 case_evidence_valid = case_evidence_valid and (
                     result["result"] == "BLOCKED_BY_ACCESS"
                     and observation.get("target_repository_accessed_during_case") is False
+                    and observation.get("target_code_executed") is False
+                    and (
+                        not archive.get("created")
+                        or observation.get("archive_sha256") == archive.get("sha256")
+                    )
                 )
+                if archive.get("created"):
+                    access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id in {"LP-007", "LP-009"}:
+                archive = target["archive"]
+                expected_access = (
+                    "program archive receipt only"
+                    if archive.get("created")
+                    else "frozen closure-epoch identity only"
+                )
                 case_evidence_valid = case_evidence_valid and (
                     result["result"] == "BLOCKED_BY_ACCESS"
-                    and observation.get("target_access")
-                    == "frozen closure-epoch identity only"
+                    and observation.get("target_access") == expected_access
+                    and observation.get("target_code_executed") is False
+                    and (
+                        not archive.get("created")
+                        or observation.get("archive_sha256") == archive.get("sha256")
+                    )
                 )
+                if archive.get("created"):
+                    access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             else:
                 case_evidence_valid = False
         checks.append(

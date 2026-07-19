@@ -13,7 +13,6 @@ import secrets
 import shutil
 import signal
 import socket
-import stat
 import subprocess
 import sys
 import threading
@@ -24,6 +23,11 @@ from pathlib import Path
 from typing import Any, cast
 
 from harness.browser_policy import browser_refusal
+from harness.browser_runtime import (
+    BrowserSession,
+    browser_html,
+    current_browser_identity,
+)
 from harness.canary_store import CanaryError, CanaryStore
 from harness.ledger import DuplicateExecutionError, ExecutionLedger, write_once
 from harness.limits import (
@@ -188,9 +192,16 @@ def validate_qualification_contract(receipt: dict[str, Any]) -> None:
                 "$.browser_mode: BROWSER_DISABLED requires exercised case-routing refusal"
             )
     else:
-        raise SchemaValidationError(
-            "$.browser_mode: QUALIFIED has no active repeatable launcher"
-        )
+        observations = cq12["observations"]
+        if (
+            not observations
+            or observations[0].get("repeatable_launcher_qualified") is not True
+            or observations[0].get("normal_profiles_read") is not False
+            or observations[0].get("normal_profiles_mounted") is not False
+        ):
+            raise SchemaValidationError(
+                "$.browser_mode: QUALIFIED requires repeatability and profile isolation"
+            )
 
 
 def aggregate_qualification_result(
@@ -1124,93 +1135,69 @@ console.log(JSON.stringify(payload));
 
 def cq_012(root: Path, run_id: str, image: str) -> tuple[list[dict[str, Any]], str]:
     root.mkdir(parents=True, exist_ok=True, mode=0o700)
-    code = """
-const fs = require("fs");
-const candidates = ["/usr/bin/chromium", "/usr/bin/google-chrome", "/usr/bin/firefox"];
-console.log(JSON.stringify(candidates.filter((path) => fs.existsSync(path))));
-"""
-    completed = docker(
-        safe_container_arguments(
-            name=f"mhai-cq012-{run_id[-8:]}",
-            run_id=run_id,
-            image=image,
-            command=["node", "-e", code],
-        ),
-        cwd=root,
-    )
-    if completed.returncode != 0:
-        raise QualificationError(completed.stderr.decode(errors="replace"))
-    container_browsers = json.loads(completed.stdout)
+    del image
+    identity = current_browser_identity()
     cases = load_json(ROOT / "cases.json")
     browser_cases = [case for case in cases if case["requires_browser"]]
     non_browser_cases = [case for case in cases if not case["requires_browser"]]
-    refused = {
-        case["case_id"]: browser_refusal(case, "BROWSER_DISABLED")
+    allowed = {
+        case["case_id"]: browser_refusal(case, "QUALIFIED")
         for case in browser_cases
     }
     false_refusals = [
         case["case_id"]
         for case in non_browser_cases
-        if browser_refusal(case, "BROWSER_DISABLED") is not None
+        if browser_refusal(case, "QUALIFIED") is not None
     ]
     if (
         len(browser_cases) != 8
-        or any(value is None or not value["unsafe_fallback_refused"] for value in refused.values())
+        or any(value is not None for value in allowed.values())
         or false_refusals
     ):
         raise QualificationError(
-            f"browser hard-refusal routing mismatch: refused={refused}, false={false_refusals}"
+            f"qualified browser routing mismatch: allowed={allowed}, false={false_refusals}"
         )
-    cache_root = Path.home() / "Library" / "Caches" / "ms-playwright"
-    cached_candidates = []
-    for revision, browser_version, playwright_version in (
-        ("1208", "145", "1.58.2"),
-        ("1217", "147", "1.59.1"),
-        ("1223", "148.0.7778.96", "1.60.0"),
-        ("1228", "149.0.7827.55", "1.61.1"),
-    ):
-        executable = (
-            cache_root
-            / f"chromium_headless_shell-{revision}"
-            / "chrome-headless-shell-mac-arm64"
-            / "chrome-headless-shell"
-        )
-        try:
-            metadata = executable.lstat()
-            executable_present = (
-                stat.S_ISREG(metadata.st_mode) and metadata.st_nlink == 1
+    launches: list[dict[str, Any]] = []
+    for index in range(3):
+        session_root = root / f"repeat-{index + 1}"
+        with BrowserSession(session_root) as session:
+            launch = session.run_html(
+                browser_html(
+                    "mhaiFinish({accepted_variants: [], legitimate_control: true});"
+                )
             )
-        except OSError:
-            executable_present = False
-        cached_candidates.append(
-            {
-                "revision": revision,
-                "browser_version": browser_version,
-                "playwright_version": playwright_version,
-                "single_link_regular_executable_present": executable_present,
-            }
-        )
-    assessment = ROOT / "BROWSER-CANDIDATE-ASSESSMENT.md"
+        if (
+            launch.payload
+            != {"accepted_variants": [], "legitimate_control": True}
+            or session_root.exists()
+        ):
+            raise QualificationError("browser repeatability or cleanup control failed")
+        launches.append(launch.evidence())
+    if any(
+        item["outer_sandbox_network_denied"] is not True
+        or item["outer_sandbox_normal_profiles_denied"] is not True
+        or item["residual_processes"] != 0
+        or item["diagnostic_report_changes"] != 0
+        for item in launches
+    ):
+        raise QualificationError("browser containment evidence is incomplete")
     return (
         [
             {
-                "contained_browser_candidates": container_browsers,
-                "host_cached_candidates": cached_candidates,
-                "candidate_launcher_status": "REJECTED_UNSTABLE",
-                "candidate_rejection_class": "repeatable-wall-time-ceiling-failure",
-                "candidate_assessment_sha256": hashlib.sha256(
-                    assessment.read_bytes()
-                ).hexdigest(),
+                "candidate_launcher_status": "QUALIFIED_PROGRAM_OWNED",
+                "repeatable_launcher_qualified": True,
+                "browser_identity": identity.as_dict(),
+                "repeat_count": len(launches),
+                "launches": launches,
                 "normal_profiles_read": False,
                 "normal_profiles_mounted": False,
                 "normal_profile_identifiers_enumerated": False,
-                "browser_cases_must_block": True,
-                "browser_case_ids": sorted(refused),
-                "all_browser_cases_refused": True,
+                "browser_case_ids": sorted(allowed),
+                "all_browser_cases_refused": False,
                 "non_browser_cases_refused": false_refusals,
             }
         ],
-        "BROWSER_DISABLED",
+        "QUALIFIED",
     )
 
 

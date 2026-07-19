@@ -101,25 +101,41 @@ class ClosureEpochTests(unittest.TestCase):
             {
                 "case_id": "HC-011",
                 "result": "BLOCKED_BY_ACCESS",
-                "observations": [{"unsafe_fallback_refused": True}],
+                "observations": [
+                    {
+                        "unsafe_fallback_refused": True,
+                        "target_code_executed": False,
+                    }
+                ],
             },
             {
                 "case_id": "HC-012",
                 "result": "BLOCKED_BY_ACCESS",
-                "observations": [{"target_repository_accessed_during_case": False}],
+                "observations": [
+                    {
+                        "target_repository_accessed_during_case": False,
+                        "target_code_executed": False,
+                    }
+                ],
             },
             {
                 "case_id": "LP-007",
                 "result": "BLOCKED_BY_ACCESS",
                 "observations": [
-                    {"target_access": "frozen closure-epoch identity only"}
+                    {
+                        "target_access": "frozen closure-epoch identity only",
+                        "target_code_executed": False,
+                    }
                 ],
             },
             {
                 "case_id": "LP-009",
                 "result": "BLOCKED_BY_ACCESS",
                 "observations": [
-                    {"target_access": "frozen closure-epoch identity only"}
+                    {
+                        "target_access": "frozen closure-epoch identity only",
+                        "target_code_executed": False,
+                    }
                 ],
             },
         ]

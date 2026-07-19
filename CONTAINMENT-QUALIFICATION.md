@@ -122,22 +122,29 @@ invalid record fails the gate.
 ### CQ-012 — browser profile isolation or hard refusal
 
 - Browser cases are executable only through a separately qualified launcher.
-- The positive control points a disposable browser at a synthetic account,
-  extension, saved-state, and sync marker inside a sacrificial profile and must
-  observe those markers.
-- The qualified launcher must create a new profile under the run-owned
-  sacrificial root, reject symlinks and hard links, disable accounts, sync,
-  extensions, password storage, device APIs, clipboard authority, and normal
-  profile import, and run inside the qualified network/filesystem boundary.
-- The observer verifies that normal browser profile paths are neither mounted,
-  opened, inherited, nor named in the child command line or environment.
+- The qualified launcher must be an exact official program-owned browser whose
+  binary, bundle tree, Playwright metadata, version, and ownership match the
+  recorded provenance before and after every launch.
+- Three independent controls must each create a fresh profile under the
+  qualification root, execute one browser script to a terminal payload, and
+  remove that complete profile root afterward.
+- The outer macOS sandbox must deny all network operations, all writes outside
+  the fresh session, and reads from every enumerated normal Chrome, Chromium,
+  Edge, Arc, Brave, Firefox, Safari, and Mozilla profile root. HOME, TMPDIR, and
+  `--user-data-dir` must point only into the fresh program-owned session.
+- The browser subject command and environment may not name a normal profile.
+  The outer `sandbox-exec` policy necessarily names those roots only as explicit
+  deny rules; that is policy evidence, not browser subject input.
+- Every control must remain under the browser PID and RSS ceilings, leave no
+  process-group member, create or change no crash diagnostic, and finish within
+  the wall-time ceiling.
 - If no launcher can prove all of these properties, CQ-012 passes only in
   `BROWSER_DISABLED` mode: the harness must refuse every browser-dependent case
   as `BLOCKED_BY_ACCESS`. It may not fall back to an in-app, logged-in, normal,
   or merely command-line-separated profile.
-- The bounded local search and rejected cached candidates are recorded in
-  `BROWSER-CANDIDATE-ASSESSMENT.md`. A failed repeatability probe is not browser
-  coverage and is not retried by ordinary qualification.
+- The authorized official candidate and the historically rejected cache-only
+  candidates are recorded in `BROWSER-CANDIDATE-ASSESSMENT.md`. A failed
+  repeatability probe is not browser coverage.
 - Cleanup must remove the disposable profile and prove no browser process,
   profile lock, or delayed action remains.
 

@@ -66,6 +66,18 @@ class QualificationContractTests(unittest.TestCase):
         with self.assertRaises(SchemaValidationError):
             validate_qualification_contract(invalid)
 
+    def test_qualified_browser_mode_accepts_repeatable_isolated_launcher(self) -> None:
+        valid = receipt()
+        valid["browser_mode"] = "QUALIFIED"
+        valid["checks"][-1]["observations"] = [
+            {
+                "repeatable_launcher_qualified": True,
+                "normal_profiles_read": False,
+                "normal_profiles_mounted": False,
+            }
+        ]
+        validate_qualification_contract(valid)
+
     def test_all_pass_cannot_publish_pass_without_verified_cleanup(self) -> None:
         self.assertEqual(
             aggregate_qualification_result(

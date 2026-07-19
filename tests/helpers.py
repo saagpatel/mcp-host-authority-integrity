@@ -34,6 +34,13 @@ def synthetic_closure_epoch() -> dict[str, Any]:
                 "status_sha256": "0" * 64,
                 "ownership": ownership,
                 "ownership_basis": "synthetic unit-test ownership evidence",
+                "owner_activity": {
+                    "clear": ownership == "CLEAR",
+                    "status": ownership,
+                    "detail": "synthetic owner evidence",
+                    "git_lock_count": 0,
+                    "cwd_process_count": 0,
+                },
                 "metadata": {"unit": True},
                 "read_mutation_free": True,
                 "archive": {

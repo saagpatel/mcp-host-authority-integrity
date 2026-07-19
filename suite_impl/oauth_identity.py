@@ -127,4 +127,8 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
         return _issuer_mixup(case, context)
     if case_id == "OA-003":
         return _resource_mixup(case, context)
+    if case_id in {"OA-004", "OA-005", "OA-006"}:
+        from suite_impl.browser_fixtures import evaluate_oa
+
+        return evaluate_oa(case, context)
     raise KeyError(f"unsupported OAuth case: {case_id}")

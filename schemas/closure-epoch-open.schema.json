@@ -48,6 +48,7 @@
           "status_sha256",
           "ownership",
           "ownership_basis",
+          "owner_activity",
           "metadata",
           "read_mutation_free",
           "archive"
@@ -62,6 +63,29 @@
           "status_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
           "ownership": {"enum": ["CLEAR", "UNCLEAR", "ACTIVE"]},
           "ownership_basis": {"type": "string", "minLength": 1},
+          "owner_activity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "clear",
+              "status",
+              "detail",
+              "git_lock_count",
+              "cwd_process_count"
+            ],
+            "properties": {
+              "clear": {"type": "boolean"},
+              "status": {"enum": ["CLEAR", "UNCLEAR", "ACTIVE"]},
+              "detail": {"type": "string", "minLength": 1},
+              "git_lock_count": {"type": "integer", "minimum": 0},
+              "cwd_process_count": {
+                "anyOf": [
+                  {"type": "integer", "minimum": 0},
+                  {"type": "null"}
+                ]
+              }
+            }
+          },
           "metadata": {"type": "object"},
           "read_mutation_free": {"const": true},
           "archive": {"type": "object"}

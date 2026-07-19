@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -48,11 +49,29 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
                     ],
                 )
 
-    def test_browser_cases_never_fall_back_to_simulation(self) -> None:
-        result = evaluate(self.cases["HC-001"], self.context("QUALIFIED"))
+    def test_qualified_fixture_browser_executes_both_controls(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temporary:
+            context = RunContext(
+                run_id="hc-qualified-browser",
+                run_root=Path(temporary),
+                browser_mode="QUALIFIED",
+                qualification_digest="0" * 64,
+                **closure_context_fields(),
+            )
+            result = evaluate(
+                self.cases["HC-001"],
+                context.for_case("HC-001"),
+            )
+        self.assertEqual(deterministic_declared_result(result), "PASS")
+        self.assertEqual(result.positive_control, "PASS")
+        self.assertEqual(result.negative_control, "PASS")
+
+    def test_qualified_browser_does_not_substitute_for_target_executor(self) -> None:
+        result = evaluate(self.cases["HC-011"], self.context("QUALIFIED"))
         self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
-        self.assertIn("No browser", result.blocked_detail or "")
+        self.assertIn("target webview", result.blocked_detail or "")
         self.assertTrue(result.observations[0]["unsafe_fallback_refused"])
+        self.assertFalse(result.observations[0]["target_code_executed"])
 
     def test_synthetic_cases_have_valid_positive_and_negative_controls(self) -> None:
         for case_id in ("HC-002", "HC-003", "HC-004", "HC-007", "HC-008", "HC-010"):
@@ -118,7 +137,7 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
         result = evaluate(self.cases["HC-012"], self.context())
         self.assertEqual(deterministic_declared_result(result), "BLOCKED_BY_ACCESS")
         self.assertEqual(result.blocked_kind, "ACCESS")
-        self.assertIn("ownership is not clear", result.blocked_detail or "")
+        self.assertIn("no eligible exact archive", result.blocked_detail or "")
         self.assertFalse(result.observations[0]["isolated_copy_available"])
         self.assertFalse(result.observations[0]["target_repository_accessed_during_case"])
         self.assertFalse(result.observations[0]["substitute_fixture_claimed"])

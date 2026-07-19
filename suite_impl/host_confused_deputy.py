@@ -529,6 +529,52 @@ def _browser_refusal(case: dict[str, Any], context: RunContext) -> Evaluation:
     blocked = browser_block(case, context)
     if blocked is not None:
         return blocked
+    if case["case_id"] in {"HC-001", "HC-005", "HC-006", "HC-009"}:
+        from suite_impl.browser_fixtures import evaluate_hc
+
+        return evaluate_hc(case, context)
+    if case["case_id"] == "HC-011":
+        frozen = context.frozen_target("HC-011")
+        archive = frozen["archive"]
+        archive_available = bool(
+            archive.get("created") and archive.get("fidelity_proven")
+        )
+        deviation = hashlib.sha256(
+            f"HC-011:{frozen['head']}:target-webview-bridge-not-executed".encode()
+        ).hexdigest()
+        return Evaluation(
+            target_verdict="BLOCKED",
+            blocked_kind="ACCESS",
+            blocked_detail=(
+                "An exact read-only PortfolioCommandCenter archive is available, "
+                "but no qualified target webview-to-command-bridge executor or "
+                "locked build dependency set is available."
+                if archive_available
+                else (
+                    "No fidelity-proven PortfolioCommandCenter archive is available "
+                    "for the target webview command-bridge case."
+                )
+            ),
+            observations=[
+                {
+                    "browser_required": True,
+                    "browser_mode": context.browser_mode,
+                    "unsafe_fallback_refused": True,
+                    "archive_available": archive_available,
+                    "archive_sha256": archive.get("sha256"),
+                    "target_code_executed": False,
+                    "fixture_browser_evidence_substituted": False,
+                }
+            ],
+            limitations=[
+                "Browser qualification alone cannot establish behavior of an unbuilt target command bridge."
+            ],
+            positive_control="NOT_RUN",
+            negative_control="NOT_RUN",
+            containment_result="NOT_APPLICABLE",
+            cleanup_result="NOT_APPLICABLE",
+            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
+        )
     return Evaluation(
         target_verdict="BLOCKED",
         blocked_kind="ACCESS",
@@ -559,13 +605,27 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
     if case_id == "HC-012":
         frozen = context.frozen_target(case_id)
         cleanliness = "clean" if frozen["clean"] else "not clean"
+        archive = frozen["archive"]
+        archive_available = bool(
+            archive.get("created") and archive.get("fidelity_proven")
+        )
+        deviation = hashlib.sha256(
+            f"HC-012:{frozen['head']}:target-command-launch-not-executed".encode()
+        ).hexdigest()
         return Evaluation(
             target_verdict="BLOCKED",
             blocked_kind="ACCESS",
             blocked_detail=(
-                f"PortfolioCommandCenter is {cleanliness} at the frozen epoch identity; "
-                "current branch ownership is not clear enough to create or execute "
-                "an archive."
+                (
+                    "An exact read-only PortfolioCommandCenter archive is available, "
+                    "but its command-launch path cannot be executed without an "
+                    "independently qualified locked build dependency set."
+                )
+                if archive_available
+                else (
+                    f"PortfolioCommandCenter is {cleanliness} at the frozen epoch "
+                    "identity; no eligible exact archive is available."
+                )
             ),
             observations=[
                 {
@@ -574,7 +634,9 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
                     "source_clean_at_epoch_open": frozen["clean"],
                     "ownership": frozen["ownership"],
                     "ownership_basis": frozen["ownership_basis"],
-                    "isolated_copy_available": False,
+                    "isolated_copy_available": archive_available,
+                    "archive_sha256": archive.get("sha256"),
+                    "target_code_executed": False,
                     "target_repository_accessed_during_case": False,
                     "substitute_fixture_claimed": False,
                 }
@@ -586,5 +648,6 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             negative_control="NOT_RUN",
             containment_result="NOT_APPLICABLE",
             cleanup_result="NOT_APPLICABLE",
+            subject_version=f"git:{frozen['head']}+deviations:{deviation}",
         )
     return _EVALUATORS[case_id]()

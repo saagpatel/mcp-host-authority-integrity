@@ -12,9 +12,13 @@ the qualified no-network container and never substitutes lookalike behavior.
 
 from __future__ import annotations
 
+import hashlib
 import json
+import shutil
+import subprocess
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 from urllib.parse import unquote
 
@@ -788,42 +792,197 @@ _RUNNERS: dict[
 }
 
 
-def _official_go_sdk_block(
+def _official_go_sdk(
     case_id: str,
     contract: _Contract,
     context: RunContext,
 ) -> Evaluation:
     discovery = context.bound_closure_epoch()["lane_discovery"]["go_sdk"]
-    detail = (
-        "No exact official Go MCP SDK is available from the frozen bounded cache "
-        "discovery; network access and package installation remain forbidden."
+    if not (
+        discovery.get("eligible") is True
+        and discovery.get("program_owned_official_available") is True
+        and discovery.get("program_owned_official_version") == "v1.6.1"
+    ):
+        detail = (
+            "No exact official Go MCP SDK is available from the frozen bounded "
+            "program-owned discovery."
+        )
+        return Evaluation(
+            target_verdict="BLOCKED",
+            observations=[
+                {
+                    "case_id": case_id,
+                    "protocol_status": contract.status,
+                    "evidence_basis": contract.evidence_basis,
+                    "pass_oracle": contract.pass_oracle,
+                    "fail_oracle": contract.fail_oracle,
+                    "coverage_level": "OFFICIAL_SDK",
+                    "exact_official_sdk_available": False,
+                    "cache_discovery": discovery,
+                    "simulated_official_sdk_refused": True,
+                    "synthetic_positive_control_executed": False,
+                    "synthetic_negative_control_executed": False,
+                }
+            ],
+            positive_control="NOT_RUN",
+            negative_control="NOT_RUN",
+            containment_result="NOT_APPLICABLE",
+            cleanup_result="NOT_APPLICABLE",
+            blocked_kind="ACCESS",
+            blocked_detail=detail,
+            limitations=[
+                "No OFFICIAL_SDK behavior was simulated or inferred from the in-memory fixture model."
+            ],
+        )
+
+    root = Path(__file__).resolve().parents[1]
+    fixture = root / "fixtures" / "go_sdk_sa014"
+    module_cache = root / "vendor" / "official" / "go-mod-cache"
+    work = context.case_root / "official-go-sdk"
+    if work.exists() or work.is_symlink():
+        shutil.rmtree(work)
+    build_cache = work / "build-cache"
+    go_path = work / "gopath"
+    home = work / "home"
+    tmp = work / "tmp"
+    for path in (build_cache, go_path, home, tmp):
+        path.mkdir(parents=True, exist_ok=False, mode=0o700)
+
+    go_binary = shutil.which("go")
+    if go_binary is None:
+        shutil.rmtree(work)
+        return Evaluation(
+            target_verdict="BLOCKED",
+            observations=[
+                {
+                    "case_id": case_id,
+                    "exact_official_sdk_available": True,
+                    "go_toolchain_available": False,
+                }
+            ],
+            positive_control="NOT_RUN",
+            negative_control="NOT_RUN",
+            containment_result="NOT_APPLICABLE",
+            cleanup_result="PASS",
+            blocked_kind="ACCESS",
+            blocked_detail="The exact SDK is present but no Go toolchain is available.",
+            subject_version="package:github.com/modelcontextprotocol/go-sdk@v1.6.1",
+        )
+
+    environment = {
+        "PATH": "/usr/local/go/bin:/usr/local/bin:/usr/bin:/bin",
+        "HOME": str(home),
+        "TMPDIR": str(tmp),
+        "GOCACHE": str(build_cache),
+        "GOMODCACHE": str(module_cache),
+        "GOPATH": str(go_path),
+        "GOENV": "off",
+        "GOTELEMETRY": "off",
+        "GOTOOLCHAIN": "local",
+        "GOPROXY": "off",
+        "GOSUMDB": "off",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+    }
+    sandbox = "\n".join(
+        (
+            "(version 1)",
+            "(allow default)",
+            "(deny network*)",
+            "(deny file-write*)",
+            '(allow file-write* (literal "/dev/null"))',
+            f'(allow file-write* (subpath "{work}"))',
+        )
     )
+    completed = subprocess.run(
+        [
+            "/usr/bin/sandbox-exec",
+            "-p",
+            sandbox,
+            go_binary,
+            "run",
+            "-mod=readonly",
+            ".",
+        ],
+        cwd=fixture,
+        env=environment,
+        check=False,
+        capture_output=True,
+        timeout=90,
+    )
+    source_sha256 = hashlib.sha256(
+        (fixture / "main.go").read_bytes() + (fixture / "go.mod").read_bytes()
+    ).hexdigest()
+    try:
+        payload = json.loads(completed.stdout)
+    except json.JSONDecodeError:
+        payload = {}
+    vulnerable_statuses = payload.get("vulnerable_statuses", {})
+    safe_statuses = payload.get("safe_statuses", {})
+    positive_passed = (
+        completed.returncode == 0
+        and payload.get("vulnerable_handler_hits") == 2
+        and vulnerable_statuses == {"host": 200, "origin": 200}
+    )
+    negative_passed = (
+        completed.returncode == 0
+        and payload.get("safe_handler_hits") == 1
+        and safe_statuses.get("valid") == 200
+        and all(
+            safe_statuses.get(name) == 403
+            for name in ("host", "host_port", "host_suffix", "origin")
+        )
+    )
+    stderr_sha256 = hashlib.sha256(completed.stderr).hexdigest()
+    shutil.rmtree(work)
+    cleanup_passed = not work.exists()
+    observations = [
+        {
+            "case_id": case_id,
+            "protocol_status": contract.status,
+            "evidence_basis": contract.evidence_basis,
+            "pass_oracle": contract.pass_oracle,
+            "fail_oracle": contract.fail_oracle,
+            "coverage_level": "OFFICIAL_SDK",
+            "exact_official_sdk_available": True,
+            "official_sdk_version": "v1.6.1",
+            "program_owned_module_path": discovery["program_owned_module_path"],
+            "module_zip_sha256": discovery["program_owned_module_zip_sha256"],
+            "fixture_source_sha256": source_sha256,
+            "network_policy": "sandbox-exec deny network* and GOPROXY=off",
+            "normal_go_cache_used": False,
+            "vulnerable_control": payload,
+            "hostile_statuses": safe_statuses,
+            "valid_status": safe_statuses.get("valid"),
+            "handler_hits_after_protection": payload.get("safe_handler_hits"),
+            "stderr_sha256": stderr_sha256,
+            "cleanup_verified": cleanup_passed,
+        }
+    ]
+    if not positive_passed or not negative_passed or not cleanup_passed:
+        return Evaluation(
+            target_verdict="UNKNOWN",
+            observations=observations,
+            positive_control="PASS" if positive_passed else "FAIL",
+            negative_control="PASS" if negative_passed else "FAIL",
+            cleanup_result="PASS" if cleanup_passed else "FAIL",
+            declared_result="ERROR",
+            limitations=[
+                "The exact official SDK control did not satisfy its full status and handler-hit matrix."
+            ],
+            subject_version="package:github.com/modelcontextprotocol/go-sdk@v1.6.1",
+        )
     return Evaluation(
-        target_verdict="BLOCKED",
-        observations=[
-            {
-                "case_id": case_id,
-                "protocol_status": contract.status,
-                "evidence_basis": contract.evidence_basis,
-                "pass_oracle": contract.pass_oracle,
-                "fail_oracle": contract.fail_oracle,
-                "coverage_level": "OFFICIAL_SDK",
-                "exact_official_sdk_available": False,
-                "cache_discovery": discovery,
-                "simulated_official_sdk_refused": True,
-                "synthetic_positive_control_executed": False,
-                "synthetic_negative_control_executed": False,
-            }
-        ],
-        positive_control="NOT_RUN",
-        negative_control="NOT_RUN",
-        containment_result="NOT_APPLICABLE",
-        cleanup_result="NOT_APPLICABLE",
-        blocked_kind="ACCESS",
-        blocked_detail=detail,
+        target_verdict="PASS",
+        observations=observations,
+        positive_control="PASS",
+        negative_control="PASS",
+        containment_result="PASS",
+        cleanup_result="PASS",
         limitations=[
-            "No OFFICIAL_SDK behavior was simulated or inferred from the in-memory fixture model."
+            "This proves the exact v1.6.1 handler under the recorded stateless configuration; it does not prove other Go SDK versions or deployments."
         ],
+        subject_version="package:github.com/modelcontextprotocol/go-sdk@v1.6.1",
     )
 
 
@@ -1067,7 +1226,7 @@ def evaluate(case: dict[str, Any], context: RunContext) -> Evaluation:
             limitations=["The exact cases.json oracle contract was not executed."],
         )
     if case_id == "SA-014":
-        return _official_go_sdk_block(case_id, contract, context)
+        return _official_go_sdk(case_id, contract, context)
     if case_id == "SA-015":
         return _cross_sdk_parser(case, context)
 

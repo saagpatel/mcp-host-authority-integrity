@@ -168,9 +168,21 @@ def _blocked_copy(
     frozen = context.frozen_target(case["case_id"])
     commit = frozen["head"]
     cleanliness = "clean" if frozen["clean"] else "not clean"
+    archive = frozen["archive"]
+    archive_available = bool(
+        archive.get("created") and archive.get("fidelity_proven")
+    )
     detail = (
-        f"{target_name} is {cleanliness} at the frozen epoch identity; "
-        f"{ownership_detail}"
+        (
+            f"An exact read-only {target_name} archive is available, but no "
+            "program-owned locked dependency set and qualified target executor "
+            "can exercise the full claimed runtime paths."
+        )
+        if archive_available
+        else (
+            f"{target_name} is {cleanliness} at the frozen epoch identity; "
+            f"{ownership_detail}"
+        )
     )
     deviation = hashlib.sha256(
         f"{case['case_id']}:{commit}:copy-not-created".encode()
@@ -186,8 +198,14 @@ def _blocked_copy(
                 "source_clean_at_epoch_open": frozen["clean"],
                 "ownership": frozen["ownership"],
                 "ownership_basis": frozen["ownership_basis"],
-                "isolated_copy_created": False,
-                "target_access": "frozen closure-epoch identity only",
+                "isolated_copy_created": archive_available,
+                "archive_sha256": archive.get("sha256"),
+                "target_access": (
+                    "program archive receipt only"
+                    if archive_available
+                    else "frozen closure-epoch identity only"
+                ),
+                "target_code_executed": False,
                 "overclaim_refused": True,
             }
         ],

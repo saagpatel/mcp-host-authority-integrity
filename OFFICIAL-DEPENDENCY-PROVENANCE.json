@@ -1,0 +1,41 @@
+{
+  "go_sdk": {
+    "module": "github.com/modelcontextprotocol/go-sdk",
+    "version": "v1.6.1",
+    "release_url": "https://github.com/modelcontextprotocol/go-sdk/releases/tag/v1.6.1",
+    "origin": {
+      "vcs": "git",
+      "url": "https://github.com/modelcontextprotocol/go-sdk",
+      "hash": "d454bbaf06a342aee5336df3370321d9cdec2478",
+      "ref": "refs/tags/v1.6.1"
+    },
+    "go_sum": "h1:0zOSupjKUxPKSocPT1Wtago+mUHU2/uZ4xSOY0FGReU=",
+    "go_mod_sum": "h1:kzm3kzFL1/+AziGOE0nUs3gvPoNxMCvkxokMkuFapXQ=",
+    "zip_sha256": "42d2f3dd1c889e7591675c83eae6ccb29a4a3ae9560dd5767869467bbb03ca85",
+    "go_mod_sha256": "77385a63f6339a0bac57b6aeeb28958f378980b011a075a821127d1b9d42f549",
+    "path": "vendor/official/go-mod-cache/github.com/modelcontextprotocol/go-sdk@v1.6.1",
+    "transitive_module_cache": "vendor/official/go-mod-cache",
+    "fixture_go_sum_sha256": "48cad205f2bca46e8fb48486de158c80bd154f18d085ff6cb3873251bb20de9c"
+  },
+  "playwright": {
+    "channel": "next",
+    "package_version": "1.62.0-alpha-2026-07-19",
+    "package_tarball": "https://registry.npmjs.org/playwright/-/playwright-1.62.0-alpha-2026-07-19.tgz",
+    "package_integrity": "sha512-egPsbE/CH/0mNU/ia3Xwfx2vQ7ot8IUA/IUQMUHXc8aCBpjDrQrt1oY3MirrFq6uXOxvNPs8SUqApKYijl6w4A==",
+    "playwright_core_integrity": "sha512-x7CbPsCZIsxaVL8vwbaVzF2SpJyiBeBsz3XbTghcgQI4lKCl5prOBOPN5ctIWl6O+ZVr0tgmm6SNr82deS81mA==",
+    "browser_revision": "1234",
+    "browser_version": "151.0.7922.34",
+    "browser_download_url": "https://cdn.playwright.dev/builds/cft/151.0.7922.34/mac-arm64/chrome-headless-shell-mac-arm64.zip",
+    "browser_binary_sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45",
+    "browser_bundle_sha256": "5d6cf6a02dbc47c3210d027647e18b6f70b33dbd2cafb017adf0c4278827981b",
+    "runtime_bundle_tree_sha256": "2ce0e63dbf28c73c9096904171095c803828c7e14a3d56bfb312a19a6ad732aa",
+    "browsers_metadata_sha256": "f9fcc742e33e0b12fe6650bf1f833c0cb1c391214a382d05c58c5e817f87e1ad",
+    "path": "vendor/official/playwright-browsers/chromium_headless_shell-1234"
+  },
+  "scope": {
+    "network_used": true,
+    "normal_browser_profile_used": false,
+    "writes_outside_program_root": false,
+    "production_readiness_claimed": false
+  }
+}
