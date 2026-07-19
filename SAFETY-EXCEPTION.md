@@ -64,10 +64,30 @@ connector, or external network endpoint was opened by the probes. Browser
 writes were otherwise confined to fresh program-owned profiles. The reports
 were not opened for content inspection, altered, moved, or deleted.
 
-The qualified launcher avoids the incompatible nested Chromium sandbox, uses
-one renderer process under the outer deny-all network/filesystem policy, and
-disables Chromium crash reporting. This reduces recurrence risk but does not
+The launcher candidate was ultimately rejected because it did not prove
+repeatable bounded execution. Hard refusal reduces recurrence risk but does not
 repair or erase `SE-002`.
+
+## SE-003 — diagnostic process inventory wrote outside the program root
+
+- Classification: `PROGRAM_SIDE_EFFECT_OUTSIDE_PROGRAM_ROOT`
+- Phase: pre-epoch disposable-browser watchdog diagnosis
+- Observed at: `2026-07-19T06:14:34-07:00`
+- Command shape: `/bin/ps -g <nonexistent-pgid> ...` with stdout and stderr
+  redirected to `/tmp/mhai-ps-out` and `/tmp/mhai-ps-err`
+- Closure-gate effect: historical pre-epoch exception; excluded from no later
+  epoch window
+
+The diagnostic command directly created `/tmp/mhai-ps-out` as a zero-byte file
+and `/tmp/mhai-ps-err` as a 36-byte file. Both files were observed by metadata
+only. They were not opened for content inspection, altered, moved, or deleted.
+
+The command targeted a deliberately nonexistent process group and did not read
+or modify any target repository, normal browser profile, account, secret,
+connector, or external endpoint. The write locations nevertheless fell
+outside the program-owned sacrificial root and are preserved as a safety
+exception. Retiring the experimental launcher prevents this diagnostic path
+from recurring, but does not repair or erase `SE-003`.
 
 ## Later closure epochs
 
@@ -75,4 +95,4 @@ A later, explicitly bounded closure epoch may establish that its own observation
 window caused no forbidden target mutation. That is separate evidence only.
 It cannot repair, erase, downgrade, or reinterpret `SE-001`; the historical
 Gate 7 outcome above remains `FAIL`. It likewise cannot erase or reinterpret
-the pre-epoch lifecycle side effect recorded as `SE-002`.
+the pre-epoch side effects recorded as `SE-002` and `SE-003`.

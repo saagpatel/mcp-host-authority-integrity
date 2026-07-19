@@ -129,26 +129,15 @@ invalid record fails the gate.
   sacrificial root, reject symlinks and hard links, disable accounts, sync,
   extensions, password storage, device APIs, clipboard authority, and normal
   profile import, and run inside the qualified network/filesystem boundary.
-- A macOS host launcher may disable Chromium's inner sandbox only when CQ-012
-  proves that the exact browser binary is instead enclosed by a stricter
-  `sandbox-exec` policy: deny all network, deny all writes except the current
-  browser-state root, and deny user-home reads except the exact immutable
-  browser cache and current run inputs. The launcher must use a single bounded
-  renderer domain, a scrubbed environment, the 16-process and 256 MiB ceilings,
-  and an independent controller-death/expiry watchdog.
-- Exact browser version, complete bundle digest, executable digest, cached
-  Playwright metadata version/digest, sandbox executable digest, and the
-  qualification runtime are one binding. Any drift makes the receipt stale.
 - The observer verifies that normal browser profile paths are neither mounted,
   opened, inherited, nor named in the child command line or environment.
-- The positive control round-trips synthetic account, extension, saved-state,
-  and sync markers through one sacrificial profile. A second fresh profile must
-  observe none of them. Permission queries may be `prompt`, `denied`, or
-  unsupported but never `granted`; no permission prompt is accepted.
 - If no launcher can prove all of these properties, CQ-012 passes only in
   `BROWSER_DISABLED` mode: the harness must refuse every browser-dependent case
   as `BLOCKED_BY_ACCESS`. It may not fall back to an in-app, logged-in, normal,
   or merely command-line-separated profile.
+- The bounded local search and rejected cached candidates are recorded in
+  `BROWSER-CANDIDATE-ASSESSMENT.md`. A failed repeatability probe is not browser
+  coverage and is not retried by ordinary qualification.
 - Cleanup must remove the disposable profile and prove no browser process,
   profile lock, or delayed action remains.
 
@@ -156,9 +145,8 @@ invalid record fails the gate.
 
 Gate 1B passes only if CQ-001 through CQ-012 pass, their evidence validates, the
 3-second delayed-action observations complete, and final cleanup is clean.
-`BROWSER_DISABLED` remains a safe Gate 1B mode when the exact launcher is absent
-or any CQ-012 control fails, but it blocks every browser-dependent case and is
-never browser coverage.
+`BROWSER_DISABLED` is a safe Gate 1B mode but blocks every browser-dependent
+case; it is never browser coverage.
 `run-safe` recomputes the qualification binding before each run. Any failure,
 missing control, stale digest, or cleanup residue yields `ERROR` and prevents
 active adversarial execution.

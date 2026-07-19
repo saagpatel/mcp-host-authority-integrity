@@ -11,7 +11,8 @@ def browser_refusal(case: dict[str, Any], browser_mode: str) -> dict[str, Any] |
             "target_verdict": "BLOCKED",
             "blocked_kind": "ACCESS",
             "blocked_detail": (
-                "CQ-012 is BROWSER_DISABLED; no isolated browser launcher is qualified"
+                "CQ-012 is BROWSER_DISABLED; locally cached candidates failed "
+                "repeatable bounded launcher qualification"
             ),
             "browser_required": True,
             "unsafe_fallback_refused": True,

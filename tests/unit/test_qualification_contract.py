@@ -38,34 +38,6 @@ def receipt() -> dict:
     }
 
 
-def qualified_receipt() -> dict:
-    value = receipt()
-    value["browser_mode"] = "QUALIFIED"
-    value["checks"][-1]["observations"] = [
-        {
-            "browser_launcher_qualified": True,
-            "browser_identity": {"contract_version": "MHAI-BROWSER-1"},
-            "marker_round_trip_detected": True,
-            "fresh_profile_marker_absent": True,
-            "profile_symlink_rejected": True,
-            "profile_hardlink_rejected": True,
-            "normal_profiles_not_read": True,
-            "normal_profiles_not_mounted": True,
-            "normal_profiles_not_named_in_child_command_or_environment": True,
-            "network_denied": True,
-            "filesystem_boundary_passed": True,
-            "permission_grants_absent": True,
-            "device_authority_absent": True,
-            "clipboard_authority_absent": True,
-            "accounts_sync_extensions_password_store_disabled": True,
-            "profile_cleanup_verified": True,
-            "watchdog_cleanup_verified": True,
-            "controller_death_cleanup_verified": True,
-        }
-    ]
-    return value
-
-
 class QualificationContractTests(unittest.TestCase):
     def test_valid_exact_contract(self) -> None:
         validate_qualification_contract(receipt())
@@ -88,10 +60,9 @@ class QualificationContractTests(unittest.TestCase):
         with self.assertRaises(SchemaValidationError):
             validate_qualification_contract(invalid)
 
-    def test_qualified_browser_requires_every_containment_control(self) -> None:
-        validate_qualification_contract(qualified_receipt())
-        invalid = qualified_receipt()
-        invalid["checks"][-1]["observations"][0]["network_denied"] = False
+    def test_qualified_browser_mode_requires_a_new_active_launcher(self) -> None:
+        invalid = receipt()
+        invalid["browser_mode"] = "QUALIFIED"
         with self.assertRaises(SchemaValidationError):
             validate_qualification_contract(invalid)
 

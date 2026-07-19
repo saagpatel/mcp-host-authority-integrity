@@ -30,8 +30,8 @@ python3 -m unittest discover -s tests -v
 python3 scripts/generate_cases.py --check
 python3 -m harness.runner list
 git commit  # create a clean, program-owned local checkpoint
-python3 -m harness.runner qualify
 python3 -m harness.runner epoch-open
+python3 -m harness.runner qualify
 python3 -m harness.runner run-safe
 python3 -m harness.runner epoch-close
 python3 scripts/render_execution_evidence.py --write
@@ -84,6 +84,11 @@ The completed evidence overlay is in [EXECUTION-SUMMARY.md](EXECUTION-SUMMARY.md
 and [EXECUTION-COVERAGE.md](EXECUTION-COVERAGE.md). `COVERAGE-MATRIX.md` remains
 the immutable pre-execution catalog view. [SAFETY-EXCEPTION.md](SAFETY-EXCEPTION.md)
 records the Gate 7 closeout boundary violation.
-Historical `SE-001` and pre-epoch lifecycle exception `SE-002` are permanent
-program history. A later closure epoch may pass its own gate, but cannot repair
-or reinterpret either exception.
+It also records the pre-epoch browser exploration side effects. Historical
+`SE-001`, `SE-002`, and `SE-003` are permanent program history. A later closure
+epoch may pass its own gate, but cannot repair or reinterpret them.
+
+The bounded browser search is recorded in
+[BROWSER-CANDIDATE-ASSESSMENT.md](BROWSER-CANDIDATE-ASSESSMENT.md). Existing
+cached candidates failed repeatable CQ-012 qualification, so browser cases
+remain hard-refused without reading or reusing normal profiles.
