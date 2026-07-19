@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T17:35:32.132575Z",
+  "closed_at": "2026-07-19T19:05:28.446248Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784482491-2a4e4ee2dbdc",
+  "epoch_id": "closure-1784487883-13b22b62b44a",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,9 +10,9 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "f41170af51124278bf62100153636b7f417a88b81484400d474e58eeb97320dc",
+  "open_digest": "72e41aee4c6f04753a17995e4104e1fd6da2fff0c51eec9d1bde3214f053f3cb",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784482495-611891591ef7",
+  "qualification_run_id": "cq-1784487890-32fb7fa56fd6",
   "remaining_blockers": [
     {
       "case_id": "RT-012",
@@ -22,32 +22,26 @@
     },
     {
       "case_id": "HC-011",
-      "detail": "An exact read-only PortfolioCommandCenter archive is available, but no qualified target webview-to-command-bridge executor or locked build dependency set is available.",
-      "kind": "ACCESS",
-      "result": "BLOCKED_BY_ACCESS"
-    },
-    {
-      "case_id": "HC-012",
-      "detail": "An exact read-only PortfolioCommandCenter archive is available, but its command-launch path cannot be executed without an independently qualified locked build dependency set.",
+      "detail": "An exact read-only PortfolioCommandCenter archive is available, but no qualified target webview-to-command-bridge executor is available for the actual Tauri IPC path.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     },
     {
       "case_id": "LP-007",
-      "detail": "An exact read-only AIGCCore archive is available, but no program-owned locked dependency set and qualified target executor can exercise the full claimed runtime paths.",
+      "detail": "An exact read-only AIGCCore archive is available, but no qualified target executor with a proven network-attempt sensor can exercise the full UI, command, adapter, and dependency paths.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     },
     {
       "case_id": "LP-009",
-      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was CLEAR and does not override the clean-source requirement.",
+      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was ACTIVE and does not override the clean-source requirement.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     }
   ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784482512-08fb6585b090",
-  "run_manifest_sha256": "8bb345d81983634cf8f86bf182c317497349c57a4fa59aee3b3c442cde83bd32",
+  "run_id": "run-1784487903-5dd9d8c697b4",
+  "run_manifest_sha256": "0ed532a70446daf3bf822056afc7906840af91221acef9df8aaafa99aa60fda6",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {

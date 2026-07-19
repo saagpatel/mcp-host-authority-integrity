@@ -4,13 +4,14 @@
 
 `ACCEPT`
 
-The corrected receipt chain has no blocking independent-review findings.
+The latest receipt chain has no blocking independent-review findings for the
+safely obtainable coverage boundary.
 
-The accepted evidence is closure epoch
-`closure-1784482491-2a4e4ee2dbdc`, qualification
-`cq-1784482495-611891591ef7`, and run
-`run-1784482512-08fb6585b090`. The program source checkpoint bound by the epoch
-is `c3addb899ebfaa33a82f1924c6f615fd22216a25`.
+The accepted terminal candidate is closure epoch
+`closure-1784487883-13b22b62b44a`, qualification
+`cq-1784487890-32fb7fa56fd6`, and run
+`run-1784487903-5dd9d8c697b4`. The program source checkpoint bound by the epoch
+is `91e642598dbba707209b13bbab53656f4f151c2e`.
 
 ## Blocking findings
 
@@ -18,30 +19,44 @@ None.
 
 ## Verification
 
-- Confirmed `LP-009` consistently records ownership `CLEAR` and blocks solely
-  because the frozen source is dirty.
-- Validated every schema, all 57 case/result contracts, exact paths and hashes,
-  catalog order, immutable copies, and canonical epoch, qualification, and run
-  bindings.
-- Confirmed exact totals of 51 `PASS`, 1 `FAIL`, and 5
-  `BLOCKED_BY_ACCESS`.
-- Confirmed CQ-001 through CQ-012 pass and that browser qualification and
-  scoped cleanup evidence are valid.
-- Confirmed archive hashes, read-only modes, and file counts match their
-  receipts.
-- Confirmed blocker parity is exact and no target, archive, fixture, or
-  access-limited evidence is overclaimed.
-- Confirmed historical `SE-001` through `SE-004` remain unrepaired and the
-  historical v1 epoch remains `FAIL`.
-- Confirmed renderer consistency, catalog generation, and diff hygiene.
+- Confirmed exact run totals of 51 `PASS`, 2 `FAIL`, and 4
+  `BLOCKED_BY_ACCESS` across 57 case results.
+- Confirmed the remaining access blockers are exactly `RT-012`, `HC-011`,
+  `LP-007`, and `LP-009`.
+- Confirmed `HC-012` records an authentic archived-target `FAIL`: the hostile
+  `PATH` canary was followed without detection, the vulnerable control followed
+  the fake `zsh`, the safe baseline did not, cleanup passed, and the case did
+  not access the live target repository after epoch open.
+- Confirmed `SA-015` remains a `FAIL` and is not weakened or reinterpreted.
+- Confirmed CQ-001 through CQ-012 pass and that the final run is bound to the
+  exact qualification digest and closure epoch digest.
+- Confirmed closure close result `PASS_WITH_HISTORICAL_EXCEPTION` with
+  `no_forbidden_mutation_gate` equal to `PASS`.
+- Confirmed the renderer is consistent for `EXECUTION-SUMMARY.md`,
+  `EXECUTION-COVERAGE.md`, `FINDINGS.md`, and `results/findings.json`.
+- Confirmed static/type/catalog/test gates pass: `ruff check .`,
+  `mypy harness suite_impl scripts`, `python3 scripts/generate_cases.py --check`,
+  `python3 -m harness.runner list`, and `python3 -m unittest discover -s tests -v`.
+- Confirmed official cargo dependency provenance for the two archived Rust
+  targets: PortfolioCommandCenter archive/lockfile hashes plus 433 locked crates,
+  and AIGCCore archive/lockfile hashes plus 480 locked crates.
+- Confirmed historical `SE-001` through `SE-004` remain preserved and unrepaired.
 
 ## Limitations
 
-- At review time, the new evidence had not yet received its intended local
-  evidence commit.
-- CQ and run cleanup is proven for run-owned roots. Official acquisition and
-  build caches under ignored program-owned `work/` remain outside that scoped
-  cleanup claim.
+- `RT-012` remains blocked because no fidelity-proven immutable `mcp-trust`
+  archive is bound to this run.
+- `HC-011` remains blocked because no qualified archived Tauri
+  webview-to-command IPC executor is available for the actual target path.
+- `LP-007` remains blocked because no complete AIGCCore UI, Tauri command, core
+  adapter, dependency-path executor with a proven network-attempt sensor is
+  available.
+- `LP-009` remains blocked because `portfolio-index` was not clean at epoch open
+  and ownership was `ACTIVE`; that does not satisfy the clean-source archive
+  eligibility boundary.
+- Historical safety exceptions are preserved, not repaired.
+- Ignored program-owned build/acquisition caches under `work/` remain outside
+  the run-owned cleanup claim.
 
 ## Required corrections
 

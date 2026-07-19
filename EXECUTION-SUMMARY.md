@@ -4,11 +4,11 @@
 
 `EXECUTION_COMPLETE_NEW_EPOCH_PASS_WITH_HISTORICAL_EXCEPTION`
 
-The bound run `run-1784482512-08fb6585b090` produced 57 schema-valid, hash-bound case results: 51 `PASS`, 1 `FAIL`, and 5 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
+The bound run `run-1784487903-5dd9d8c697b4` produced 57 schema-valid, hash-bound case results: 51 `PASS`, 2 `FAIL`, and 4 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
 
 One low-severity exact-SDK interoperability finding was validated in `SA-015`. It is not evidence of an authorization bypass in a particular host. A fixture `PASS` proves only the recorded synthetic subject and controls.
 
-The new closure epoch `closure-1784482491-2a4e4ee2dbdc` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
+The new closure epoch `closure-1784487883-13b22b62b44a` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
 
 ## Suite totals
 
@@ -16,21 +16,21 @@ The new closure epoch `closure-1784482491-2a4e4ee2dbdc` passed its own no-forbid
 |---|---:|---:|---:|---:|
 | Runtime Truth | 11 | 0 | 1 | 12 |
 | Stateless Authority | 14 | 1 | 0 | 15 |
-| Host Confused Deputy | 10 | 0 | 2 | 12 |
+| Host Confused Deputy | 10 | 1 | 1 | 12 |
 | Local Privilege Containment | 9 | 0 | 2 | 11 |
 | OAuth and Browser Identity | 6 | 0 | 0 | 6 |
 | Integrated Attack Chain | 1 | 0 | 0 | 1 |
-| **Total** | **51** | **1** | **5** | **57** |
+| **Total** | **51** | **2** | **4** | **57** |
 
 ## Containment binding
 
-- Qualification: `cq-1784482495-611891591ef7` / `PASS`.
+- Qualification: `cq-1784487890-32fb7fa56fd6` / `PASS`.
 - Qualification checks: 12/12 `PASS`.
 - Browser mode: `QUALIFIED`.
-- Qualification digest: `2bd4b7a7180e3c08fa8d5b36d4a25f684bcc8557df24a9e8efaca6c53e6e216c`.
-- Fixture digest: `3f23e62eeea39a126dece9dd428ab7f79ba1c5151ff96a891fe5d3e280a831a4`.
-- Closure epoch: `closure-1784482491-2a4e4ee2dbdc` / `PASS_WITH_HISTORICAL_EXCEPTION`.
-- Closure digest: `f41170af51124278bf62100153636b7f417a88b81484400d474e58eeb97320dc`.
+- Qualification digest: `612531b06de6368c37fef797bea76ffe26a429f5b53849bd05bbebfb28d35e84`.
+- Fixture digest: `8261000263f7e12a711f22cc0ad5ff1890d0639440e2d9e341c7c26e31859035`.
+- Closure epoch: `closure-1784487883-13b22b62b44a` / `PASS_WITH_HISTORICAL_EXCEPTION`.
+- Closure digest: `72e41aee4c6f04753a17995e4104e1fd6da2fff0c51eec9d1bde3214f053f3cb`.
 - Final cleanup: `PASS`.
 
 ## Evidence boundary
@@ -39,7 +39,9 @@ The new closure epoch `closure-1784482491-2a4e4ee2dbdc` passed its own no-forbid
 - `SA-014` executed the exact official Go MCP SDK v1.6.1 from program-owned storage with the network denied and all hostile Origin/Host inputs rejected.
 - Exact Python and TypeScript SDK parsers executed from the qualified cached image with network disabled.
 - `RT-012` remained blocked because no fidelity-proven mcp-trust archive was available; the live target was not executed.
-- Fidelity-proven PortfolioCommandCenter and AIGCCore archives did not become behavioral proof: their locked build/runtime dependency lanes remained unavailable, so the target cases stayed blocked.
+- `HC-012` executed the exact archived PortfolioCommandCenter command-spawn path and recorded a hostile `PATH` failure.
+- `HC-011` remained blocked because no actual archived Tauri webview-to-command IPC executor was available.
+- `LP-007` remained blocked because no complete AIGCCore UI, Tauri command, core adapter, dependency-path executor with a proven network-attempt sensor was available.
 - During this closure epoch, no target repair, content/ref/worktree edit, publication, external write, disclosure, push, or deploy was performed.
 - `SE-001` remains the historical Gate 7 violation. The new epoch's passing gate is separate evidence and does not repair it.
 - `SE-002` preserves the macOS crash-diagnostic writes caused by failed pre-epoch browser probes.
