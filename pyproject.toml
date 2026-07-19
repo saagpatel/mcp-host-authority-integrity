@@ -13,7 +13,7 @@ dependencies = []
 mhai = "harness.runner:main"
 
 [tool.setuptools]
-packages = ["harness", "harness.suites"]
+packages = ["harness", "harness.suites", "suite_impl"]
 
 [tool.ruff]
 line-length = 100
