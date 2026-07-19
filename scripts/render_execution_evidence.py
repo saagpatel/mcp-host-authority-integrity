@@ -181,8 +181,9 @@ def render_summary(
             "- Browser-required cases blocked because every locally cached disposable "
             "launcher candidate failed repeatable CQ-012 qualification; no normal user "
             "browser profile was read, mounted, imported, or launched.",
-            "- The Go SDK case remains blocked because no exact official Go SDK exists "
-            "in bounded local caches.",
+            "- The Go SDK case remains blocked because no exact official Go SDK is "
+            "available from the frozen bounded cache discovery; one unavailable "
+            "cached image remains an explicit access limitation.",
             "- Exact Python and TypeScript SDK parsers executed from the qualified "
             "cached image with network disabled.",
             (
