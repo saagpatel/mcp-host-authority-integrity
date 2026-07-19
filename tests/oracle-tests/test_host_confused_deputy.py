@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import inspect
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+from harness.browser_runtime import DEFAULT_BROWSER_TIMEOUT_SECONDS, BrowserSession
 from harness.execution import Evaluation, RunContext, deterministic_declared_result
 from harness.schema_validation import load_json
 from suite_impl.host_confused_deputy import evaluate
@@ -58,6 +60,13 @@ class HostConfusedDeputyOracleTests(unittest.TestCase):
             result = evaluate(self.cases["HC-001"], self.context("QUALIFIED"))
         self.assertIs(result, sentinel)
         executor.assert_called_once()
+
+    def test_disposable_browser_has_bounded_wall_clock_headroom(self) -> None:
+        default = inspect.signature(BrowserSession.run_html).parameters[
+            "timeout_seconds"
+        ].default
+        self.assertEqual(default, DEFAULT_BROWSER_TIMEOUT_SECONDS)
+        self.assertEqual(default, 20.0)
 
     def test_qualified_browser_does_not_substitute_for_target_executor(self) -> None:
         result = evaluate(self.cases["HC-011"], self.context("QUALIFIED"))

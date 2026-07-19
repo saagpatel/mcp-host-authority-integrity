@@ -23,6 +23,7 @@ BROWSER_CONTRACT_VERSION = "MHAI-BROWSER-2"
 MAX_STDIO_BYTES = 2 * 1024 * 1024
 MAX_BROWSER_PIDS = 4
 MAX_BROWSER_RSS_KIB = 384 * 1024
+DEFAULT_BROWSER_TIMEOUT_SECONDS = 20.0
 SANDBOX_EXEC = Path("/usr/bin/sandbox-exec")
 PROVENANCE = ROOT / "OFFICIAL-DEPENDENCY-PROVENANCE.json"
 BUNDLE = (
@@ -484,7 +485,12 @@ class BrowserSession:
         (self.root / "tmp").mkdir(mode=0o700)
         return self
 
-    def run_html(self, content: str, *, timeout_seconds: float = 10.0) -> BrowserLaunch:
+    def run_html(
+        self,
+        content: str,
+        *,
+        timeout_seconds: float = DEFAULT_BROWSER_TIMEOUT_SECONDS,
+    ) -> BrowserLaunch:
         if self.closed or not self.root.exists():
             raise BrowserRuntimeError("browser session is closed")
         for path in [self.profile, *self.profile.rglob("*")]:

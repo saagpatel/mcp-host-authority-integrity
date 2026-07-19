@@ -44,7 +44,8 @@
 
 | Limit | Default |
 |---|---:|
-| Wall time per ordinary case | 10 seconds |
+| Wall time per ordinary non-browser case | 10 seconds |
+| Wall time per disposable-browser launch | 20 seconds |
 | Long task duration | 30 seconds |
 | Child processes | 16 |
 | Open file descriptors | 64 |
