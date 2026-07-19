@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T17:28:22.740850Z",
+  "closed_at": "2026-07-19T17:35:32.132575Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784482012-610879302d78",
+  "epoch_id": "closure-1784482491-2a4e4ee2dbdc",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,9 +10,9 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "3b31ee9c8855e0ef59c1ec9682091062e124140dad486fecea653d10643d8886",
+  "open_digest": "f41170af51124278bf62100153636b7f417a88b81484400d474e58eeb97320dc",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784482031-c4f3444192b7",
+  "qualification_run_id": "cq-1784482495-611891591ef7",
   "remaining_blockers": [
     {
       "case_id": "RT-012",
@@ -40,14 +40,14 @@
     },
     {
       "case_id": "LP-009",
-      "detail": "portfolio-index is not clean at the frozen epoch identity; the shared feat/portfolio-index worktree has an active owner.",
+      "detail": "portfolio-index is not clean at the frozen epoch identity; the ownership check was CLEAR and does not override the clean-source requirement.",
       "kind": "ACCESS",
       "result": "BLOCKED_BY_ACCESS"
     }
   ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784482060-36ca22ae9f0c",
-  "run_manifest_sha256": "b63de957ac6b600ef05c05056a780267fc60d7aa5f0c14e1a0befa2c1e81e19a",
+  "run_id": "run-1784482512-08fb6585b090",
+  "run_manifest_sha256": "8bb345d81983634cf8f86bf182c317497349c57a4fa59aee3b3c442cde83bd32",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {

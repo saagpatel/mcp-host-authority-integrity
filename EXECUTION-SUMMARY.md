@@ -4,11 +4,11 @@
 
 `EXECUTION_COMPLETE_NEW_EPOCH_PASS_WITH_HISTORICAL_EXCEPTION`
 
-The bound run `run-1784482060-36ca22ae9f0c` produced 57 schema-valid, hash-bound case results: 51 `PASS`, 1 `FAIL`, and 5 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
+The bound run `run-1784482512-08fb6585b090` produced 57 schema-valid, hash-bound case results: 51 `PASS`, 1 `FAIL`, and 5 `BLOCKED_BY_ACCESS`. No case produced `UNKNOWN`, `ERROR`, `NOT_RUN`, or `NOT_IMPLEMENTED`.
 
 One low-severity exact-SDK interoperability finding was validated in `SA-015`. It is not evidence of an authorization bypass in a particular host. A fixture `PASS` proves only the recorded synthetic subject and controls.
 
-The new closure epoch `closure-1784482012-610879302d78` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
+The new closure epoch `closure-1784482491-2a4e4ee2dbdc` passed its own no-forbidden-mutation gate. Target identities were frozen once with both optional-lock controls; final checks performed no target inventory and did not invoke target Git. Historical `SE-001` remains a violation; pre-epoch side effects `SE-002`, `SE-003`, and `SE-004` also remain preserved. None is repaired or reinterpreted.
 
 ## Suite totals
 
@@ -24,13 +24,13 @@ The new closure epoch `closure-1784482012-610879302d78` passed its own no-forbid
 
 ## Containment binding
 
-- Qualification: `cq-1784482031-c4f3444192b7` / `PASS`.
+- Qualification: `cq-1784482495-611891591ef7` / `PASS`.
 - Qualification checks: 12/12 `PASS`.
 - Browser mode: `QUALIFIED`.
-- Qualification digest: `3d100a3e7557ac013f47a0a376c83e1ef89e52976b2ca6e673669040035b54d6`.
-- Fixture digest: `00ed9bf229cc7ab683334ae04769cbb355b30508669da4ba466064730557bea4`.
-- Closure epoch: `closure-1784482012-610879302d78` / `PASS_WITH_HISTORICAL_EXCEPTION`.
-- Closure digest: `3b31ee9c8855e0ef59c1ec9682091062e124140dad486fecea653d10643d8886`.
+- Qualification digest: `2bd4b7a7180e3c08fa8d5b36d4a25f684bcc8557df24a9e8efaca6c53e6e216c`.
+- Fixture digest: `3f23e62eeea39a126dece9dd428ab7f79ba1c5151ff96a891fe5d3e280a831a4`.
+- Closure epoch: `closure-1784482491-2a4e4ee2dbdc` / `PASS_WITH_HISTORICAL_EXCEPTION`.
+- Closure digest: `f41170af51124278bf62100153636b7f417a88b81484400d474e58eeb97320dc`.
 - Final cleanup: `PASS`.
 
 ## Evidence boundary
