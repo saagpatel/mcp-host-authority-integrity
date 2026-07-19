@@ -1,0 +1,50 @@
+{
+  "blocked_reason": {
+    "detail": "portfolio-index is not clean at the frozen epoch identity; the shared feat/wave3-accretive worktree has an active owner.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "1bab0b23603d999676bf769b6da9736dd1172fad6a21045b91d39fe94ccce3d8",
+  "case_id": "LP-009",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "1c642b669b275971e204d2d5a5d494cbcc3aa0976a019011af6926d4596cb7f1",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:57.110330Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "ownership": "ACTIVE",
+      "ownership_basis": "The shared portfolio-index worktree has an active owner; no clean ownership window is authorized.",
+      "source_candidate_head": "eb17854731c6cadcdc5a01a318439667e085f957",
+      "source_candidate_tree": "d7e7aab8e64d2a37ece219020e6a16cdea673e31",
+      "source_clean_at_epoch_open": false,
+      "target_access": "frozen closure-epoch identity only"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:57.090027Z",
+  "subject": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+  "subject_version": "git:eb17854731c6cadcdc5a01a318439667e085f957+deviations:bb2fd50b1daa1a7403e9a1c399f5a418568dd38139c37f402d8e1e51dfbcf2b9",
+  "target_verdict": "BLOCKED"
+}

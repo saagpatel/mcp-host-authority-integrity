@@ -1,0 +1,81 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "cf1a2de75f2870a4785d8fa02ed9b9923b82464bf7169aec11b418eef1c16cf8",
+  "case_id": "RT-009",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "eb5bc148f6624d02cef8b3136a4180a3401147bd35861d3cae13feffbb154624",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:50.179705Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "same-tool-name-server-a",
+        "same-tool-name-server-b"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "RT-009",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "same-tool-name-server-a"
+        },
+        {
+          "accepted": false,
+          "reason": "runtime evidence contradicted the declared authority input",
+          "variant": "same-tool-name-server-b"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "same-tool-name-server-a",
+        "same-tool-name-server-b"
+      ]
+    },
+    {
+      "ambiguous_name_only_lookup_rejected": true,
+      "composite_keys": [
+        "server-a::collide",
+        "server-b::collide"
+      ],
+      "selected_origin": "server-a"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "RELEASED_CORE",
+  "result": "PASS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:50.175790Z",
+  "subject": "Same-named tools remain bound to server identity through selection, approval, execution, logs, and result.",
+  "subject_version": "fixture:MHAI-runtime-truth-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

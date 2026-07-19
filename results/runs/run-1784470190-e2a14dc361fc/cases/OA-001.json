@@ -1,0 +1,107 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "b75797146572eff5c1c082222906378b5d56a8498a343175d56f81f2bbb22168",
+  "case_id": "OA-001",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "e8af48429e1f7c8afe56dcb4d10f7e09053e3f30660a08e2b6d415d44c0ff483",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:57.121300Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "loopback-alias",
+        "private-ip",
+        "metadata-address",
+        "scheme-confusion",
+        "foreign-redirect"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "OA-001",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "destination is outside the exact run-owned origin",
+          "variant": "loopback-alias"
+        },
+        {
+          "accepted": false,
+          "reason": "destination is outside the exact run-owned origin",
+          "variant": "private-ip"
+        },
+        {
+          "accepted": false,
+          "reason": "destination is outside the exact run-owned origin",
+          "variant": "metadata-address"
+        },
+        {
+          "accepted": false,
+          "reason": "destination is outside the exact run-owned origin",
+          "variant": "scheme-confusion"
+        },
+        {
+          "accepted": false,
+          "reason": "destination is outside the exact run-owned origin",
+          "variant": "foreign-redirect"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "foreign-redirect",
+        "loopback-alias",
+        "metadata-address",
+        "private-ip",
+        "scheme-confusion"
+      ]
+    },
+    {
+      "destination_decisions": {
+        "approved-origin": true,
+        "foreign-redirect": false,
+        "loopback-alias": false,
+        "metadata-address": false,
+        "private-ip": false,
+        "scheme-confusion": false
+      },
+      "dns_rebinding_simulation": "post-resolution address rechecked",
+      "prohibited_destination_hits": 0,
+      "redirect_revalidation": "every hop before I/O"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "OFFICIAL_GUIDANCE",
+  "result": "PASS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:57.119924Z",
+  "subject": "Synthetic authorization metadata retrieval revalidates every redirect hop and blocks non-owned destinations.",
+  "subject_version": "fixture:MHAI-stateless-authority-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

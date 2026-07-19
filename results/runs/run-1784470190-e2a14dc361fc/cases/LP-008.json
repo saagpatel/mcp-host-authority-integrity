@@ -1,0 +1,85 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "32ed629c2149cddfe3c73a3b50a7aeb9bc15f7b31a494c7159b9fe60bb00e4f1",
+  "case_id": "LP-008",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_SERVER",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a62569ab56ab813d7eb788f88e33d5088fb19f4771779b5cca3a936112b70072",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:57.087220Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host."
+  ],
+  "observations": [
+    {
+      "attack_variants": [
+        "adjacent-attacker-key",
+        "forged-manifest",
+        "publisher-name-collision"
+      ],
+      "broker_attempts": [
+        {
+          "allowed": true,
+          "effect": "write_canary",
+          "name": "positive-control.json"
+        },
+        {
+          "allowed": false,
+          "effect": "write_canary",
+          "name": "safe-subject.json"
+        }
+      ],
+      "case_id": "LP-008",
+      "positive_canary_detected": true,
+      "safe_canary_absent": true,
+      "safe_decisions": [
+        {
+          "accepted": false,
+          "reason": "adjacent key lacks an independent publisher anchor",
+          "variant": "adjacent-attacker-key"
+        },
+        {
+          "accepted": false,
+          "reason": "adjacent key lacks an independent publisher anchor",
+          "variant": "forged-manifest"
+        },
+        {
+          "accepted": false,
+          "reason": "adjacent key lacks an independent publisher anchor",
+          "variant": "publisher-name-collision"
+        }
+      ],
+      "vulnerable_control_accepted": [
+        "adjacent-attacker-key",
+        "forged-manifest",
+        "publisher-name-collision"
+      ]
+    },
+    {
+      "adjacent_bundle_internally_consistent": true,
+      "bundle_accepted": false,
+      "independent_publisher_anchor_matches": false
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+  "result": "PASS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:57.066455Z",
+  "subject": "A manifest signature is not treated as publisher identity when the verification key is attacker-controlled and adjacent.",
+  "subject_version": "fixture:MHAI-local-privilege-containment-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}

@@ -1,0 +1,50 @@
+{
+  "blocked_reason": {
+    "detail": "AIGCCore is clean at the frozen epoch identity; source ownership is not clear enough to create or execute a program-owned archive.",
+    "kind": "ACCESS"
+  },
+  "case_definition_digest": "0a9c4234d9de4872fbc3e5c4d03b71f6dd122f554c582101e627a21f8f4ca3d8",
+  "case_id": "LP-007",
+  "cleanup_result": "NOT_APPLICABLE",
+  "containment_result": "NOT_APPLICABLE",
+  "contradictions": [],
+  "control_results": {
+    "negative": "NOT_RUN",
+    "positive": "NOT_RUN"
+  },
+  "coverage_level": "ISOLATED_TARGET_COPY",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "5396eeea93e73f0d3b5b8d51a5c70c2db34f887efb6523b947cd34c1bb337d8a",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:57.056476Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "No behavior of the live checkout or an isolated copy was executed."
+  ],
+  "observations": [
+    {
+      "isolated_copy_created": false,
+      "overclaim_refused": true,
+      "ownership": "UNCLEAR",
+      "ownership_basis": "Clean source exists on a security-fix branch, but current branch ownership is not proven.",
+      "source_candidate_head": "09c3aa435a608d03c002782e6268c10f5bb7fe94",
+      "source_candidate_tree": "e89ae646ceb8932ac88a3f0bb27fcd8bedd95798",
+      "source_clean_at_epoch_open": true,
+      "target_access": "frozen closure-epoch identity only"
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "LOCAL_CONTRACT",
+  "result": "BLOCKED_BY_ACCESS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:56.992324Z",
+  "subject": "An exact isolated AIGCCore source copy performs no network action across the exercised UI, command, adapter, and dependency paths.",
+  "subject_version": "git:09c3aa435a608d03c002782e6268c10f5bb7fe94+deviations:4b2cb9dfbf59b1af59c272fa77a732f65a52733bd866929c710724e14e955763",
+  "target_verdict": "BLOCKED"
+}

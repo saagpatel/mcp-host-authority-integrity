@@ -1,0 +1,52 @@
+{
+  "blocked_reason": null,
+  "case_definition_digest": "7331535d2bd1e1f28f109528d8b96298945f4493859fb155016a7971f010b30c",
+  "case_id": "HC-010",
+  "cleanup_result": "PASS",
+  "containment_result": "PASS",
+  "contradictions": [],
+  "control_results": {
+    "negative": "PASS",
+    "positive": "PASS"
+  },
+  "coverage_level": "FIXTURE_HOST",
+  "evidence": [
+    {
+      "kind": "validated-scenario-observation",
+      "observation_digest": "a850047761f6c9ae8b10596865c64ad80de52b3ff78bce50e903eac0b78a617d",
+      "qualification_digest": "7a6229c7c4066da0d6c15ceb8cf793c643184d2cd21ad7302c66718516615222"
+    }
+  ],
+  "finished_at": "2026-07-19T14:09:56.710066Z",
+  "limitations": [
+    "The case definition is not an execution result.",
+    "Coverage cannot exceed the declared evidence ceiling.",
+    "Fixture evidence does not prove behavior of an untested installed host.",
+    "This is deterministic fixture-host evidence, not proof about an installed host."
+  ],
+  "observations": [
+    {
+      "filesystem_access_performed": false,
+      "kind": "canonical-root-matrix",
+      "safe_attack_authorizations": "[REDACTED_SYNTHETIC_SECRET]",
+      "safe_legitimate_authorization": "[REDACTED_SYNTHETIC_SECRET]",
+      "vulnerable_attack_authorizations": "[REDACTED_SYNTHETIC_SECRET]"
+    },
+    {
+      "case_id": "HC-010",
+      "execution_mode": "pure-in-memory",
+      "external_effects_attempted": false,
+      "kind": "control-summary",
+      "safe_subject_rejected_attack": true,
+      "vulnerable_control_reached_forbidden_boundary": true
+    }
+  ],
+  "oracle_version": "MHAI-ORACLE-1",
+  "protocol_status": "STABLE_EXTENSION",
+  "result": "PASS",
+  "run_id": "run-1784470190-e2a14dc361fc",
+  "started_at": "2026-07-19T14:09:56.709118Z",
+  "subject": "The fixture client canonicalizes every filesystem access against the current authorized roots.",
+  "subject_version": "fixture:MHAI-host-confused-deputy-1@sha256:df7979c40a5b4f5d2a726fde8b8cbe4e1f4d3e52db22088639007df78d0d1b9d",
+  "target_verdict": "PASS"
+}
