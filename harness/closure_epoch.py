@@ -775,15 +775,43 @@ def _target_access_checks(
                     access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id == "HC-012":
                 archive = target["archive"]
-                case_evidence_valid = case_evidence_valid and (
-                    result["result"] == "BLOCKED_BY_ACCESS"
-                    and observation.get("target_repository_accessed_during_case") is False
-                    and observation.get("target_code_executed") is False
-                    and (
-                        not archive.get("created")
-                        or observation.get("archive_sha256") == archive.get("sha256")
+                if result["result"] == "FAIL":
+                    instrumentation = observation.get("instrumentation", {})
+                    vulnerable = instrumentation.get("vulnerable_control", {})
+                    baseline = instrumentation.get("safe_baseline", {})
+                    hostile = instrumentation.get("hostile_path", {})
+                    case_evidence_valid = case_evidence_valid and (
+                        archive.get("created") is True
+                        and archive.get("fidelity_proven") is True
+                        and observation.get("archive_sha256") == archive.get("sha256")
+                        and observation.get("archive_fidelity_proven") is True
+                        and observation.get("target_repository_accessed_during_case")
+                        is False
+                        and observation.get("target_code_executed") is True
+                        and observation.get("ambient_fake_zsh_followed_without_detection")
+                        is True
+                        and observation.get("cleanup_verified") is True
+                        and observation.get("containment_domains")
+                        == ["vulnerable-control", "safe-baseline", "hostile-path"]
+                        and result.get("control_results", {}).get("positive") == "PASS"
+                        and result.get("control_results", {}).get("negative") == "PASS"
+                        and result.get("containment_result") == "PASS"
+                        and result.get("cleanup_result") == "PASS"
+                        and vulnerable.get("fake_zsh_followed") is True
+                        and baseline.get("fake_zsh_followed") is False
+                        and hostile.get("fake_zsh_followed") is True
                     )
-                )
+                else:
+                    case_evidence_valid = case_evidence_valid and (
+                        result["result"] == "BLOCKED_BY_ACCESS"
+                        and observation.get("target_repository_accessed_during_case")
+                        is False
+                        and observation.get("target_code_executed") is False
+                        and (
+                            not archive.get("created")
+                            or observation.get("archive_sha256") == archive.get("sha256")
+                        )
+                    )
                 if archive.get("created"):
                     access_mode = "PROGRAM_ARCHIVE_RECEIPT_ONLY"
             elif case_id in {"LP-007", "LP-009"}:

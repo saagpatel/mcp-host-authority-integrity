@@ -152,6 +152,96 @@ class ClosureEpochTests(unittest.TestCase):
             )
         )
 
+    def test_closeout_accepts_archive_bound_hc012_path_poisoning_fail(self) -> None:
+        receipt = synthetic_closure_epoch()
+        portfolio_command_center = next(
+            item
+            for item in receipt["target_observations"]
+            if item["name"] == "PortfolioCommandCenter"
+        )
+        portfolio_command_center["archive"] = {
+            "created": True,
+            "fidelity_proven": True,
+            "sha256": "a" * 64,
+        }
+        results = [
+            {
+                "case_id": "RT-012",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [{"target_code_executed": False}],
+            },
+            {
+                "case_id": "HC-011",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {
+                        "archive_sha256": "a" * 64,
+                        "unsafe_fallback_refused": True,
+                        "target_code_executed": False,
+                    }
+                ],
+            },
+            {
+                "case_id": "HC-012",
+                "result": "FAIL",
+                "control_results": {"positive": "PASS", "negative": "PASS"},
+                "containment_result": "PASS",
+                "cleanup_result": "PASS",
+                "observations": [
+                    {
+                        "archive_sha256": "a" * 64,
+                        "archive_fidelity_proven": True,
+                        "target_repository_accessed_during_case": False,
+                        "target_code_executed": True,
+                        "ambient_fake_zsh_followed_without_detection": True,
+                        "cleanup_verified": True,
+                        "containment_domains": [
+                            "vulnerable-control",
+                            "safe-baseline",
+                            "hostile-path",
+                        ],
+                        "instrumentation": {
+                            "vulnerable_control": {"fake_zsh_followed": True},
+                            "safe_baseline": {"fake_zsh_followed": False},
+                            "hostile_path": {"fake_zsh_followed": True},
+                        },
+                    }
+                ],
+            },
+            {
+                "case_id": "LP-007",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {
+                        "target_access": "frozen closure-epoch identity only",
+                        "target_code_executed": False,
+                    }
+                ],
+            },
+            {
+                "case_id": "LP-009",
+                "result": "BLOCKED_BY_ACCESS",
+                "observations": [
+                    {
+                        "target_access": "frozen closure-epoch identity only",
+                        "target_code_executed": False,
+                    }
+                ],
+            },
+        ]
+        checks = _target_access_checks(receipt, results)
+        self.assertTrue(all(item["case_evidence_valid"] for item in checks))
+        self.assertIn(
+            {
+                "name": "PortfolioCommandCenter",
+                "opening_read_mutation_free": True,
+                "post_open_access": "PROGRAM_ARCHIVE_RECEIPT_ONLY",
+                "case_evidence_valid": True,
+                "final_observation": "none; no final target inventory or Git command",
+            },
+            checks,
+        )
+
     def test_close_schema_accepts_archive_receipt_only_access(self) -> None:
         schema = load_json(ROOT / "schemas/closure-epoch-close.schema.json")
         allowed = schema["properties"]["target_access_checks"]["items"][
