@@ -1,0 +1,205 @@
+{
+  "registry_version": "MHAI-SOURCES-1",
+  "retrieved_at": "2026-07-19",
+  "sources_digest": "3cb03f0666cafd52120038f7adcd56dcbdcb161a650c6487ba9497dd68b6e99c",
+  "sources": [
+    {
+      "source_id": "MCP-TOOLS-2025-11-25",
+      "title": "Model Context Protocol: Tools",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "Tool annotations are untrusted hints; clients should consider the tool description and annotations untrusted unless they come from trusted servers.",
+      "local_implementation_claims_support": "Fixture hosts exercise listing, calls, annotations, pagination, and list-change invalidation; no live-host support is inferred."
+    },
+    {
+      "source_id": "MCP-PROMPTS-2025-11-25",
+      "title": "Model Context Protocol: Prompts",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/prompts",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "Prompt discovery and prompt retrieval are separate operations and list responses may be paginated.",
+      "local_implementation_claims_support": "Fixture servers expose descriptor and retrieved-content differences."
+    },
+    {
+      "source_id": "MCP-RESOURCES-2025-11-25",
+      "title": "Model Context Protocol: Resources",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/resources",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "Resource discovery and resource reads are separate operations and list responses may be paginated.",
+      "local_implementation_claims_support": "Fixture servers expose descriptor and read-content differences."
+    },
+    {
+      "source_id": "MCP-TASKS-2025-11-25",
+      "title": "Model Context Protocol: Tasks",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/utilities/tasks",
+      "status": "RELEASED_EXPERIMENTAL",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "Tasks are experimental, capability-negotiated durable state machines with retrieval and cancellation operations.",
+      "local_implementation_claims_support": "Only the program-owned fixture task service claims support."
+    },
+    {
+      "source_id": "MCP-AUTH-2025-11-25",
+      "title": "Model Context Protocol: Authorization",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "Authorization uses OAuth protected-resource metadata and resource indicators and requires token audience validation.",
+      "local_implementation_claims_support": "Only synthetic OAuth resources and authorization servers are exercised."
+    },
+    {
+      "source_id": "MCP-ELICITATION-2025-11-25",
+      "title": "Model Context Protocol: Elicitation",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/client/elicitation",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2025-11-25",
+      "exact_requirement_used": "URL elicitation completion must be associated with the initiating interaction and clients must present destination identity.",
+      "local_implementation_claims_support": "Fixture-only URL completion binding."
+    },
+    {
+      "source_id": "SEP-2567",
+      "title": "SEP-2567: Sessionless MCP and explicit state",
+      "url": "https://modelcontextprotocol.io/seps/2567-sessionless-mcp",
+      "status": "FINAL_PROPOSAL",
+      "publication_or_update_date": "2026-03-11",
+      "exact_requirement_used": "Explicit state handles must be treated as state references rather than proof of authorization.",
+      "local_implementation_claims_support": "Fixture state handles model the proposal; no released-core claim is made."
+    },
+    {
+      "source_id": "SEP-2260",
+      "title": "SEP-2260: Require server requests to be associated with client requests",
+      "url": "https://modelcontextprotocol.io/seps/2260-Require-Server-requests-to-be-associated-with-Client-requests",
+      "status": "FINAL_PROPOSAL",
+      "publication_or_update_date": "2026-02-16",
+      "exact_requirement_used": "Server-originated requests require a live, valid parent client request association.",
+      "local_implementation_claims_support": "Fixture host correlation behavior only."
+    },
+    {
+      "source_id": "SEP-2243",
+      "title": "SEP-2243: HTTP standardization",
+      "url": "https://modelcontextprotocol.io/seps/2243-http-standardization",
+      "status": "FINAL_PROPOSAL",
+      "publication_or_update_date": "2026-02-04",
+      "exact_requirement_used": "Mcp-Method mirrors the case-sensitive JSON-RPC method and Mcp-Name mirrors the applicable params.name; implementations processing the body reject disagreement, while HTTP header names remain case-insensitive.",
+      "local_implementation_claims_support": "Fixture parser differential only."
+    },
+    {
+      "source_id": "MCP-APPS-2026-01-26",
+      "title": "MCP Apps extension specification",
+      "url": "https://github.com/modelcontextprotocol/ext-apps/blob/main/specification/2026-01-26/apps.mdx",
+      "status": "STABLE_EXTENSION",
+      "publication_or_update_date": "2026-01-26",
+      "exact_requirement_used": "App messages, tool visibility, resource templates, and host mediation are bound to an app lifecycle and server connection.",
+      "local_implementation_claims_support": "Fixture app host only; no installed MCP App host is claimed."
+    },
+    {
+      "source_id": "WEBMCP-REPOSITORY",
+      "title": "WebMCP repository",
+      "url": "https://github.com/webmachinelearning/webmcp",
+      "status": "DRAFT_OR_EMERGING",
+      "publication_or_update_date": "2025-08-13",
+      "exact_requirement_used": "Web tool registrations are document and frame lifecycle state whose exposure depends on origin policy.",
+      "local_implementation_claims_support": "A faithful fixture lifecycle model is used; browser implementation support is not generalized."
+    },
+    {
+      "source_id": "ACP-ADDITIONAL-DIRECTORIES",
+      "title": "ACP RFD: Additional directories",
+      "url": "https://agentclientprotocol.com/rfds/additional-directories",
+      "status": "STABLE_EXTENSION",
+      "publication_or_update_date": "2026-06-01",
+      "exact_requirement_used": "Additional filesystem roots expand authority and require exact canonical root enforcement.",
+      "local_implementation_claims_support": "Fixture ACP client path checks only."
+    },
+    {
+      "source_id": "RFC-9728",
+      "title": "RFC 9728: OAuth 2.0 Protected Resource Metadata",
+      "url": "https://www.rfc-editor.org/rfc/rfc9728",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2025-04",
+      "exact_requirement_used": "Protected resources publish authorization-server metadata locations that clients retrieve and validate.",
+      "local_implementation_claims_support": "Synthetic metadata fetcher only."
+    },
+    {
+      "source_id": "RFC-8707",
+      "title": "RFC 8707: Resource Indicators for OAuth 2.0",
+      "url": "https://www.rfc-editor.org/rfc/rfc8707",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2020-01",
+      "exact_requirement_used": "Tokens are audience-bound to the requested protected resource.",
+      "local_implementation_claims_support": "Synthetic audience checking only."
+    },
+    {
+      "source_id": "RFC-9207",
+      "title": "RFC 9207: OAuth 2.0 Authorization Server Issuer Identification",
+      "url": "https://www.rfc-editor.org/rfc/rfc9207",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2022-03",
+      "exact_requirement_used": "Authorization responses identify the issuer so clients can prevent authorization-server mix-up.",
+      "local_implementation_claims_support": "Synthetic issuer mix-up fixture only."
+    },
+    {
+      "source_id": "RFC-8252",
+      "title": "RFC 8252: OAuth 2.0 for Native Apps",
+      "url": "https://www.rfc-editor.org/rfc/rfc8252",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2017-10",
+      "exact_requirement_used": "Loopback redirects use ephemeral ports and authorization-code flows use PKCE and exact state binding.",
+      "local_implementation_claims_support": "Synthetic callback race only; no real identity provider."
+    },
+    {
+      "source_id": "OAUTH-CIMD-DRAFT-02",
+      "title": "OAuth Client ID Metadata Document draft",
+      "url": "https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/",
+      "status": "DRAFT_OR_EMERGING",
+      "publication_or_update_date": "2026-07-06",
+      "exact_requirement_used": "An HTTPS client identifier resolves to metadata, but redirect targets still require visible validation and binding.",
+      "local_implementation_claims_support": "Synthetic client metadata only."
+    },
+    {
+      "source_id": "JSON-SCHEMA-2020-12",
+      "title": "JSON Schema Core 2020-12",
+      "url": "https://json-schema.org/draft/2020-12/json-schema-core",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2022-06-16",
+      "exact_requirement_used": "Reference resolution and recursive evaluation are explicit validation operations requiring bounded resource handling.",
+      "local_implementation_claims_support": "Program-owned bounded schema evaluator."
+    },
+    {
+      "source_id": "GO-MCP-SDK",
+      "title": "Official MCP Go SDK",
+      "url": "https://github.com/modelcontextprotocol/go-sdk",
+      "status": "OFFICIAL_GUIDANCE",
+      "publication_or_update_date": "2026-05-22",
+      "exact_requirement_used": "Cross-origin behavior is version- and configuration-specific and must be tested against an exact installed version.",
+      "local_implementation_claims_support": "None until an isolated exact SDK version is available."
+    },
+    {
+      "source_id": "MCP-RUNTIME-SCANNER-STUDY",
+      "title": "Runtime scanner reliability study",
+      "url": "https://arxiv.org/abs/2607.11086",
+      "status": "DRAFT_OR_EMERGING",
+      "publication_or_update_date": "2026-07-13",
+      "exact_requirement_used": "Static and descriptor-only scanner observations should not be represented as runtime behavioral proof.",
+      "local_implementation_claims_support": "Motivates evidence ceilings only; the paper is not an execution oracle."
+    },
+    {
+      "source_id": "LOCAL-TARGET-SNAPSHOT",
+      "title": "Read-only local target source snapshots",
+      "url": "local://pinned-source-digests",
+      "status": "LOCAL_CONTRACT",
+      "publication_or_update_date": "2026-07-19",
+      "exact_requirement_used": "Target-specific claims are limited to the exact read-only commit or isolated copy recorded in the result.",
+      "local_implementation_claims_support": "Subject digests and deviations must be recorded before any target-scoped result."
+    },
+    {
+      "source_id": "MHAI-SAFETY",
+      "title": "MHAI fixture safety invariant",
+      "url": "local://SAFETY-BOUNDARY.md",
+      "status": "FIXTURE_SECURITY_INVARIANT",
+      "publication_or_update_date": "2026-07-19",
+      "exact_requirement_used": "Synthetic effects may touch only program-owned canaries and exact run-owned sockets inside qualified containment.",
+      "local_implementation_claims_support": "Program harness."
+    }
+  ]
+}

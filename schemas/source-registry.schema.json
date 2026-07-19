@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/source-registry.schema.json",
+  "title": "MHAI primary source registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_version", "retrieved_at", "sources_digest", "sources"],
+  "properties": {
+    "registry_version": {"const": "MHAI-SOURCES-1"},
+    "retrieved_at": {"type": "string", "minLength": 10},
+    "sources_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_id",
+          "title",
+          "url",
+          "status",
+          "publication_or_update_date",
+          "exact_requirement_used",
+          "local_implementation_claims_support"
+        ],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 3},
+          "title": {"type": "string", "minLength": 3},
+          "url": {"type": "string", "minLength": 8},
+          "status": {
+            "enum": [
+              "RELEASED_CORE",
+              "RELEASED_EXPERIMENTAL",
+              "STABLE_EXTENSION",
+              "FINAL_PROPOSAL",
+              "DRAFT_OR_EMERGING",
+              "OFFICIAL_GUIDANCE",
+              "LOCAL_CONTRACT",
+              "FIXTURE_SECURITY_INVARIANT",
+              "UNKNOWN"
+            ]
+          },
+          "publication_or_update_date": {"type": "string", "minLength": 4},
+          "exact_requirement_used": {"type": "string", "minLength": 10},
+          "local_implementation_claims_support": {"type": "string", "minLength": 3}
+        }
+      }
+    }
+  }
+}

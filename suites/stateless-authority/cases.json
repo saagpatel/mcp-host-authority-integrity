@@ -1,0 +1,1498 @@
+[
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial state-handle theft variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-001",
+    "claim_under_test": "Fixture authorization is checked independently of state-handle possession.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Fixture authorization is checked independently of state-handle possession.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Fixture authorization is checked independently of state-handle possession.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Possession of any tested invalid-authority handle grants continuation or data.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-001.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Cross-principal, cross-tool, neighboring, expired, and revoked handles are rejected without disclosure.",
+    "plain_language_name": "State-handle theft",
+    "positive_control": "A deliberately vulnerable SA-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Explicit MCP state handles",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2567"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-001-principal-a",
+      "sa-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-002 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial handle tampering variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-002",
+    "claim_under_test": "Malformed or modified state handles fail closed before authority use.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Malformed or modified state handles fail closed before authority use.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Malformed or modified state handles fail closed before authority use.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any tampered handle is normalized into a valid authorization context.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-002.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-002"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-002 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every byte, field, encoding, casing, and wrapper mutation is rejected.",
+    "plain_language_name": "Handle tampering",
+    "positive_control": "A deliberately vulnerable SA-002 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Explicit MCP state handles",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2567"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-002-principal-a",
+      "sa-002-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-003 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial continuation-state swap variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-003",
+    "claim_under_test": "Continuation material is bound to principal, server, operation, and originating request.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Continuation material is bound to principal, server, operation, and originating request.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Continuation material is bound to principal, server, operation, and originating request.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Swapped continuation material resumes or performs an unauthorized effect.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-003.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-003"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-003 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every cross-user, cross-tool, cross-prompt, and cross-request swap is rejected.",
+    "plain_language_name": "Continuation-state swap",
+    "positive_control": "A deliberately vulnerable SA-003 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP continuation requestState",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2567"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-003-principal-a",
+      "sa-003-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-004 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial input-response replay variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-004",
+    "claim_under_test": "A replayed input-response key cannot apply the downstream synthetic action more than once.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A replayed input-response key cannot apply the downstream synthetic action more than once.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A replayed input-response key cannot apply the downstream synthetic action more than once.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "The downstream canary counter exceeds one.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-004.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-004"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-004 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Retries return one stable outcome while the canary counter remains exactly one.",
+    "plain_language_name": "Input-response replay",
+    "positive_control": "A deliberately vulnerable SA-004 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Idempotent continuation",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2567"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-004-principal-a",
+      "sa-004-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-005 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial task cross-tenant access variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-005",
+    "claim_under_test": "Task get, update, cancel, list, and result access are tenant-bound.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Task get, update, cancel, list, and result access are tenant-bound.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Task get, update, cancel, list, and result access are tenant-bound.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "B observes task details or changes A's task.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-005.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-005"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-005 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Principal B receives indistinguishable denial for every operation on A's task.",
+    "plain_language_name": "Task cross-tenant access",
+    "positive_control": "A deliberately vulnerable SA-005 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Tasks",
+    "protocol_status": "RELEASED_EXPERIMENTAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TASKS-2025-11-25"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-005-principal-a",
+      "sa-005-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-006 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial task revocation variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-006",
+    "claim_under_test": "Task result retrieval rechecks current authority after revocation.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Task result retrieval rechecks current authority after revocation.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Task result retrieval rechecks current authority after revocation.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Previously held authority remains sufficient after revocation.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-006.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-006"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-006 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Revoked principal A cannot retrieve delayed results or complete a pending side effect.",
+    "plain_language_name": "Task revocation",
+    "positive_control": "A deliberately vulnerable SA-006 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Tasks",
+    "protocol_status": "RELEASED_EXPERIMENTAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TASKS-2025-11-25"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-006-principal-a",
+      "sa-006-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-007 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial task cancellation race variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-007",
+    "claim_under_test": "Cancellation is reported only after fixture work has verifiably ceased at the synthetic boundary.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Cancellation is reported only after fixture work has verifiably ceased at the synthetic boundary.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Cancellation is reported only after fixture work has verifiably ceased at the synthetic boundary.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "The client reports cancellation while work continues or the boundary is crossed later.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-007.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-007"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-007 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "All race schedules reconcile to stopped or completed truth and no post-cancel canary appears.",
+    "plain_language_name": "Task cancellation race",
+    "positive_control": "A deliberately vulnerable SA-007 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Tasks",
+    "protocol_status": "RELEASED_EXPERIMENTAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TASKS-2025-11-25",
+      "MHAI-SAFETY"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-007-principal-a",
+      "sa-007-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 30
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-008 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial task capability stickiness variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-008",
+    "claim_under_test": "Task behavior follows the current request capability rather than stale remembered support.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Task behavior follows the current request capability rather than stale remembered support.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Task behavior follows the current request capability rather than stale remembered support.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Stale capability state causes an unadvertised task response.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-008.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-008"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-008 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "A request omitting Tasks is handled synchronously or rejected without task creation.",
+    "plain_language_name": "Task capability stickiness",
+    "positive_control": "A deliberately vulnerable SA-008 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Tasks negotiation",
+    "protocol_status": "RELEASED_EXPERIMENTAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TASKS-2025-11-25"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-008-principal-a",
+      "sa-008-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-009 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial unsolicited server request variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-009",
+    "claim_under_test": "Sampling, elicitation, and roots requests require a valid live parent request.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Sampling, elicitation, and roots requests require a valid live parent request.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Sampling, elicitation, and roots requests require a valid live parent request.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any forged or stale association releases model, user, or filesystem-shaped synthetic data.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-009.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "sa-009"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-009 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Requests without a parent, after completion, or with a forged parent are rejected without releasing data.",
+    "plain_language_name": "Unsolicited server request",
+    "positive_control": "A deliberately vulnerable SA-009 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP server-request correlation",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2260"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-009-principal-a",
+      "sa-009-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-010 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial header/body split-brain variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-010",
+    "claim_under_test": "Mcp-Method must equal the case-sensitive JSON-RPC method and Mcp-Name must equal the applicable params.name after case-insensitive header-name parsing, or the request is rejected before execution.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Mcp-Method must equal the case-sensitive JSON-RPC method and Mcp-Name must equal the applicable params.name after case-insensitive header-name parsing, or the request is rejected before execution.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Mcp-Method must equal the case-sensitive JSON-RPC method and Mcp-Name must equal the applicable params.name after case-insensitive header-name parsing, or the request is rejected before execution.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any disagreement selects one authority input and reaches the canary action.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-010.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "sa-010"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-010 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Duplicate Mcp-Method/Mcp-Name fields, case-varied header names, invalid encodings, proxy normalization, and any header/body value disagreement are rejected before authorization.",
+    "plain_language_name": "Header/body split-brain",
+    "positive_control": "A deliberately vulnerable SA-010 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP HTTP standardization",
+    "protocol_status": "FINAL_PROPOSAL",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "SEP-2243"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-010-principal-a",
+      "sa-010-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-011 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial cross-user cache leak variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-011",
+    "claim_under_test": "Private cached results are keyed by user, scope, server, authorization state, and expiry.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Private cached results are keyed by user, scope, server, authorization state, and expiry.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Private cached results are keyed by user, scope, server, authorization state, and expiry.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "A private synthetic result crosses any changed authority dimension.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-011.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "sa-011"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-011 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every boundary change causes a miss and only the exact original authority tuple hits.",
+    "plain_language_name": "Cross-user cache leak",
+    "positive_control": "A deliberately vulnerable SA-011 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Host result cache",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-011-principal-a",
+      "sa-011-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-012 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial self-asserted client identity variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-012",
+    "claim_under_test": "Self-asserted client name and capabilities do not independently grant approval or access.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Self-asserted client name and capabilities do not independently grant approval or access.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Self-asserted client name and capabilities do not independently grant approval or access.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Self-asserted metadata changes an authorization outcome.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-012.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-012"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-012 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "A forged trusted-looking identity receives the same policy decision as an untrusted client.",
+    "plain_language_name": "Self-asserted client identity",
+    "positive_control": "A deliberately vulnerable SA-012 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP client metadata",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-012-principal-a",
+      "sa-012-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-013 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial stateless rate-limit bypass variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-013",
+    "claim_under_test": "Rate limiting remains bound to principal and operation across transport and metadata rotation.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Rate limiting remains bound to principal and operation across transport and metadata rotation.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Rate limiting remains bound to principal and operation across transport and metadata rotation.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Rotation restores budget before the bounded window expires.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-013.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-013"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-013 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Connection, handle, client, and tool-name rotation cannot reset the principal-operation budget.",
+    "plain_language_name": "Stateless rate-limit bypass",
+    "positive_control": "A deliberately vulnerable SA-013 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Rate limiting",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-013-principal-a",
+      "sa-013-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-014 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial go cross-origin default variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-014",
+    "claim_under_test": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "OFFICIAL_SDK",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "OFFICIAL_SDK",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+      "version_pattern": "^package:[A-Za-z0-9._/@+-]+@[A-Za-z0-9._+-]+$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "An exact isolated official Go SDK version rejects hostile Origin and rebinding-shaped Host inputs under its recorded configuration.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any hostile input reaches the handler or the version/configuration is not exact.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-014.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-014"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-014 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The exact version and configuration reject every hostile request while accepting the valid control.",
+    "plain_language_name": "Go cross-origin default",
+    "positive_control": "A deliberately vulnerable SA-014 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Official MCP Go SDK",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "GO-MCP-SDK"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-014-principal-a",
+      "sa-014-principal-b"
+    ],
+    "target_kind": "OFFICIAL_SDK",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained SA-015 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial cross-sdk json disagreement variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "SA-015",
+    "claim_under_test": "Available exact-version official SDKs interpret adversarial JSON without authority-relevant disagreement.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "OFFICIAL_SDK",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "OFFICIAL_SDK",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Available exact-version official SDKs interpret adversarial JSON without authority-relevant disagreement.",
+      "version_pattern": "^package:[A-Za-z0-9._/@+-]+@[A-Za-z0-9._+-]+$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Available exact-version official SDKs interpret adversarial JSON without authority-relevant disagreement.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Available SDKs disagree in a way that can change authorization or execution.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/sa-015.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "sa-015"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe SA-015 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Duplicate keys, mixed case, confusables, unknown fields, and conflicts yield identical safe decisions.",
+    "plain_language_name": "Cross-SDK JSON disagreement",
+    "positive_control": "A deliberately vulnerable SA-015 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Official MCP SDK JSON parsers",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "GO-MCP-SDK",
+      "JSON-SCHEMA-2020-12"
+    ],
+    "suite": "Stateless Authority",
+    "synthetic_principals": [
+      "sa-015-principal-a",
+      "sa-015-principal-b"
+    ],
+    "target_kind": "OFFICIAL_SDK",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial authorization metadata ssrf variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-001",
+    "claim_under_test": "Synthetic authorization metadata retrieval revalidates every redirect hop and blocks non-owned destinations.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Synthetic authorization metadata retrieval revalidates every redirect hop and blocks non-owned destinations.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Synthetic authorization metadata retrieval revalidates every redirect hop and blocks non-owned destinations.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any prohibited destination receives a request.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-001.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Loopback aliases, private IPs, rebinding simulation, metadata-shaped addresses, and redirects are denied.",
+    "plain_language_name": "Authorization metadata SSRF",
+    "positive_control": "A deliberately vulnerable OA-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "OAuth protected-resource metadata",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "RFC-9728",
+      "MCP-AUTH-2025-11-25"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-001-principal-a",
+      "oa-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-002 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial issuer mix-up variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-002",
+    "claim_under_test": "Authorization responses, registrations, callbacks, and credentials remain bound to the selected issuer.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Authorization responses, registrations, callbacks, and credentials remain bound to the selected issuer.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Authorization responses, registrations, callbacks, and credentials remain bound to the selected issuer.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "A response or credential from authorization server A is accepted under server B.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-002.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-002"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-002 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every swapped issuer or cached registration is rejected before credential use.",
+    "plain_language_name": "Issuer mix-up",
+    "positive_control": "A deliberately vulnerable OA-002 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "OAuth issuer identification",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "RFC-9207",
+      "MCP-AUTH-2025-11-25"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-002-principal-a",
+      "oa-002-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-003 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial resource mix-up variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-003",
+    "claim_under_test": "A synthetic token for resource A is rejected by resource B and is never forwarded.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A synthetic token for resource A is rejected by resource B and is never forwarded.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A synthetic token for resource A is rejected by resource B and is never forwarded.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Resource B accepts or forwards resource A's token.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-003.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-003"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-003 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Resource B rejects the token without disclosing or forwarding it.",
+    "plain_language_name": "Resource mix-up",
+    "positive_control": "A deliberately vulnerable OA-003 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "OAuth resource indicators",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "RFC-8707",
+      "MCP-AUTH-2025-11-25"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-003-principal-a",
+      "oa-003-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-004 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial loopback callback capture variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-004",
+    "claim_under_test": "Synthetic loopback callback completion binds PKCE, state, redirect URI, browser flow, and one-shot code consumption.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Synthetic loopback callback completion binds PKCE, state, redirect URI, browser flow, and one-shot code consumption.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Synthetic loopback callback completion binds PKCE, state, redirect URI, browser flow, and one-shot code consumption.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Any attacker callback or replay completes the authorization.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-004.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-004"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-004 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Port race, wrong state, replay, and second-tab attempts all fail while the exact callback succeeds once.",
+    "plain_language_name": "Loopback callback capture",
+    "positive_control": "A deliberately vulnerable OA-004 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "OAuth native-app callback",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "RFC-8252"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-004-principal-a",
+      "oa-004-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-005 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial client metadata impersonation variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-005",
+    "claim_under_test": "The approval surface exposes and binds the actual redirect target rather than trusting a legitimate-looking metadata identity.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The approval surface exposes and binds the actual redirect target rather than trusting a legitimate-looking metadata identity.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The approval surface exposes and binds the actual redirect target rather than trusting a legitimate-looking metadata identity.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "Brand-like metadata hides or authorizes the attacker redirect.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-005.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-005"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-005 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The attacker-controlled loopback redirect is visibly identified and cannot inherit trusted-brand approval.",
+    "plain_language_name": "Client metadata impersonation",
+    "positive_control": "A deliberately vulnerable OA-005 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "OAuth client metadata document",
+    "protocol_status": "DRAFT_OR_EMERGING",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "OAUTH-CIMD-DRAFT-02"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-005-principal-a",
+      "oa-005-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained OA-006 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial url elicitation identity swap variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "OA-006",
+    "claim_under_test": "URL elicitation completion remains bound to the initiating synthetic user and client across redirects and tampering.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "URL elicitation completion remains bound to the initiating synthetic user and client across redirects and tampering.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "URL elicitation completion remains bound to the initiating synthetic user and client across redirects and tampering.",
+    "execution_family": "stateless-authority",
+    "fail_oracle": "A different user, client, or destination completes Alice's elicitation.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/oa-006.json",
+      "family": "stateless-authority",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "oa-006"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe OA-006 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Bob, Punycode, redirected, and parameter-tampered completions cannot complete Alice's request.",
+    "plain_language_name": "URL elicitation identity swap",
+    "positive_control": "A deliberately vulnerable OA-006 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP URL elicitation",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-ELICITATION-2025-11-25"
+    ],
+    "suite": "OAuth and Browser Identity",
+    "synthetic_principals": [
+      "oa-006-principal-a",
+      "oa-006-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  }
+]

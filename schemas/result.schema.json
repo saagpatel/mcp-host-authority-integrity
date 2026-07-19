@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/result.schema.json",
+  "title": "MHAI execution result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "run_id",
+    "case_definition_digest",
+    "oracle_version",
+    "subject",
+    "subject_version",
+    "coverage_level",
+    "protocol_status",
+    "started_at",
+    "finished_at",
+    "observations",
+    "target_verdict",
+    "control_results",
+    "containment_result",
+    "cleanup_result",
+    "contradictions",
+    "result",
+    "evidence",
+    "limitations",
+    "blocked_reason"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "case_definition_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "oracle_version": {"const": "MHAI-ORACLE-1"},
+    "subject": {"type": "string", "minLength": 1},
+    "subject_version": {"type": "string", "minLength": 1},
+    "coverage_level": {
+      "enum": [
+        "LIVE_TARGET",
+        "ISOLATED_TARGET_COPY",
+        "OFFICIAL_SDK",
+        "FIXTURE_HOST",
+        "FIXTURE_SERVER",
+        "STATIC_EVIDENCE_ONLY"
+      ]
+    },
+    "protocol_status": {
+      "enum": [
+        "RELEASED_CORE",
+        "RELEASED_EXPERIMENTAL",
+        "STABLE_EXTENSION",
+        "FINAL_PROPOSAL",
+        "DRAFT_OR_EMERGING",
+        "OFFICIAL_GUIDANCE",
+        "LOCAL_CONTRACT",
+        "FIXTURE_SECURITY_INVARIANT",
+        "UNKNOWN"
+      ]
+    },
+    "started_at": {"type": "string", "minLength": 1},
+    "finished_at": {"type": "string", "minLength": 1},
+    "observations": {"type": "array", "items": {"type": "object"}},
+    "target_verdict": {"enum": ["PASS", "FAIL", "UNKNOWN", "BLOCKED"]},
+    "control_results": {
+      "type": "object",
+      "required": ["positive", "negative"],
+      "properties": {
+        "positive": {"enum": ["PASS", "FAIL", "NOT_RUN"]},
+        "negative": {"enum": ["PASS", "FAIL", "NOT_RUN"]}
+      },
+      "additionalProperties": false
+    },
+    "containment_result": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_RUN"]},
+    "cleanup_result": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "NOT_RUN"]},
+    "contradictions": {"type": "array", "items": {"type": "string"}},
+    "result": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED_BY_AUTHORITY",
+        "BLOCKED_BY_ACCESS",
+        "NOT_IMPLEMENTED",
+        "NOT_RUN",
+        "UNKNOWN",
+        "ERROR"
+      ]
+    },
+    "evidence": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "blocked_reason": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["kind", "detail"],
+          "properties": {
+            "kind": {"enum": ["AUTHORITY", "ACCESS", "SAFETY", "DEPENDENCY", "UNKNOWN"]},
+            "detail": {"type": "string"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"result": {"const": "PASS"}}, "required": ["result"]},
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "PASS"},
+          "control_results": {
+            "properties": {"positive": {"const": "PASS"}, "negative": {"const": "PASS"}}
+          },
+          "containment_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "cleanup_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "contradictions": {"maxItems": 0},
+          "evidence": {"minItems": 1},
+          "blocked_reason": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"result": {"const": "FAIL"}}, "required": ["result"]},
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "FAIL"},
+          "control_results": {
+            "properties": {"positive": {"const": "PASS"}, "negative": {"const": "PASS"}}
+          },
+          "containment_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "cleanup_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "contradictions": {"maxItems": 0},
+          "evidence": {"minItems": 1},
+          "blocked_reason": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"result": {"const": "BLOCKED_BY_AUTHORITY"}},
+        "required": ["result"]
+      },
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "BLOCKED"},
+          "blocked_reason": {
+            "type": "object",
+            "properties": {"kind": {"const": "AUTHORITY"}}
+          },
+          "evidence": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"result": {"const": "BLOCKED_BY_ACCESS"}},
+        "required": ["result"]
+      },
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "BLOCKED"},
+          "blocked_reason": {
+            "type": "object",
+            "properties": {
+              "kind": {"enum": ["ACCESS", "SAFETY", "DEPENDENCY"]}
+            }
+          },
+          "evidence": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"result": {"const": "UNKNOWN"}}, "required": ["result"]},
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "UNKNOWN"},
+          "control_results": {
+            "properties": {"positive": {"const": "PASS"}, "negative": {"const": "PASS"}}
+          },
+          "containment_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "cleanup_result": {"enum": ["PASS", "NOT_APPLICABLE"]},
+          "evidence": {"minItems": 1},
+          "blocked_reason": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {"result": {"enum": ["NOT_IMPLEMENTED", "NOT_RUN"]}},
+        "required": ["result"]
+      },
+      "then": {
+        "properties": {
+          "target_verdict": {"const": "UNKNOWN"},
+          "control_results": {
+            "properties": {
+              "positive": {"const": "NOT_RUN"},
+              "negative": {"const": "NOT_RUN"}
+            }
+          },
+          "containment_result": {"const": "NOT_RUN"},
+          "cleanup_result": {"const": "NOT_RUN"},
+          "contradictions": {"maxItems": 0},
+          "blocked_reason": {"type": "null"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"result": {"const": "ERROR"}}, "required": ["result"]},
+      "then": {
+        "anyOf": [
+          {
+            "properties": {
+              "control_results": {"properties": {"positive": {"const": "FAIL"}}}
+            }
+          },
+          {
+            "properties": {
+              "control_results": {"properties": {"positive": {"const": "NOT_RUN"}}}
+            }
+          },
+          {
+            "properties": {
+              "control_results": {"properties": {"negative": {"const": "FAIL"}}}
+            }
+          },
+          {
+            "properties": {
+              "control_results": {"properties": {"negative": {"const": "NOT_RUN"}}}
+            }
+          },
+          {"properties": {"containment_result": {"const": "FAIL"}}},
+          {"properties": {"containment_result": {"const": "NOT_RUN"}}},
+          {"properties": {"cleanup_result": {"const": "FAIL"}}},
+          {"properties": {"cleanup_result": {"const": "NOT_RUN"}}}
+        ]
+      }
+    }
+  ]
+}

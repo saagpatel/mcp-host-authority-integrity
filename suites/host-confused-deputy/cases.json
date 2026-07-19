@@ -1,0 +1,854 @@
+[
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial app-frame message binding variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-001",
+    "claim_under_test": "Accepted app messages are bound to exact frame, origin, server connection, request, and lifecycle.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Accepted app messages are bound to exact frame, origin, server connection, request, and lifecycle.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Accepted app messages are bound to exact frame, origin, server connection, request, and lifecycle.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "A forged or stale frame message receives host authority.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-001.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Forged source, origin, IDs, replies, and initialization order are rejected.",
+    "plain_language_name": "App-frame message binding",
+    "positive_control": "A deliberately vulnerable HC-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps messaging",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-001-principal-a",
+      "hc-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-002 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial app tool visibility variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-002",
+    "claim_under_test": "App-only, model-only, dual-use, and same-named sibling tools retain their visibility and server binding.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "App-only, model-only, dual-use, and same-named sibling tools retain their visibility and server binding.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "App-only, model-only, dual-use, and same-named sibling tools retain their visibility and server binding.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "A caller discovers or invokes a tool outside its visibility or server scope.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-002.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-002"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-002 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every discovery and invocation path exposes only the authorized tool set.",
+    "plain_language_name": "App tool visibility",
+    "positive_control": "A deliberately vulnerable HC-002 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps tool visibility",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-002-principal-a",
+      "hc-002-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-003 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial cross-server app call variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-003",
+    "claim_under_test": "An app can call app-only tools only on its bound server connection.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "An app can call app-only tools only on its bound server connection.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "An app can call app-only tools only on its bound server connection.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "A sibling server tool can be invoked through the app's host authority.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-003.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-003"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-003 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every cross-server app-only call is rejected before tool execution.",
+    "plain_language_name": "Cross-server app call",
+    "positive_control": "A deliberately vulnerable HC-003 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps tool calls",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-003-principal-a",
+      "hc-003-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-004 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial template review toctou variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-004",
+    "claim_under_test": "Materially changed executable ui resource content invalidates cached review despite a stable URI.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Materially changed executable ui resource content invalidates cached review despite a stable URI.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Materially changed executable ui resource content invalidates cached review despite a stable URI.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Changed executable content reuses the prior approval solely because the URI matches.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-004.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-004"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-004 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Content digest changes trigger revalidation before rendering or authority use.",
+    "plain_language_name": "Template review TOCTOU",
+    "positive_control": "A deliberately vulnerable HC-004 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps ui resource",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-004-principal-a",
+      "hc-004-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-005 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial csp and permission escape variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-005",
+    "claim_under_test": "The disposable app host denies undeclared egress, nested-frame, clipboard, camera, microphone, and geolocation authority.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The disposable app host denies undeclared egress, nested-frame, clipboard, camera, microphone, and geolocation authority.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The disposable app host denies undeclared egress, nested-frame, clipboard, camera, microphone, and geolocation authority.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Any undeclared egress or permission reaches its synthetic sensor.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-005.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-005"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-005 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "All prohibited schemes, redirects, hosts, frames, and permissions are denied while declared controls work.",
+    "plain_language_name": "CSP and permission escape",
+    "positive_control": "A deliberately vulnerable HC-005 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Browser CSP and permissions",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-005-principal-a",
+      "hc-005-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-006 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial consent gesture laundering variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-006",
+    "claim_under_test": "Consequential consent remains in trusted host chrome and binds server, tool, arguments, and effect to a relevant gesture.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Consequential consent remains in trusted host chrome and binds server, tool, arguments, and effect to a relevant gesture.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Consequential consent remains in trusted host chrome and binds server, tool, arguments, and effect to a relevant gesture.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "An untrusted app gesture or content surface creates consequential approval.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-006.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-006"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-006 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Invisible, programmatic, fake, stale, and unrelated gestures cannot approve the action.",
+    "plain_language_name": "Consent gesture laundering",
+    "positive_control": "A deliberately vulnerable HC-006 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Trusted host consent",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-006-principal-a",
+      "hc-006-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-007 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial model-context overwrite variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-007",
+    "claim_under_test": "App-provided context remains provenance-labelled, scoped, and lower authority than host instructions.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "App-provided context remains provenance-labelled, scoped, and lower authority than host instructions.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "App-provided context remains provenance-labelled, scoped, and lower authority than host instructions.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "App content overwrites or persists as host-authority context.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-007.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-007"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-007 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Inject, replace, and persistence attempts remain untrusted app context.",
+    "plain_language_name": "Model-context overwrite",
+    "positive_control": "A deliberately vulnerable HC-007 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps context update",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-007-principal-a",
+      "hc-007-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-008 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial unsupported-app fallback variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-008",
+    "claim_under_test": "A client without App support treats hostile-looking App HTML as inert text or rejects it.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A client without App support treats hostile-looking App HTML as inert text or rejects it.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A client without App support treats hostile-looking App HTML as inert text or rejects it.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Fallback content executes or acquires host authority.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-008.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-008"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-008 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "No markup executes and no canary or message sensor is reached.",
+    "plain_language_name": "Unsupported-app fallback",
+    "positive_control": "A deliberately vulnerable HC-008 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP Apps fallback",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-008-principal-a",
+      "hc-008-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-009 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial webmcp frame contamination variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-009",
+    "claim_under_test": "Web tool registrations remain origin-, frame-, and document-lifecycle-bound.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Web tool registrations remain origin-, frame-, and document-lifecycle-bound.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Web tool registrations remain origin-, frame-, and document-lifecycle-bound.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Stale or unauthorized cross-origin tools remain callable.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-009.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-009"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-009 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Navigation, revocation, replacement, and frame removal delete stale registrations and enforce delegation.",
+    "plain_language_name": "WebMCP frame contamination",
+    "positive_control": "A deliberately vulnerable HC-009 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "WebMCP registration lifecycle",
+    "protocol_status": "DRAFT_OR_EMERGING",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "WEBMCP-REPOSITORY"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-009-principal-a",
+      "hc-009-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-010 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial acp multi-root escape variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-010",
+    "claim_under_test": "The fixture client canonicalizes every filesystem access against the current authorized roots.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture client canonicalizes every filesystem access against the current authorized roots.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture client canonicalizes every filesystem access against the current authorized roots.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Any path outside the current canonical roots is read or written.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-010.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-010"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-010 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Traversal, symlink, changed-root, removed-root, and direct-route attempts fail closed.",
+    "plain_language_name": "ACP multi-root escape",
+    "positive_control": "A deliberately vulnerable HC-010 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "ACP additional directories",
+    "protocol_status": "STABLE_EXTENSION",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "ACP-ADDITIONAL-DIRECTORIES"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-010-principal-a",
+      "hc-010-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-011 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial portfoliocommandcenter webview boundary variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-011",
+    "claim_under_test": "In an exact isolated source copy, hostile webview content cannot reach proposal-approval or external-apply-shaped commands.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "ISOLATED_TARGET_COPY",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "ISOLATED_TARGET_COPY",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "In an exact isolated source copy, hostile webview content cannot reach proposal-approval or external-apply-shaped commands.",
+      "version_pattern": "^git:[a-f0-9]{40}([a-f0-9]{24})?\\+deviations:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "In an exact isolated source copy, hostile webview content cannot reach proposal-approval or external-apply-shaped commands.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Hostile content reaches a sensitive command or the copy fidelity is insufficient but reported as proof.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-011.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-011"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-011 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Only the vulnerable positive-control reproduction reaches a program canary; the subject path rejects hostile content.",
+    "plain_language_name": "PortfolioCommandCenter webview boundary",
+    "positive_control": "A deliberately vulnerable HC-011 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "PortfolioCommandCenter Tauri bridge",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": true,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-011-principal-a",
+      "hc-011-principal-b"
+    ],
+    "target_kind": "ISOLATED_TARGET_COPY",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained HC-012 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial portfoliocommandcenter launch poisoning variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "HC-012",
+    "claim_under_test": "In an exact isolated source copy, command identity, evidence paths, and approval inputs do not follow untrusted ambient state.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "ISOLATED_TARGET_COPY",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "ISOLATED_TARGET_COPY",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "In an exact isolated source copy, command identity, evidence paths, and approval inputs do not follow untrusted ambient state.",
+      "version_pattern": "^git:[a-f0-9]{40}([a-f0-9]{24})?\\+deviations:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "In an exact isolated source copy, command identity, evidence paths, and approval inputs do not follow untrusted ambient state.",
+    "execution_family": "host-confused-deputy",
+    "fail_oracle": "Ambient state redirects a trusted launch or evidence decision without detection.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/hc-012.json",
+      "family": "host-confused-deputy",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "hc-012"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe HC-012 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Fake paths and binaries are rejected or remain inside the program fixture with identity mismatch reported.",
+    "plain_language_name": "PortfolioCommandCenter launch poisoning",
+    "positive_control": "A deliberately vulnerable HC-012 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "PortfolioCommandCenter process launch",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Host Confused Deputy",
+    "synthetic_principals": [
+      "hc-012-principal-a",
+      "hc-012-principal-b"
+    ],
+    "target_kind": "ISOLATED_TARGET_COPY",
+    "timeout_seconds": 10
+  }
+]

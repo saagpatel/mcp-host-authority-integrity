@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/test-case.schema.json",
+  "title": "MHAI immutable test case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "suite",
+    "plain_language_name",
+    "claim_under_test",
+    "exact_subject_claim",
+    "target_kind",
+    "protocol_or_component",
+    "protocol_status",
+    "source_citations",
+    "preconditions",
+    "synthetic_principals",
+    "fixture",
+    "attack_steps",
+    "allowed_effects",
+    "forbidden_effects",
+    "pass_oracle",
+    "fail_oracle",
+    "positive_control",
+    "negative_control",
+    "timeout_seconds",
+    "cleanup",
+    "coverage_level",
+    "evidence_ceiling",
+    "result",
+    "evidence",
+    "limitations",
+    "execution_family",
+    "requires_browser"
+  ],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^(RT|SA|HC|LP|OA)-[0-9]{3}$|^CHAIN-001$"},
+    "suite": {"type": "string"},
+    "plain_language_name": {"type": "string", "minLength": 3},
+    "claim_under_test": {"type": "string", "minLength": 10},
+    "exact_subject_claim": {"type": "string", "minLength": 10},
+    "target_kind": {"type": "string"},
+    "protocol_or_component": {"type": "string"},
+    "protocol_status": {
+      "enum": [
+        "RELEASED_CORE",
+        "RELEASED_EXPERIMENTAL",
+        "STABLE_EXTENSION",
+        "FINAL_PROPOSAL",
+        "DRAFT_OR_EMERGING",
+        "OFFICIAL_GUIDANCE",
+        "LOCAL_CONTRACT",
+        "FIXTURE_SECURITY_INVARIANT",
+        "UNKNOWN"
+      ]
+    },
+    "source_citations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "preconditions": {"type": "array", "items": {"type": "string"}},
+    "synthetic_principals": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "fixture": {"type": "object"},
+    "attack_steps": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "allowed_effects": {"type": "array", "items": {"type": "string"}},
+    "forbidden_effects": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "pass_oracle": {"type": "string"},
+    "fail_oracle": {"type": "string"},
+    "positive_control": {"type": "string"},
+    "negative_control": {"type": "string"},
+    "timeout_seconds": {"type": "integer", "minimum": 1, "maximum": 30},
+    "cleanup": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "coverage_level": {
+      "enum": [
+        "LIVE_TARGET",
+        "ISOLATED_TARGET_COPY",
+        "OFFICIAL_SDK",
+        "FIXTURE_HOST",
+        "FIXTURE_SERVER",
+        "STATIC_EVIDENCE_ONLY"
+      ]
+    },
+    "evidence_ceiling": {
+      "type": "object",
+      "required": [
+        "coverage_level",
+        "subject",
+        "version_rule",
+        "version_pattern",
+        "instrumentation"
+      ],
+      "properties": {
+        "coverage_level": {
+          "enum": [
+            "LIVE_TARGET",
+            "ISOLATED_TARGET_COPY",
+            "OFFICIAL_SDK",
+            "FIXTURE_HOST",
+            "FIXTURE_SERVER",
+            "STATIC_EVIDENCE_ONLY"
+          ]
+        },
+        "subject": {"type": "string"},
+        "version_rule": {"type": "string"},
+        "version_pattern": {"type": "string", "minLength": 3},
+        "instrumentation": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "result": {"const": "NOT_RUN"},
+    "evidence": {"type": "array", "maxItems": 0},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "execution_family": {"type": "string"},
+    "requires_browser": {"type": "boolean"}
+  }
+}

@@ -1,0 +1,76 @@
+[
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained CHAIN-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial end-to-end authority integrity chain variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "CHAIN-001",
+    "claim_under_test": "Every descriptor-to-runtime-to-state-to-app-to-local transition is recorded and the first effective defense prevents an escaped effect.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Every descriptor-to-runtime-to-state-to-app-to-local transition is recorded and the first effective defense prevents an escaped effect.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Every descriptor-to-runtime-to-state-to-app-to-local transition is recorded and the first effective defense prevents an escaped effect.",
+    "execution_family": "integrated-chain",
+    "fail_oracle": "The safe chain reaches the canary without an expected finding or any action escapes containment.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/chain-001.json",
+      "family": "integrated-chain",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "chain-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe CHAIN-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The safe chain stops at a named boundary, the vulnerable control reaches only its canary, and cleanup proves no escape.",
+    "plain_language_name": "End-to-end authority integrity chain",
+    "positive_control": "A deliberately vulnerable CHAIN-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Integrated fixture chain",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY",
+      "MCP-TOOLS-2025-11-25",
+      "SEP-2567",
+      "MCP-APPS-2026-01-26"
+    ],
+    "suite": "Integrated Attack Chain",
+    "synthetic_principals": [
+      "chain-001-principal-a",
+      "chain-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 30
+  }
+]

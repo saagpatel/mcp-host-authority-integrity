@@ -1,0 +1,784 @@
+[
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial loopback cookie cross-port theft variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-001",
+    "claim_under_test": "A synthetic loopback session is not accepted across attacker and legitimate fixture ports without exact origin binding.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A synthetic loopback session is not accepted across attacker and legitimate fixture ports without exact origin binding.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A synthetic loopback session is not accepted across attacker and legitimate fixture ports without exact origin binding.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "The attacker fixture obtains and replays a session into any consequential synthetic route.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-001.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "lp-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Cross-port disclosure or replay cannot reach synthetic approve, send, or apply routes.",
+    "plain_language_name": "Loopback cookie cross-port theft",
+    "positive_control": "A deliberately vulnerable LP-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Synthetic loopback session",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-001-principal-a",
+      "lp-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-002 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial subagent authority escape variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-002",
+    "claim_under_test": "A fixture child cannot exceed the parent's sacrificial directory and read-only capability.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A fixture child cannot exceed the parent's sacrificial directory and read-only capability.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A fixture child cannot exceed the parent's sacrificial directory and read-only capability.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Delegation expands authority or changes a canary outside the granted subtree.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-002.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-002"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-002 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Out-of-scope child and sibling requests are denied and no outside canary changes.",
+    "plain_language_name": "Subagent authority escape",
+    "positive_control": "A deliberately vulnerable LP-002 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Delegated local authority",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-002-principal-a",
+      "lp-002-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-003 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial approval replay variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-003",
+    "claim_under_test": "Synthetic approval is bound to actor, server, action, normalized arguments, target, and expiry.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Synthetic approval is bound to actor, server, action, normalized arguments, target, and expiry.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Synthetic approval is bound to actor, server, action, normalized arguments, target, and expiry.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Any altered authority tuple consumes the approval.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-003.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-003"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-003 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Sibling, later, modified-argument, different-server, and expired replays are rejected.",
+    "plain_language_name": "Approval replay",
+    "positive_control": "A deliberately vulnerable LP-003 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Host approval capability",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-003-principal-a",
+      "lp-003-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-004 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial stdio environment leak variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-004",
+    "claim_under_test": "A hostile fixture MCP server inherits only an explicit minimum environment and descriptor allowlist.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A hostile fixture MCP server inherits only an explicit minimum environment and descriptor allowlist.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A hostile fixture MCP server inherits only an explicit minimum environment and descriptor allowlist.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "A disallowed key name, descriptor, socket, path, or endpoint is inherited.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-004.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "lp-004"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-004 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Only approved key names, descriptors, working directory, and control endpoints are visible.",
+    "plain_language_name": "Stdio environment leak",
+    "positive_control": "A deliberately vulnerable LP-004 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP stdio launch",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-004-principal-a",
+      "lp-004-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-005 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial sibling mcp pivot variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-005",
+    "claim_under_test": "Compromising one fixture server does not grant direct sibling access or host impersonation.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Compromising one fixture server does not grant direct sibling access or host impersonation.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Compromising one fixture server does not grant direct sibling access or host impersonation.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "The compromised server invokes or impersonates its sibling.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-005.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-005"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-005 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Distinct principals and host mediation reject every direct or synthetic-credential pivot.",
+    "plain_language_name": "Sibling MCP pivot",
+    "positive_control": "A deliberately vulnerable LP-005 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Multi-server local host",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-005-principal-a",
+      "lp-005-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-006 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial bridgedb read isolation variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-006",
+    "claim_under_test": "BridgeDB read isolation is claimed only where an independently enforceable principal boundary is observable.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "STATIC_EVIDENCE_ONLY",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "STATIC_EVIDENCE_ONLY",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "BridgeDB read isolation is claimed only where an independently enforceable principal boundary is observable.",
+      "version_pattern": "^snapshot:sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "BridgeDB read isolation is claimed only where an independently enforceable principal boundary is observable.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Fixture authorization is represented as live BridgeDB tenant isolation proof.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-006.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-006"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-006 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Live contracts are inspected read-only and fixture results remain explicitly fixture-scoped.",
+    "plain_language_name": "BridgeDB read isolation",
+    "positive_control": "A deliberately vulnerable LP-006 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "BridgeDB read contracts",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-006-principal-a",
+      "lp-006-principal-b"
+    ],
+    "target_kind": "STATIC_EVIDENCE_ONLY",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-007 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial aigccore offline claim variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-007",
+    "claim_under_test": "An exact isolated AIGCCore source copy performs no network action across the exercised UI, command, adapter, and dependency paths.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "ISOLATED_TARGET_COPY",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "ISOLATED_TARGET_COPY",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "An exact isolated AIGCCore source copy performs no network action across the exercised UI, command, adapter, and dependency paths.",
+      "version_pattern": "^git:[a-f0-9]{40}([a-f0-9]{24})?\\+deviations:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "An exact isolated AIGCCore source copy performs no network action across the exercised UI, command, adapter, and dependency paths.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Any subject network attempt occurs or static constants are reported as runtime proof.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-007.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-007"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-007 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Network sensors observe no subject attempt while permissive controls prove detection.",
+    "plain_language_name": "AIGCCore offline claim",
+    "positive_control": "A deliberately vulnerable LP-007 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "AIGCCore isolated copy",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-007-principal-a",
+      "lp-007-principal-b"
+    ],
+    "target_kind": "ISOLATED_TARGET_COPY",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-008 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial signed discovery key substitution variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-008",
+    "claim_under_test": "A manifest signature is not treated as publisher identity when the verification key is attacker-controlled and adjacent.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "A manifest signature is not treated as publisher identity when the verification key is attacker-controlled and adjacent.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "A manifest signature is not treated as publisher identity when the verification key is attacker-controlled and adjacent.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "The forged bundle is accepted as the claimed publisher solely because its adjacent key verifies it.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-008.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "lp-008"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-008 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The internally consistent forged bundle is rejected for lacking an independent identity anchor.",
+    "plain_language_name": "Signed discovery key substitution",
+    "positive_control": "A deliberately vulnerable LP-008 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Signed manifest discovery",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-008-principal-a",
+      "lp-008-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-009 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial private label public leak variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-009",
+    "claim_under_test": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "ISOLATED_TARGET_COPY",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "ISOLATED_TARGET_COPY",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+      "version_pattern": "^git:[a-f0-9]{40}([a-f0-9]{24})?\\+deviations:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Public aggregation excludes labels and metadata belonging only to synthetic private projects.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Any synthetic private-only marker appears in public output.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-009.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-009"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-009 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "No private-only marker appears in any generated public output while public controls do.",
+    "plain_language_name": "Private label public leak",
+    "positive_control": "A deliberately vulnerable LP-009 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Synthetic public aggregation",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-009-principal-a",
+      "lp-009-principal-b"
+    ],
+    "target_kind": "ISOLATED_TARGET_COPY",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-010 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial remote schema reference variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-010",
+    "claim_under_test": "Schema validation does not silently access network, loopback, files, or redirecting references.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Schema validation does not silently access network, loopback, files, or redirecting references.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Schema validation does not silently access network, loopback, files, or redirecting references.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "Validation performs any prohibited reference fetch or file read.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-010.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-010"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-010 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every external reference is rejected before I/O and the permissive sensor proves attempted access is observable.",
+    "plain_language_name": "Remote schema reference",
+    "positive_control": "A deliberately vulnerable LP-010 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "JSON Schema reference resolution",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "JSON-SCHEMA-2020-12"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-010-principal-a",
+      "lp-010-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained LP-011 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial schema validation exhaustion variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "LP-011",
+    "claim_under_test": "Hostile recursive, deep, alternating, and pattern schemas are rejected within strict time and memory limits.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Hostile recursive, deep, alternating, and pattern schemas are rejected within strict time and memory limits.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Hostile recursive, deep, alternating, and pattern schemas are rejected within strict time and memory limits.",
+    "execution_family": "local-privilege-containment",
+    "fail_oracle": "A ceiling is exceeded, a worker survives, or the valid follow-up cannot complete.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/lp-011.json",
+      "family": "local-privilege-containment",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "lp-011"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe LP-011 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Every hostile schema stops within ceilings and the validator remains responsive to a valid follow-up.",
+    "plain_language_name": "Schema validation exhaustion",
+    "positive_control": "A deliberately vulnerable LP-011 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "JSON Schema resource limits",
+    "protocol_status": "OFFICIAL_GUIDANCE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "JSON-SCHEMA-2020-12",
+      "MHAI-SAFETY"
+    ],
+    "suite": "Local Privilege Containment",
+    "synthetic_principals": [
+      "lp-011-principal-a",
+      "lp-011-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 30
+  }
+]

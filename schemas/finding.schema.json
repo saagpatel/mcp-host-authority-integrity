@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/finding.schema.json",
+  "title": "MHAI validated finding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "finding_id",
+    "title",
+    "severity",
+    "case_ids",
+    "scope",
+    "component",
+    "version",
+    "coverage_level",
+    "fixture_only",
+    "trust_boundary",
+    "unauthorized_outcome_or_misleading_claim",
+    "reproduction",
+    "positive_control",
+    "negative_control",
+    "evidence",
+    "limitations",
+    "alternative_explanations",
+    "independent_confirmation"
+  ],
+  "properties": {
+    "finding_id": {"type": "string"},
+    "title": {"type": "string"},
+    "severity": {"enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"]},
+    "case_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "scope": {"type": "string"},
+    "component": {"type": "string"},
+    "version": {"type": "string"},
+    "coverage_level": {
+      "enum": [
+        "LIVE_TARGET",
+        "ISOLATED_TARGET_COPY",
+        "OFFICIAL_SDK",
+        "FIXTURE_HOST",
+        "FIXTURE_SERVER",
+        "STATIC_EVIDENCE_ONLY"
+      ]
+    },
+    "fixture_only": {"type": "boolean"},
+    "trust_boundary": {"type": "string"},
+    "unauthorized_outcome_or_misleading_claim": {"type": "string"},
+    "reproduction": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "positive_control": {"type": "string"},
+    "negative_control": {"type": "string"},
+    "evidence": {"type": "array", "items": {"type": "object"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "alternative_explanations": {"type": "array", "items": {"type": "string"}},
+    "independent_confirmation": {"enum": ["REQUIRED", "CONFIRMED", "NOT_REQUIRED", "UNAVAILABLE"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"severity": {"const": "CRITICAL"}}, "required": ["severity"]},
+      "then": {
+        "properties": {
+          "coverage_level": {"const": "LIVE_TARGET"},
+          "fixture_only": {"const": false},
+          "independent_confirmation": {"const": "CONFIRMED"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"severity": {"const": "HIGH"}}, "required": ["severity"]},
+      "then": {
+        "properties": {
+          "coverage_level": {"enum": ["LIVE_TARGET", "ISOLATED_TARGET_COPY"]},
+          "fixture_only": {"const": false},
+          "independent_confirmation": {"const": "CONFIRMED"}
+        }
+      }
+    }
+  ]
+}

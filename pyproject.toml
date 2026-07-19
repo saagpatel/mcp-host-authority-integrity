@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-host-authority-integrity"
+version = "0.1.0"
+description = "Synthetic adversarial suites for MCP host authority integrity"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+mhai = "harness.runner:main"
+
+[tool.setuptools]
+packages = ["harness", "harness.suites"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"

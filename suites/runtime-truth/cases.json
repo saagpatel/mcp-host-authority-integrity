@@ -1,0 +1,860 @@
+[
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-001 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial hidden prompt content variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-001",
+    "claim_under_test": "The fixture host distinguishes prompt list metadata from the body returned by prompts/get.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host distinguishes prompt list metadata from the body returned by prompts/get.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host distinguishes prompt list metadata from the body returned by prompts/get.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "The host treats the harmless descriptor as proof and does not observe the contradictory retrieved body.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-001.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-001"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-001 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The retrieved synthetic authority-seeking body is observed and classified separately from its harmless descriptor.",
+    "plain_language_name": "Hidden prompt content",
+    "positive_control": "A deliberately vulnerable RT-001 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP prompts",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-PROMPTS-2025-11-25",
+      "MCP-RUNTIME-SCANNER-STUDY"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-001-principal-a",
+      "rt-001-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-002 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial hidden resource content variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-002",
+    "claim_under_test": "The fixture host distinguishes resource list metadata from content returned by resources/read.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host distinguishes resource list metadata from content returned by resources/read.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host distinguishes resource list metadata from content returned by resources/read.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "The host records the resource safe without reading or classifying the contradictory body.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-002.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-002"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-002 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The retrieved executable-looking content is observed and classified separately from its harmless descriptor.",
+    "plain_language_name": "Hidden resource content",
+    "positive_control": "A deliberately vulnerable RT-002 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP resources",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-RESOURCES-2025-11-25",
+      "MCP-RUNTIME-SCANNER-STUDY"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-002-principal-a",
+      "rt-002-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-003 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial tool-call behavior gap variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-003",
+    "claim_under_test": "The fixture host measures tools/call effects instead of inferring behavior from the descriptor.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host measures tools/call effects instead of inferring behavior from the descriptor.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host measures tools/call effects instead of inferring behavior from the descriptor.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "The mutation attempt occurs but the runtime mismatch is omitted or classified safe.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-003.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-003"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-003 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The program-owned mutation attempt is observed and the descriptor/runtime mismatch is reported.",
+    "plain_language_name": "Tool-call behavior gap",
+    "positive_control": "A deliberately vulnerable RT-003 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP tools",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-003-principal-a",
+      "rt-003-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-004 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial read-only annotation lie variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-004",
+    "claim_under_test": "The fixture host does not accept readOnlyHint as behavioral proof.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host does not accept readOnlyHint as behavioral proof.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host does not accept readOnlyHint as behavioral proof.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "The mutation occurs while readOnlyHint is accepted as proof of no mutation.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-004.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-004"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-004 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "A canary mutation contradicting readOnlyHint is detected and reported.",
+    "plain_language_name": "Read-only annotation lie",
+    "positive_control": "A deliberately vulnerable RT-004 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP tool annotations",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-004-principal-a",
+      "rt-004-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-005 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial open-world annotation lie variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-005",
+    "claim_under_test": "The fixture host dynamically checks a tool marked openWorldHint false.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host dynamically checks a tool marked openWorldHint false.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host dynamically checks a tool marked openWorldHint false.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "The attempt occurs but the false annotation is accepted as behavioral proof.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-005.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-005"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-005 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "An exact run-owned loopback attempt is observed as contradicting the annotation.",
+    "plain_language_name": "Open-world annotation lie",
+    "positive_control": "A deliberately vulnerable RT-005 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP tool annotations",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-005-principal-a",
+      "rt-005-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-006 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial pagination trap variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-006",
+    "claim_under_test": "The fixture host follows every valid cursor exactly once and detects contradictory later pages.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host follows every valid cursor exactly once and detects contradictory later pages.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host follows every valid cursor exactly once and detects contradictory later pages.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "Enumeration stops early, loops, or reports the first page as complete.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-006.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-006"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-006 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "All pages are enumerated and the later contradictory entry is observed without cursor loops.",
+    "plain_language_name": "Pagination trap",
+    "positive_control": "A deliberately vulnerable RT-006 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP pagination",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25",
+      "MCP-PROMPTS-2025-11-25",
+      "MCP-RESOURCES-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-006-principal-a",
+      "rt-006-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-007 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial list-changed mutation variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-007",
+    "claim_under_test": "The fixture host invalidates cached trust and approval state after tools/list_changed.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture host invalidates cached trust and approval state after tools/list_changed.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture host invalidates cached trust and approval state after tools/list_changed.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "A stale cached descriptor or approval authorizes the changed tool.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-007.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-007"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-007 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Changed schema, annotation, identity, and effect force fresh discovery and approval.",
+    "plain_language_name": "List-changed mutation",
+    "positive_control": "A deliberately vulnerable RT-007 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP tools list_changed",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-007-principal-a",
+      "rt-007-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-008 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial client fingerprinting variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-008",
+    "claim_under_test": "The fixture comparison reports client- and protocol-dependent server behavior only for hosts actually exercised.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The fixture comparison reports client- and protocol-dependent server behavior only for hosts actually exercised.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The fixture comparison reports client- and protocol-dependent server behavior only for hosts actually exercised.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "A differential is missed or generalized to an unavailable client.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-008.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-008"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-008 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Different fixture identities produce a recorded differential with exact client labels.",
+    "plain_language_name": "Client fingerprinting",
+    "positive_control": "A deliberately vulnerable RT-008 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP initialization",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-008-principal-a",
+      "rt-008-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-009 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial tool-origin collision variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-009",
+    "claim_under_test": "Same-named tools remain bound to server identity through selection, approval, execution, logs, and result.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_HOST",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_HOST",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "Same-named tools remain bound to server identity through selection, approval, execution, logs, and result.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "Same-named tools remain bound to server identity through selection, approval, execution, logs, and result.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "A sibling server receives authority or origin becomes ambiguous.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-009.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-009"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-009 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The intended server-bound canary alone is affected and every receipt names that server.",
+    "plain_language_name": "Tool-origin collision",
+    "positive_control": "A deliberately vulnerable RT-009 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "MCP multi-server tools",
+    "protocol_status": "RELEASED_CORE",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-009-principal-a",
+      "rt-009-principal-b"
+    ],
+    "target_kind": "FIXTURE_HOST",
+    "timeout_seconds": 10
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-010 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial timeout process escape variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-010",
+    "claim_under_test": "An independent containment supervisor prevents a timed-out child or grandchild from acting later.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "An independent containment supervisor prevents a timed-out child or grandchild from acting later.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "An independent containment supervisor prevents a timed-out child or grandchild from acting later.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "Any descendant survives timeout or performs the delayed canary action.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-010.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "rt-010"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-010 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "The entire containment domain ends and no delayed canary appears after the observation window.",
+    "plain_language_name": "Timeout process escape",
+    "positive_control": "A deliberately vulnerable RT-010 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Local process supervision",
+    "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-010-principal-a",
+      "rt-010-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 30
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-011 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial container isolation reality variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-011",
+    "claim_under_test": "The exact recorded disposable container flags deny host reachability and bound filesystem, privileges, and processes.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "FIXTURE_SERVER",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "FIXTURE_SERVER",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The exact recorded disposable container flags deny host reachability and bound filesystem, privileges, and processes.",
+      "version_pattern": "^fixture:[A-Za-z0-9._-]+@sha256:[a-f0-9]{64}$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The exact recorded disposable container flags deny host reachability and bound filesystem, privileges, and processes.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "A prohibited host, filesystem, privilege, metadata, DNS, or process-limit probe succeeds.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-011.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "server",
+      "variant": "rt-011"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-011 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "All positive sensors fire in the permissive control and all prohibited probes fail in the isolated subject.",
+    "plain_language_name": "Container isolation reality",
+    "positive_control": "A deliberately vulnerable RT-011 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "Container runtime",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "MHAI-SAFETY",
+      "LOCAL-TARGET-SNAPSHOT"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-011-principal-a",
+      "rt-011-principal-b"
+    ],
+    "target_kind": "FIXTURE_SERVER",
+    "timeout_seconds": 30
+  },
+  {
+    "allowed_effects": [
+      "Create or update the declared program-owned canary inside the current run.",
+      "Connect only to an exact run-owned fixture socket when the case requires networking."
+    ],
+    "attack_steps": [
+      "Create a fresh contained RT-012 fixture with a unique synthetic authority tuple.",
+      "Exercise the adversarial trust registry self-scan variant and record bounded observations.",
+      "Run the vulnerable positive control and safe negative control in separate fresh domains.",
+      "Evaluate the exact pass and fail oracles, redact evidence, and verify cleanup."
+    ],
+    "case_id": "RT-012",
+    "claim_under_test": "The exact pinned mcp-trust read-only interface claim is compared with only behavior observable without mutation.",
+    "cleanup": [
+      "Revoke the run lease and stop the complete containment domain.",
+      "Verify no run-owned process, listener, mount, profile, namespace, or delayed action remains.",
+      "Preserve only schema-valid redacted evidence outside fixture-writable paths."
+    ],
+    "coverage_level": "LIVE_TARGET",
+    "evidence": [],
+    "evidence_ceiling": {
+      "coverage_level": "LIVE_TARGET",
+      "instrumentation": "Broker observations, canary state, control results, containment receipt, and cleanup receipt.",
+      "subject": "The exact pinned mcp-trust read-only interface claim is compared with only behavior observable without mutation.",
+      "version_pattern": "^git:[a-f0-9]{40}([a-f0-9]{24})?$",
+      "version_rule": "The result version must fully match version_pattern for this evidence level."
+    },
+    "exact_subject_claim": "The exact pinned mcp-trust read-only interface claim is compared with only behavior observable without mutation.",
+    "execution_family": "runtime-truth",
+    "fail_oracle": "Unexercised mutation or isolation behavior is represented as proven.",
+    "fixture": {
+      "canary": "work/canaries/<run-id>/rt-012.json",
+      "family": "runtime-truth",
+      "network": "run-owned isolated namespace or exact run-owned socket identity",
+      "role": "host",
+      "variant": "rt-012"
+    },
+    "forbidden_effects": [
+      "Access any real credential, account, connector, user content, or external service.",
+      "Write outside the current program-owned sacrificial run directory.",
+      "Contact an arbitrary host, LAN, cloud metadata, or pre-existing loopback listener."
+    ],
+    "limitations": [
+      "The case definition is not an execution result.",
+      "Coverage cannot exceed the declared evidence ceiling.",
+      "Fixture evidence does not prove behavior of an untested installed host."
+    ],
+    "negative_control": "A safe RT-012 fixture must satisfy the pass oracle without a forbidden effect.",
+    "pass_oracle": "Public annotations and observable read behavior are reported with an explicit evidence ceiling.",
+    "plain_language_name": "Trust registry self-scan",
+    "positive_control": "A deliberately vulnerable RT-012 fixture must satisfy the fail oracle using only its program canary.",
+    "preconditions": [
+      "Gate 1A catalog validation passes.",
+      "Gate 1B containment qualification passes before active adversarial execution.",
+      "Only synthetic principals and program-owned canaries are present."
+    ],
+    "protocol_or_component": "mcp-trust read-only MCP interface",
+    "protocol_status": "LOCAL_CONTRACT",
+    "requires_browser": false,
+    "result": "NOT_RUN",
+    "source_citations": [
+      "LOCAL-TARGET-SNAPSHOT",
+      "MCP-TOOLS-2025-11-25"
+    ],
+    "suite": "Runtime Truth",
+    "synthetic_principals": [
+      "rt-012-principal-a",
+      "rt-012-principal-b"
+    ],
+    "target_kind": "LIVE_TARGET",
+    "timeout_seconds": 10
+  }
+]
