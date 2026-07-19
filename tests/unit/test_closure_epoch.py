@@ -283,12 +283,28 @@ class ClosureEpochTests(unittest.TestCase):
             },
             {
                 "case_id": "HC-012",
-                "result": "BLOCKED_BY_ACCESS",
+                "result": "PASS",
+                "control_results": {"positive": "PASS", "negative": "PASS"},
+                "containment_result": "PASS",
+                "cleanup_result": "PASS",
                 "observations": [
                     {
                         "archive_sha256": "2" * 64,
+                        "archive_fidelity_proven": True,
                         "target_repository_accessed_during_case": False,
-                        "target_code_executed": False,
+                        "target_code_executed": True,
+                        "ambient_fake_zsh_followed_without_detection": False,
+                        "cleanup_verified": True,
+                        "containment_domains": [
+                            "vulnerable-control",
+                            "safe-baseline",
+                            "hostile-path",
+                        ],
+                        "instrumentation": {
+                            "vulnerable_control": {"fake_zsh_followed": True},
+                            "safe_baseline": {"fake_zsh_followed": False},
+                            "hostile_path": {"fake_zsh_followed": False},
+                        },
                     }
                 ],
             },
