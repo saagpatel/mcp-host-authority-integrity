@@ -63,6 +63,31 @@ required when any of the following becomes true:
 Routine scheduling, elapsed time alone, or an unchanged upstream issue are not
 rerun triggers.
 
+## Drift detector
+
+Run:
+
+```sh
+python3 scripts/check_regression_drift.py
+```
+
+The detector compares local target commits and trees under an isolated
+disposable Git `HOME`, with both optional-lock controls enabled and no fetch.
+It checks the Python SDK's current PyPI release, the TypeScript SDK's current
+GitHub release, protocol issue `#1898`, and conformance PR `#399` through
+read-only upstream API calls.
+
+Exit codes are:
+
+- `0`: no rerun trigger;
+- `10`: material drift requires review;
+- `20`: required evidence is unavailable or ambiguous.
+
+The JSON report is printed to standard output and is not persisted. A fatal
+baseline or schema error emits a smaller JSON error envelope and exits `20`.
+The detector never edits, cleans, switches, fetches, builds, or repairs a
+target, never opens an epoch, and never authorizes a rerun.
+
 ## Rerun contract
 
 - Target-owner work must finish before the program observes targets.

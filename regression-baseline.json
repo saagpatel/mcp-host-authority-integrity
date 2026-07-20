@@ -1,0 +1,119 @@
+{
+  "schema_version": "MHAI-REGRESSION-BASELINE-1",
+  "baseline_id": "mhai-regression-baseline-2026-07-19",
+  "canonical_evidence": {
+    "program_commit": "29b273d086826258f46e94c9ae2c9b15eb00d073",
+    "epoch_id": "closure-1784499573-6dced0579571",
+    "qualification_id": "cq-1784499726-d1b961ffed3c",
+    "run_id": "run-1784499743-0d91c88f094f",
+    "pass_count": 56,
+    "fail_count": 1,
+    "blocked_count": 0,
+    "preserved_failures": [
+      "SA-015"
+    ]
+  },
+  "program": {
+    "path": "/Users/d/Projects/mcp-host-authority-integrity",
+    "baseline_commit": "29b273d086826258f46e94c9ae2c9b15eb00d073",
+    "non_material_paths": [
+      "README.md",
+      "REGRESSION-BASELINE.md",
+      "regression-baseline.json",
+      "harness/regression_drift.py",
+      "schemas/drift-report.schema.json",
+      "schemas/regression-baseline.schema.json",
+      "scripts/check_regression_drift.py",
+      "tests/unit/test_regression_drift.py"
+    ]
+  },
+  "targets": [
+    {
+      "name": "mcp-trust",
+      "path": "/Users/d/Projects/mcp-trust",
+      "case_ids": [
+        "RT-012"
+      ],
+      "baseline_commit": "f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462",
+      "baseline_tree": "bdc61b679f06136d84cefaabc6928c0a9f82c030",
+      "non_material_paths": [
+        ".github/**",
+        "CHANGELOG*",
+        "LICENSE*",
+        "README*",
+        "docs/**"
+      ]
+    },
+    {
+      "name": "PortfolioCommandCenter",
+      "path": "/Users/d/Projects/PortfolioCommandCenter",
+      "case_ids": [
+        "HC-011",
+        "HC-012"
+      ],
+      "baseline_commit": "564bd41df34a959aaf3593aa01ea0b337334b4f3",
+      "baseline_tree": "b2a93b87794652e9c7b2c2bbf8f155a812973697",
+      "non_material_paths": [
+        ".github/**",
+        "CHANGELOG*",
+        "LICENSE*",
+        "README*",
+        "docs/**"
+      ]
+    },
+    {
+      "name": "AIGCCore",
+      "path": "/Users/d/Projects/AIGCCore",
+      "case_ids": [
+        "LP-007"
+      ],
+      "baseline_commit": "94b28bff8fec69e25d1c761845764a95496b8dad",
+      "baseline_tree": "341b1f1f306fe1de3b9ed74965fdc18f16c1e89b",
+      "non_material_paths": [
+        ".github/**",
+        "CHANGELOG*",
+        "LICENSE*",
+        "README*",
+        "docs/**"
+      ]
+    },
+    {
+      "name": "portfolio-index",
+      "path": "/Users/d/Projects/_claude-worktrees/portfolio-index-forge",
+      "case_ids": [
+        "LP-009"
+      ],
+      "baseline_commit": "e28c9d12849dd3b27454e64f90e8a54cd3608807",
+      "baseline_tree": "583be14d52b60883b892c8aae615dffb91047080",
+      "non_material_paths": [
+        ".github/**",
+        "CHANGELOG*",
+        "LICENSE*",
+        "README*",
+        "docs/**"
+      ]
+    }
+  ],
+  "upstream": {
+    "python_sdk": {
+      "package": "mcp",
+      "registry": "pypi",
+      "stable_version": "1.28.1"
+    },
+    "typescript_sdk": {
+      "repository": "modelcontextprotocol/typescript-sdk",
+      "stable_tag": "v1.29.0"
+    },
+    "protocol_issue": {
+      "repository": "modelcontextprotocol/modelcontextprotocol",
+      "number": 1898,
+      "state": "open"
+    },
+    "conformance_pull_request": {
+      "repository": "modelcontextprotocol/conformance",
+      "number": 399,
+      "state": "open",
+      "merged": false
+    }
+  }
+}

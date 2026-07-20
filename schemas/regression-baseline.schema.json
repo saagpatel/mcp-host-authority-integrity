@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/regression-baseline.schema.json",
+  "title": "MHAI regression baseline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "baseline_id",
+    "canonical_evidence",
+    "program",
+    "targets",
+    "upstream"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "MHAI-REGRESSION-BASELINE-1"
+    },
+    "baseline_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonical_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "program_commit",
+        "epoch_id",
+        "qualification_id",
+        "run_id",
+        "pass_count",
+        "fail_count",
+        "blocked_count",
+        "preserved_failures"
+      ],
+      "properties": {
+        "program_commit": {
+          "type": "string",
+          "pattern": "[0-9a-f]{40}"
+        },
+        "epoch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "qualification_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "run_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pass_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fail_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocked_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "preserved_failures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "program": {
+      "$ref": "#/$defs/repository"
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/repository"
+          },
+          {
+            "type": "object",
+            "required": [
+              "name",
+              "case_ids",
+              "baseline_tree"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "case_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "baseline_tree": {
+                "type": "string",
+                "pattern": "[0-9a-f]{40}"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "upstream": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python_sdk",
+        "typescript_sdk",
+        "protocol_issue",
+        "conformance_pull_request"
+      ],
+      "properties": {
+        "python_sdk": {
+          "$ref": "#/$defs/pypi_release"
+        },
+        "typescript_sdk": {
+          "$ref": "#/$defs/release"
+        },
+        "protocol_issue": {
+          "$ref": "#/$defs/issue"
+        },
+        "conformance_pull_request": {
+          "$ref": "#/$defs/pull_request"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pypi_release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package",
+        "registry",
+        "stable_version"
+      ],
+      "properties": {
+        "package": {
+          "type": "string",
+          "minLength": 1
+        },
+        "registry": {
+          "const": "pypi"
+        },
+        "stable_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "required": [
+        "path",
+        "baseline_commit",
+        "non_material_paths"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "baseline_commit": {
+          "type": "string",
+          "pattern": "[0-9a-f]{40}"
+        },
+        "non_material_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "stable_tag"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stable_tag": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "number",
+        "state"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        }
+      }
+    },
+    "pull_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "number",
+        "state",
+        "merged"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "state": {
+          "enum": [
+            "open",
+            "closed"
+          ]
+        },
+        "merged": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

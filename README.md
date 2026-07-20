@@ -97,3 +97,5 @@ candidate becomes executable only when the current CQ-012 receipt records
 
 The accepted local evidence chain and the exact conditions that justify a new
 epoch are pinned in [REGRESSION-BASELINE.md](REGRESSION-BASELINE.md).
+Use `python3 scripts/check_regression_drift.py` for a read-only, non-persistent
+drift classification; it cannot open or authorize an epoch.
