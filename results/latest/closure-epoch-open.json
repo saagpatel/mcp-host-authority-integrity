@@ -1,6 +1,6 @@
 {
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784499573-6dced0579571",
+  "epoch_id": "closure-1784550273-2e2beec6273d",
   "git_read_contract": {
     "argument": "git --no-optional-locks",
     "environment": "GIT_OPTIONAL_LOCKS=0"
@@ -92,9 +92,9 @@
       "eligible": true
     }
   },
-  "opened_at": "2026-07-19T22:19:47.064211Z",
+  "opened_at": "2026-07-20T12:25:07.839321Z",
   "phase": "OPEN",
-  "program_commit": "ff5dc602ba8c18f21c49db87fafe12b99f0b8021",
+  "program_commit": "d11b41470050f0b64fd24b8b243295954088c703",
   "target_observations": [
     {
       "archive": {
@@ -103,27 +103,27 @@
         "file_count": 123,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784499573-6dced0579571/archives/mcp-trust-f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462.zip",
-        "sha256": "1dc9e806417403171b0060e580982310f4fb2845459b78aec63febeb440a1353",
-        "tree_manifest_sha256": "9914fc7b1db6e819fe3f358304e91dfb7f16e82ec2117acaf8af091e91cabb3d"
+        "path": "results/closure-epochs/closure-1784550273-2e2beec6273d/archives/mcp-trust-a30be69132802d2b24157066fa4dc125e8edfdca.zip",
+        "sha256": "4a97928d88cf6900bdf4d876fa8d1db541a132ba994149515f5efffba67940e2",
+        "tree_manifest_sha256": "fe439cd7373367a4ef5734bab9f24fa1cb023747dd25b6697a1e1f173cb154ad"
       },
       "branch": "main",
       "case_ids": [
         "RT-012"
       ],
       "clean": true,
-      "head": "f8582c7ddd663d2ebdcd2b75dbe8b2f7f26ec462",
+      "head": "a30be69132802d2b24157066fa4dc125e8edfdca",
       "metadata": {
-        "git_entry_count": 8716,
-        "git_metadata_sha256": "6b8760310bf0c875a68a28154e5b89de78fd5b643b5d0800860cd3e03a440ba6",
+        "git_entry_count": 8783,
+        "git_metadata_sha256": "d4565194feabd76e8f2b999194a06d8d66bf9a8c66eae0cc4669b0f9878a9672",
         "git_scope": "included-in-worktree",
         "index": {
-          "inode": 232358429,
-          "mtime_ns": 1784479253892045674,
+          "inode": 243211217,
+          "mtime_ns": 1784549528340367988,
           "size": 11904
         },
-        "worktree_entry_count": 8716,
-        "worktree_metadata_sha256": "6b8760310bf0c875a68a28154e5b89de78fd5b643b5d0800860cd3e03a440ba6"
+        "worktree_entry_count": 8783,
+        "worktree_metadata_sha256": "d4565194feabd76e8f2b999194a06d8d66bf9a8c66eae0cc4669b0f9878a9672"
       },
       "name": "mcp-trust",
       "owner_activity": {
@@ -137,7 +137,7 @@
       "ownership_basis": "The operator authorized a read-only archive when clean and owner-free; the live bridge preflight found no pending handoff. Exact open-time evidence: no Git lock and no process with cwd inside the worktree.",
       "read_mutation_free": true,
       "status_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "tree": "bdc61b679f06136d84cefaabc6928c0a9f82c030"
+      "tree": "30e2ae0c0f9c3ec1aac265bd8b4baaa8c6b6bde1"
     },
     {
       "archive": {
@@ -146,28 +146,28 @@
         "file_count": 63,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784499573-6dced0579571/archives/PortfolioCommandCenter-564bd41df34a959aaf3593aa01ea0b337334b4f3.zip",
-        "sha256": "ae5ba3f1ec77346500860a86bba1c2731f655aeb3d55992778c945d77d380e42",
+        "path": "results/closure-epochs/closure-1784550273-2e2beec6273d/archives/PortfolioCommandCenter-ac10eb2f26bf858d00f8617b91ea395216122935.zip",
+        "sha256": "fa9792d5a2f732d6233d1fd05e218db015849da5b4e3c3ecf0ee331cc9ce834a",
         "tree_manifest_sha256": "fbe2dcd2364dfb7d0edf168b0b3476b8b22d7448dd9395ff0a3c22fc74021c38"
       },
-      "branch": "codex/authority-integrity-ipc-hook",
+      "branch": "main",
       "case_ids": [
         "HC-011",
         "HC-012"
       ],
       "clean": true,
-      "head": "564bd41df34a959aaf3593aa01ea0b337334b4f3",
+      "head": "ac10eb2f26bf858d00f8617b91ea395216122935",
       "metadata": {
-        "git_entry_count": 21356,
-        "git_metadata_sha256": "6d0c74cfd41c7048b549f2c7372aabc5716f05fbe8194a9ad17a2600a637fef6",
+        "git_entry_count": 21405,
+        "git_metadata_sha256": "831ff0931ca36c3e074df250007e8a36e8177482ef7d49a3318b1ddfe7013f7b",
         "git_scope": "included-in-worktree",
         "index": {
-          "inode": 235876060,
-          "mtime_ns": 1784499181608067353,
+          "inode": 236068902,
+          "mtime_ns": 1784500535043500440,
           "size": 6107
         },
-        "worktree_entry_count": 21356,
-        "worktree_metadata_sha256": "6d0c74cfd41c7048b549f2c7372aabc5716f05fbe8194a9ad17a2600a637fef6"
+        "worktree_entry_count": 21405,
+        "worktree_metadata_sha256": "831ff0931ca36c3e074df250007e8a36e8177482ef7d49a3318b1ddfe7013f7b"
       },
       "name": "PortfolioCommandCenter",
       "owner_activity": {
@@ -190,7 +190,7 @@
         "file_count": 259,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784499573-6dced0579571/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
+        "path": "results/closure-epochs/closure-1784550273-2e2beec6273d/archives/AIGCCore-94b28bff8fec69e25d1c761845764a95496b8dad.zip",
         "sha256": "0d9a523f86c535ef6eebc940fc3ab296c68133bc343588277e8bca93b043d9f7",
         "tree_manifest_sha256": "a7f701a4476d3005dd050b4fa6c4d1375531867549d993deb4219d53d7d963fc"
       },
@@ -201,16 +201,16 @@
       "clean": true,
       "head": "94b28bff8fec69e25d1c761845764a95496b8dad",
       "metadata": {
-        "git_entry_count": 69593,
-        "git_metadata_sha256": "9c5fbe8dde666296ce90f707e588dce444a61ab708f164ea3b289a96cf93e114",
+        "git_entry_count": 69616,
+        "git_metadata_sha256": "398b939a8fe543b24e170990aa228115c5874df713929b82087890e126e5b49c",
         "git_scope": "included-in-worktree",
         "index": {
           "inode": 235550192,
           "mtime_ns": 1784494261907874180,
           "size": 27144
         },
-        "worktree_entry_count": 69593,
-        "worktree_metadata_sha256": "9c5fbe8dde666296ce90f707e588dce444a61ab708f164ea3b289a96cf93e114"
+        "worktree_entry_count": 69616,
+        "worktree_metadata_sha256": "398b939a8fe543b24e170990aa228115c5874df713929b82087890e126e5b49c"
       },
       "name": "AIGCCore",
       "owner_activity": {
@@ -233,7 +233,7 @@
         "file_count": 866,
         "immutable_mode": "0444",
         "object_format": "sha1",
-        "path": "results/closure-epochs/closure-1784499573-6dced0579571/archives/portfolio-index-e28c9d12849dd3b27454e64f90e8a54cd3608807.zip",
+        "path": "results/closure-epochs/closure-1784550273-2e2beec6273d/archives/portfolio-index-e28c9d12849dd3b27454e64f90e8a54cd3608807.zip",
         "sha256": "58340e5688dae473a07771d80fc32ad807cbe3aac8b17bc02622afd9062e8c9e",
         "tree_manifest_sha256": "4e4403c92159448f1640bd4aa1d8f038576d461751f69d8583f19c810cc5b238"
       },
@@ -245,7 +245,7 @@
       "head": "e28c9d12849dd3b27454e64f90e8a54cd3608807",
       "metadata": {
         "git_entry_count": 11,
-        "git_metadata_sha256": "7568cfc706be1c217313864f5f04ee2d4166e49784c0efdb215995b029569b9b",
+        "git_metadata_sha256": "31eb93af2ae356a3330e72d4b25a192a587884a547c1593f20d0db46cb12a470",
         "git_scope": "linked-worktree-gitdir",
         "index": {
           "inode": 234768819,

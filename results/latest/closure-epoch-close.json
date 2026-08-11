@@ -1,7 +1,7 @@
 {
-  "closed_at": "2026-07-19T22:22:48.508462Z",
+  "closed_at": "2026-07-20T12:26:35.532417Z",
   "closure_version": "MHAI-CLOSURE-EPOCH-2",
-  "epoch_id": "closure-1784499573-6dced0579571",
+  "epoch_id": "closure-1784550273-2e2beec6273d",
   "historical_exception_repaired": false,
   "historical_exceptions": [
     "SE-001",
@@ -10,13 +10,26 @@
     "SE-004"
   ],
   "no_forbidden_mutation_gate": "PASS",
-  "open_digest": "d20e5fcb9928f237c1eb6e974a68e7b49922b60ae9b1c2d7e4929c643a201428",
+  "open_digest": "b677ccb5e6492c5c1dddac1cf1f965d16b8e7444f638c15dd2a5e360243028c0",
   "phase": "CLOSE",
-  "qualification_run_id": "cq-1784499726-d1b961ffed3c",
-  "remaining_blockers": [],
+  "qualification_run_id": "cq-1784550311-3f124b978714",
+  "remaining_blockers": [
+    {
+      "case_id": "HC-011",
+      "detail": "The exact PortfolioCommandCenter archive has no qualified source-owned target webview Tauri IPC executor.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    },
+    {
+      "case_id": "HC-012",
+      "detail": "The exact PortfolioCommandCenter HC-012 executor prerequisites are not all available under the program-owned archive boundary.",
+      "kind": "ACCESS",
+      "result": "BLOCKED_BY_ACCESS"
+    }
+  ],
   "result": "PASS_WITH_HISTORICAL_EXCEPTION",
-  "run_id": "run-1784499743-0d91c88f094f",
-  "run_manifest_sha256": "3a979389df350418b82c59bc41c78095e1c4294c4fb9bf56d86c39a5e2129bc7",
+  "run_id": "run-1784550340-9d9f532b3ca0",
+  "run_manifest_sha256": "6f4ddd1800d71324dcbe88223d5129122d82f596b62be8ec6dbb37af540b5a10",
   "safely_obtainable_coverage_executed": true,
   "target_access_checks": [
     {
