@@ -64,12 +64,18 @@ class TaskLeaseGuardTests(unittest.TestCase):
             ["failure_status_mismatch"],
         )
 
-    def test_current_extension_requires_server_generated_task_ids(self) -> None:
-        case = json.loads(json.dumps(self.cases["TLG-028"]))
-        case["fixture"]["events"][1]["id_issuer"] = "receiver"
-        result = evaluate_case(case)
-        self.assertEqual(result["outcome"], "FAIL")
-        self.assertEqual(result["reason_codes"], ["invalid_task_id_issuer"])
+    def test_profiles_require_their_specified_task_id_issuer(self) -> None:
+        cases = {
+            "TLG-001": "server",
+            "TLG-028": "receiver",
+        }
+        for case_id, wrong_issuer in cases.items():
+            with self.subTest(case_id=case_id):
+                case = json.loads(json.dumps(self.cases[case_id]))
+                case["fixture"]["events"][1]["id_issuer"] = wrong_issuer
+                result = evaluate_case(case)
+                self.assertEqual(result["outcome"], "FAIL")
+                self.assertEqual(result["reason_codes"], ["invalid_task_id_issuer"])
 
     def test_unknowns_preserve_specification_gaps(self) -> None:
         expected = {
