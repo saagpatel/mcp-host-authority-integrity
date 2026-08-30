@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/integrated-catalog-baseline.schema.json",
+  "title": "MHAI additive Task Lease Guard catalog baseline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "baseline_id",
+    "as_of",
+    "proof_boundary",
+    "historical_catalog",
+    "task_lease_guard_catalog",
+    "combined_catalog",
+    "source_registry",
+    "historical_receipts",
+    "claim_ceiling"
+  ],
+  "properties": {
+    "schema_version": {"const": "MHAI-INTEGRATED-CATALOG-1"},
+    "baseline_id": {"const": "task-lease-guard-2026-08-30"},
+    "as_of": {"const": "2026-08-30"},
+    "proof_boundary": {"const": "LOCAL_SYNTHETIC_FIXTURE"},
+    "historical_catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "path", "case_count", "case_ids", "catalog_sha256", "sa_case_count", "sa_definitions_sha256"],
+      "properties": {
+        "namespace": {"const": "MHAI-HISTORICAL"},
+        "path": {"const": "cases.json"},
+        "case_count": {"const": 57},
+        "case_ids": {"type": "array", "minItems": 57, "maxItems": 57, "items": {"type": "string"}},
+        "catalog_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "sa_case_count": {"const": 15},
+        "sa_definitions_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "task_lease_guard_catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "path", "case_count", "case_ids", "catalog_sha256", "suite_result", "outcome_counts"],
+      "properties": {
+        "namespace": {"const": "TLG"},
+        "path": {"const": "task_lease_guard/cases.json"},
+        "case_count": {"const": 30},
+        "case_ids": {"type": "array", "minItems": 30, "maxItems": 30, "items": {"type": "string", "pattern": "^TLG-[0-9]{3}$"}},
+        "catalog_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "suite_result": {"const": "PASS"},
+        "outcome_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["PASS", "FAIL", "UNKNOWN"],
+          "properties": {
+            "PASS": {"const": 9},
+            "FAIL": {"const": 17},
+            "UNKNOWN": {"const": 4}
+          }
+        }
+      }
+    },
+    "combined_catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_count", "ordered_case_ids", "namespace_counts", "identity_sha256"],
+      "properties": {
+        "case_count": {"const": 87},
+        "ordered_case_ids": {"type": "array", "minItems": 87, "maxItems": 87, "items": {"type": "string"}},
+        "namespace_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["MHAI-HISTORICAL", "TLG"],
+          "properties": {
+            "MHAI-HISTORICAL": {"const": 57},
+            "TLG": {"const": 30}
+          }
+        },
+        "identity_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "source_registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "prior_source_count", "prior_sources_sha256", "current_source_ids", "sources_digest"],
+      "properties": {
+        "path": {"const": "sources/source-registry.json"},
+        "prior_source_count": {"const": 24},
+        "prior_sources_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "current_source_ids": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "string"}},
+        "sources_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "historical_receipts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "file_count", "ledger_claim_file_count", "tree_sha256", "immutable"],
+      "properties": {
+        "path": {"const": "results"},
+        "file_count": {"const": 2057},
+        "ledger_claim_file_count": {"const": 1567},
+        "tree_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "immutable": {"const": true}
+      }
+    },
+    "claim_ceiling": {"type": "string", "minLength": 40}
+  }
+}

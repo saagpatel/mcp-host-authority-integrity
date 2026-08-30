@@ -10,6 +10,8 @@ from harness.closure_epoch import close_epoch, open_epoch
 from harness.program import run_complete_program
 from harness.qualification import qualify
 from harness.schema_validation import load_json, validate_case_contract
+from task_lease_guard.checker import evaluate_catalog as evaluate_task_lease_catalog
+from task_lease_guard.checker import load_catalog as load_task_lease_catalog
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -63,6 +65,13 @@ def run_safe() -> int:
     return 0
 
 
+def run_task_lease_check() -> int:
+    """Evaluate only the bundled synthetic Task Lease Guard fixtures."""
+    report = evaluate_task_lease_catalog(load_task_lease_catalog())
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["suite_result"] == "PASS" else 1
+
+
 def run_epoch_open() -> int:
     receipt, path = open_epoch()
     print(
@@ -105,6 +114,7 @@ def main() -> int:
     commands.add_parser("list")
     commands.add_parser("qualify")
     commands.add_parser("run-safe")
+    commands.add_parser("task-lease-check")
     commands.add_parser("epoch-open")
     commands.add_parser("epoch-close")
     args = parser.parse_args()
@@ -114,6 +124,8 @@ def main() -> int:
         return run_qualification()
     if args.command == "run-safe":
         return run_safe()
+    if args.command == "task-lease-check":
+        return run_task_lease_check()
     if args.command == "epoch-open":
         return run_epoch_open()
     return run_epoch_close()

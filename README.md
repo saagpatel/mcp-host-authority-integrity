@@ -80,6 +80,27 @@ Fixture evidence never proves behavior in an installed or live target.
 See [DESIGN.md](DESIGN.md), [THREAT-MODEL.md](THREAT-MODEL.md), and
 [SAFETY-BOUNDARY.md](SAFETY-BOUNDARY.md) before execution.
 
+## Fixture-only Task Lease Guard
+
+The experimental Tasks lifecycle has a separate deterministic sidecar checker:
+
+```sh
+python3 scripts/check_task_lease_guard.py
+python3 -m harness.runner task-lease-check
+python3 -m unittest tests.unit.test_task_lease_guard -v
+python3 scripts/generate_task_lease_integration.py --check
+```
+
+It evaluates 30 machine-readable synthetic cases across the legacy
+`2025-11-25` Tasks contract and the current `2026-07-28` Tasks extension. Its
+JSON output uses only `PASS`, `FAIL`, and `UNKNOWN`, and its proof boundary is
+always `LOCAL_SYNTHETIC_FIXTURE`. See
+[TASK-LEASE-GUARD-INTEGRATION-PROPOSAL.md](TASK-LEASE-GUARD-INTEGRATION-PROPOSAL.md)
+for the versioned integration path and claim ceiling. The additive
+`task_lease_guard/integration-baseline.json` binds 57 immutable historical cases
+and 30 `TLG-*` cases into an 87-case identity denominator without changing the
+historical catalog, execution manifests, or receipts.
+
 The completed evidence overlay is in [EXECUTION-SUMMARY.md](EXECUTION-SUMMARY.md)
 and [EXECUTION-COVERAGE.md](EXECUTION-COVERAGE.md). `COVERAGE-MATRIX.md` remains
 the immutable pre-execution catalog view. [SAFETY-EXCEPTION.md](SAFETY-EXCEPTION.md)

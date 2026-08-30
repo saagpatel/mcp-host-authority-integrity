@@ -1,0 +1,108 @@
+{
+  "schema_version": "TaskProtocolDriftV1",
+  "as_of": "2026-08-30",
+  "baseline_binding": "git:99f6c7888db6949eb1695f37ee37b3af4f1e6638",
+  "baseline_corpus": {
+    "source_id": "MCP-TASKS-2025-11-25",
+    "protocol_status": "RELEASED_EXPERIMENTAL",
+    "case_ids": ["SA-005", "SA-006", "SA-007", "SA-008", "SA-009"]
+  },
+  "current_protocol": {
+    "core_revision": "2026-07-28",
+    "extension_id": "io.modelcontextprotocol/tasks",
+    "extension_status": "SEP-2663-FINAL_HOSTED-SPEC-PAGE-DRAFT",
+    "source_ids": [
+      "MCP-CORE-2026-07-28",
+      "MCP-TASKS-EXTENSION-CURRENT",
+      "MCP-AUTHORIZATION-2026-07-28",
+      "MCP-ELICITATION-2026-07-28",
+      "MCP-SAMPLING-2026-07-28"
+    ]
+  },
+  "classification": "MATERIAL_BREAKING_PROTOCOL_DRIFT",
+  "changes": [
+    {
+      "drift_id": "TPD-001",
+      "surface": "capability-negotiation",
+      "legacy": "Tasks capabilities are exchanged during initialize and task augmentation is requestor-directed.",
+      "current": "The task extension is advertised by server/discover and by the client in each request; task creation is server-directed.",
+      "affected_case_ids": ["SA-008"],
+      "fixture_action": "Keep separate profiles and require current-request extension evidence for the 2026-07-28 lane."
+    },
+    {
+      "drift_id": "TPD-002",
+      "surface": "method-set-and-result-custody",
+      "legacy": "tasks/get, tasks/list, tasks/cancel, and blocking tasks/result are defined; results are retrieved through tasks/result.",
+      "current": "tasks/list and tasks/result are removed; tasks/update is added; terminal result or error is inlined in tasks/get.",
+      "affected_case_ids": ["SA-005", "SA-006"],
+      "fixture_action": "Reject legacy result/list messages in the current profile and bind terminal payloads to tasks/get state."
+    },
+    {
+      "drift_id": "TPD-003",
+      "surface": "cancellation",
+      "legacy": "A successful cancel transitions the task to cancelled before the response and cancelled is immutable.",
+      "current": "Cancellation returns an empty acknowledgement, is cooperative and eventually consistent, and may end in a non-cancelled terminal state.",
+      "affected_case_ids": ["SA-007"],
+      "fixture_action": "Use profile-specific cancellation oracles; do not require immediate stoppage in the current extension lane."
+    },
+    {
+      "drift_id": "TPD-004",
+      "surface": "failure-semantics",
+      "legacy": "A tool result with isError true moves the task to failed.",
+      "current": "Failed is reserved for JSON-RPC errors; a tool result with isError true is completed with the result inlined.",
+      "affected_case_ids": ["SA-006"],
+      "fixture_action": "Use profile-specific terminal status and payload-shape checks."
+    },
+    {
+      "drift_id": "TPD-005",
+      "surface": "requestor-and-context-binding",
+      "legacy": "With authorization context, task get/result/cancel and list are explicitly bound to that context; without it, strong IDs and no listing are advised.",
+      "current": "There is no task list and IDs are unguessable bearer-like handles; the extension does not standardize an authorization-context schema.",
+      "affected_case_ids": ["SA-005", "SA-006"],
+      "fixture_action": "Require explicit synthetic context evidence when present and return UNKNOWN where a transport cannot authenticate requestors."
+    },
+    {
+      "drift_id": "TPD-006",
+      "surface": "elicitation-and-sampling",
+      "legacy": "Tasks can augment client-hosted elicitation and sampling requests and use related-task metadata.",
+      "current": "Only tools/call is task-augmented; mid-flight elicitation or sampling is carried in inputRequests and answered by tasks/update. Sampling is deprecated in core 2026-07-28.",
+      "affected_case_ids": ["SA-009"],
+      "fixture_action": "Preserve standalone capability and trust checks for nested inputRequests and mark sampling as legacy compatibility."
+    },
+    {
+      "drift_id": "TPD-007",
+      "surface": "ttl-and-polling-fields",
+      "legacy": "Task fields are ttl and pollInterval; the TTL is fixed from creation in the task description.",
+      "current": "Fields are ttlMs and pollIntervalMs and either value may change over the task lifetime.",
+      "affected_case_ids": ["SA-006", "SA-007"],
+      "fixture_action": "Version field names and treat expiry and poll timing as advisory where the protocol uses MAY or SHOULD."
+    }
+  ],
+  "unresolved_specification_questions": [
+    {
+      "question_id": "TPU-001",
+      "topic": "missing-capability-error-code",
+      "status": "UNKNOWN",
+      "detail": "The hosted extension page says -32003 while current core schema and release material use -32021."
+    },
+    {
+      "question_id": "TPU-002",
+      "topic": "numeric-task-id-entropy",
+      "status": "UNKNOWN",
+      "detail": "The extension requires sufficient entropy but defines no bit count or UUID format."
+    },
+    {
+      "question_id": "TPU-003",
+      "topic": "authorization-context-schema",
+      "status": "UNKNOWN",
+      "detail": "Current Tasks does not define a portable authorization-context object or caller-binding algorithm."
+    },
+    {
+      "question_id": "TPU-004",
+      "topic": "expiry-and-post-cancel-retention",
+      "status": "UNKNOWN",
+      "detail": "No mandatory grace period, retention duration, or post-cancellation result-custody guarantee is defined."
+    }
+  ],
+  "claim_ceiling": "Static comparison of official specification text to the local corpus at the named Git binding; no installed implementation or vulnerability claim."
+}

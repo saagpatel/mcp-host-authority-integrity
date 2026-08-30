@@ -1,7 +1,7 @@
 {
   "registry_version": "MHAI-SOURCES-1",
-  "retrieved_at": "2026-07-19",
-  "sources_digest": "c6336ac508abe58192232d133875eb695960b67c315119f8180c26c11600e341",
+  "retrieved_at": "2026-08-30",
+  "sources_digest": "3e90f3bd2bf640b8178482926afbcab7f2b34d5e8477bf78522b4aba2ae508b3",
   "sources": [
     {
       "source_id": "MCP-TOOLS-2025-11-25",
@@ -218,6 +218,51 @@
       "publication_or_update_date": "2026-07-19",
       "exact_requirement_used": "Synthetic effects may touch only program-owned canaries and exact run-owned sockets inside qualified containment.",
       "local_implementation_claims_support": "Program harness."
+    },
+    {
+      "source_id": "MCP-CORE-2026-07-28",
+      "title": "Model Context Protocol 2026-07-28 core and versioning",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2026-07-28",
+      "exact_requirement_used": "Current MCP requests carry protocol version and client capabilities per request; optional extensions require explicit support and otherwise fall back or reject.",
+      "local_implementation_claims_support": "Task Lease Guard fixture capability decisions only; no live client or server conformance claim."
+    },
+    {
+      "source_id": "MCP-TASKS-EXTENSION-CURRENT",
+      "title": "MCP Tasks extension",
+      "url": "https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks",
+      "status": "DRAFT_OR_EMERGING",
+      "publication_or_update_date": "2026-07-28 profile reviewed 2026-08-30",
+      "exact_requirement_used": "The io.modelcontextprotocol/tasks extension defines server-directed durable tasks, task lifecycle and polling fields, cooperative cancellation, tasks/get result custody, and nested input requests; its hosted page remains labelled Draft despite SEP-2663 Final status.",
+      "local_implementation_claims_support": "Versioned Task Lease Guard fixtures only; specification conflicts and underspecified requirements remain UNKNOWN."
+    },
+    {
+      "source_id": "MCP-AUTHORIZATION-2026-07-28",
+      "title": "Model Context Protocol: Authorization 2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2026-07-28",
+      "exact_requirement_used": "Authorization is optional overall and transport-specific; authenticated caller identity and token audience must not be inferred where the transport supplies no authorization evidence.",
+      "local_implementation_claims_support": "Synthetic requestor and context-binding fixtures only; no authorization-provider behavior is claimed."
+    },
+    {
+      "source_id": "MCP-ELICITATION-2026-07-28",
+      "title": "Model Context Protocol: Elicitation 2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2026-07-28",
+      "exact_requirement_used": "Elicitation capability and user binding apply per request; form elicitation must not request sensitive information, which requires a URL-mode flow.",
+      "local_implementation_claims_support": "Synthetic task-nested elicitation trust checks only."
+    },
+    {
+      "source_id": "MCP-SAMPLING-2026-07-28",
+      "title": "Model Context Protocol: Sampling 2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/client/sampling",
+      "status": "RELEASED_CORE",
+      "publication_or_update_date": "2026-07-28",
+      "exact_requirement_used": "Sampling is deprecated in the 2026-07-28 core; task-nested sampling retains its ordinary capability and trust checks and is not required for current conformance.",
+      "local_implementation_claims_support": "Synthetic deprecated-compatibility fixtures only; no model-provider or installed-host behavior is claimed."
     }
   ]
 }
