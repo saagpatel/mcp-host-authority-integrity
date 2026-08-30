@@ -186,7 +186,7 @@
     "path": "sources/source-registry.json",
     "prior_source_count": 24,
     "prior_sources_sha256": "c6336ac508abe58192232d133875eb695960b67c315119f8180c26c11600e341",
-    "sources_digest": "3e90f3bd2bf640b8178482926afbcab7f2b34d5e8477bf78522b4aba2ae508b3"
+    "sources_digest": "408e3257783f3649aa1b55a711eb034d3891b129cad00198a0066e473da16168"
   },
   "task_lease_guard_catalog": {
     "case_count": 30,

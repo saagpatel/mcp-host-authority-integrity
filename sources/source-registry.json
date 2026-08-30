@@ -1,7 +1,7 @@
 {
   "registry_version": "MHAI-SOURCES-1",
   "retrieved_at": "2026-08-30",
-  "sources_digest": "3e90f3bd2bf640b8178482926afbcab7f2b34d5e8477bf78522b4aba2ae508b3",
+  "sources_digest": "408e3257783f3649aa1b55a711eb034d3891b129cad00198a0066e473da16168",
   "sources": [
     {
       "source_id": "MCP-TOOLS-2025-11-25",
@@ -234,7 +234,7 @@
       "url": "https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks",
       "status": "DRAFT_OR_EMERGING",
       "publication_or_update_date": "2026-07-28 profile reviewed 2026-08-30",
-      "exact_requirement_used": "The io.modelcontextprotocol/tasks extension defines server-directed durable tasks, task lifecycle and polling fields, cooperative cancellation, tasks/get result custody, and nested input requests; its hosted page remains labelled Draft despite SEP-2663 Final status.",
+      "exact_requirement_used": "The io.modelcontextprotocol/tasks extension defines server-directed durable tasks, task lifecycle and polling fields, cooperative cancellation, tasks/get result custody, and nested input requests; missing required client capability uses error -32021; its hosted page remains labelled Draft despite SEP-2663 Final status.",
       "local_implementation_claims_support": "Versioned Task Lease Guard fixtures only; specification conflicts and underspecified requirements remain UNKNOWN."
     },
     {

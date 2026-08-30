@@ -80,12 +80,6 @@
   ],
   "unresolved_specification_questions": [
     {
-      "question_id": "TPU-001",
-      "topic": "missing-capability-error-code",
-      "status": "UNKNOWN",
-      "detail": "The hosted extension page says -32003 while current core schema and release material use -32021."
-    },
-    {
       "question_id": "TPU-002",
       "topic": "numeric-task-id-entropy",
       "status": "UNKNOWN",
@@ -102,6 +96,16 @@
       "topic": "expiry-and-post-cancel-retention",
       "status": "UNKNOWN",
       "detail": "No mandatory grace period, retention duration, or post-cancellation result-custody guarantee is defined."
+    }
+  ],
+  "resolved_specification_questions": [
+    {
+      "question_id": "TPU-001",
+      "topic": "missing-capability-error-code",
+      "status": "RESOLVED",
+      "detail": "The current hosted Tasks draft and current core schema consistently use -32021 (Missing Required Client Capability).",
+      "source_commit": "7b8e2bde214b35fd6f0d4f3899789388d623164d",
+      "verified_at": "2026-08-30"
     }
   ],
   "claim_ceiling": "Static comparison of official specification text to the local corpus at the named Git binding; no installed implementation or vulnerability claim."

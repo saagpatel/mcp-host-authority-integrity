@@ -64,6 +64,13 @@ class TaskLeaseGuardTests(unittest.TestCase):
             ["failure_status_mismatch"],
         )
 
+    def test_current_extension_requires_server_generated_task_ids(self) -> None:
+        case = json.loads(json.dumps(self.cases["TLG-028"]))
+        case["fixture"]["events"][1]["id_issuer"] = "receiver"
+        result = evaluate_case(case)
+        self.assertEqual(result["outcome"], "FAIL")
+        self.assertEqual(result["reason_codes"], ["invalid_task_id_issuer"])
+
     def test_unknowns_preserve_specification_gaps(self) -> None:
         expected = {
             "TLG-006": "expired_task_retention_unspecified",
@@ -143,6 +150,26 @@ class TaskLeaseGuardTests(unittest.TestCase):
         )
         self.assertTrue(
             all(item["status"] == "UNKNOWN" for item in drift["unresolved_specification_questions"])
+        )
+        self.assertEqual(
+            [item["question_id"] for item in drift["unresolved_specification_questions"]],
+            ["TPU-002", "TPU-003", "TPU-004"],
+        )
+        self.assertEqual(
+            drift["resolved_specification_questions"],
+            [
+                {
+                    "question_id": "TPU-001",
+                    "topic": "missing-capability-error-code",
+                    "status": "RESOLVED",
+                    "detail": (
+                        "The current hosted Tasks draft and current core schema consistently use "
+                        "-32021 (Missing Required Client Capability)."
+                    ),
+                    "source_commit": "7b8e2bde214b35fd6f0d4f3899789388d623164d",
+                    "verified_at": "2026-08-30",
+                }
+            ],
         )
 
 
