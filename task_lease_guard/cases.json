@@ -1,0 +1,627 @@
+{
+  "schema_version": "TaskLeaseGuardCasesV1",
+  "as_of": "2026-08-30",
+  "sources": [
+    {
+      "source_id": "MCP-CORE-2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28",
+      "status": "RELEASED_CORE",
+      "as_of": "2026-08-30"
+    },
+    {
+      "source_id": "MCP-TASKS-EXTENSION-CURRENT",
+      "url": "https://tasks.extensions.modelcontextprotocol.io/specification/draft/tasks",
+      "status": "SEP-2663-FINAL_HOSTED-PAGE-DRAFT",
+      "as_of": "2026-08-30"
+    },
+    {
+      "source_id": "MCP-TASKS-2025-11-25",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/utilities/tasks",
+      "status": "RELEASED_EXPERIMENTAL_LEGACY",
+      "as_of": "2026-08-30"
+    },
+    {
+      "source_id": "MCP-AUTHORIZATION-2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+      "status": "RELEASED_CORE_OPTIONAL_FRAMEWORK",
+      "as_of": "2026-08-30"
+    },
+    {
+      "source_id": "MCP-ELICITATION-2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation",
+      "status": "RELEASED_CORE",
+      "as_of": "2026-08-30"
+    },
+    {
+      "source_id": "MCP-SAMPLING-2026-07-28",
+      "url": "https://modelcontextprotocol.io/specification/2026-07-28/client/sampling",
+      "status": "RELEASED_CORE_DEPRECATED",
+      "as_of": "2026-08-30"
+    }
+  ],
+  "policy": {
+    "minimum_entropy_bits": 128,
+    "entropy_threshold_status": "LOCAL_POLICY_NOT_PROTOCOL_REQUIREMENT",
+    "supported_profiles": [
+      "released-core-2025-11-25",
+      "current-extension-2026-07-28"
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "TLG-001",
+      "name": "Negotiated released-core lifecycle",
+      "category": "capability-and-lifecycle",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": true, "elicitation_modes": ["form", "url"], "sampling": true},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "7f4b6e8c103d45f7a2c985b6d4e1f390", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 10000, "poll_interval_ms": 1000},
+          {"op": "poll", "task_id": "7f4b6e8c103d45f7a2c985b6d4e1f390", "requestor": "alice", "context": "auth-a", "at_ms": 1000, "served": true},
+          {"op": "transition", "task_id": "7f4b6e8c103d45f7a2c985b6d4e1f390", "actor": "receiver", "status": "completed", "payload_digest": "result-a"},
+          {"op": "result", "task_id": "7f4b6e8c103d45f7a2c985b6d4e1f390", "requestor": "alice", "context": "auth-a", "delivery": "tasks/result", "payload_digest": "result-a", "related_task_id": "7f4b6e8c103d45f7a2c985b6d4e1f390"}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic released-core fixture behavior only."
+    },
+    {
+      "case_id": "TLG-002",
+      "name": "Undeclared current-request task capability",
+      "category": "capability-negotiation",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-CORE-2026-07-28", "MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": false, "durably_created": true, "task_id": "9fd3268e93b14772bdba41db7eec46d1", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 10000, "poll_interval_ms": 1000}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["undeclared_task_capability"],
+      "claim_ceiling": "Local synthetic current-extension fixture behavior only."
+    },
+    {
+      "case_id": "TLG-003",
+      "name": "Guessed low-entropy task ID",
+      "category": "task-id-security",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "task-0001", "id_issuer": "receiver", "auth_mode": "none", "requestor": "local-user", "context": null, "crypto_random": false, "entropy_bits": 12, "status": "working", "at_ms": 0, "ttl_ms": 1000, "poll_interval_ms": 100}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["insufficient_task_id_entropy"],
+      "claim_ceiling": "Local synthetic detection of a predictable task-ID generator only."
+    },
+    {
+      "case_id": "TLG-004",
+      "name": "Cross-requestor result retrieval",
+      "category": "requestor-binding",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": true, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "c24818e2d6494c4bb0cc252a61aa28b0", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "c24818e2d6494c4bb0cc252a61aa28b0", "actor": "receiver", "status": "completed", "payload_digest": "secret-result"},
+          {"op": "result", "task_id": "c24818e2d6494c4bb0cc252a61aa28b0", "requestor": "bob", "context": "auth-b", "delivery": "tasks/result", "payload_digest": "secret-result", "related_task_id": "c24818e2d6494c4bb0cc252a61aa28b0"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["authorization_context_mismatch"],
+      "claim_ceiling": "Local synthetic authorization-context binding behavior only."
+    },
+    {
+      "case_id": "TLG-005",
+      "name": "Context change during polling",
+      "category": "context-binding",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "046590ac49764f22a7cbd31e8896ad32", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "poll", "task_id": "046590ac49764f22a7cbd31e8896ad32", "requestor": "alice", "context": "auth-b", "at_ms": 500, "served": true}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["authorization_context_mismatch"],
+      "claim_ceiling": "Local synthetic context-change rejection only."
+    },
+    {
+      "case_id": "TLG-006",
+      "name": "Expired-task replay with retained state",
+      "category": "ttl-expiry",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "9d43ba40d3e04783b0109148db81ce0e", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 1000, "poll_interval_ms": 100},
+          {"op": "poll", "task_id": "9d43ba40d3e04783b0109148db81ce0e", "requestor": "alice", "context": "auth-a", "at_ms": 2000, "served": true}
+        ]
+      },
+      "expected_outcome": "UNKNOWN",
+      "expected_reason_codes": ["expired_task_retention_unspecified"],
+      "claim_ceiling": "The current extension permits but does not require deletion after TTL expiry."
+    },
+    {
+      "case_id": "TLG-007",
+      "name": "Cross-requestor result after cancellation",
+      "category": "cancellation-and-custody",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": true, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "47b7782246ae49bca2f93bbd0a8c7f53", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "cancel", "task_id": "47b7782246ae49bca2f93bbd0a8c7f53", "requestor": "alice", "context": "auth-a", "response_status": "cancelled"},
+          {"op": "result", "task_id": "47b7782246ae49bca2f93bbd0a8c7f53", "requestor": "bob", "context": "auth-b", "delivery": "tasks/result", "served": true, "payload_digest": "stale", "related_task_id": "47b7782246ae49bca2f93bbd0a8c7f53"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["authorization_context_mismatch"],
+      "claim_ceiling": "Local synthetic post-cancellation access-control behavior only."
+    },
+    {
+      "case_id": "TLG-008",
+      "name": "Task ID reuse",
+      "category": "task-id-security",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "93e82154c66747a595e7264fa7cc97e4", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "93e82154c66747a595e7264fa7cc97e4", "actor": "receiver", "status": "completed", "payload_digest": "first"},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "93e82154c66747a595e7264fa7cc97e4", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 1000, "ttl_ms": 5000, "poll_interval_ms": 500}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["task_id_reuse"],
+      "claim_ceiling": "Local synthetic task-ID uniqueness behavior only."
+    },
+    {
+      "case_id": "TLG-009",
+      "name": "Forged terminal state",
+      "category": "lifecycle-integrity",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "b945bdedb2a44df4be7fda58fb692f22", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "b945bdedb2a44df4be7fda58fb692f22", "actor": "requestor", "status": "completed", "payload_digest": "forged"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["forged_task_state"],
+      "claim_ceiling": "Local synthetic state-authority behavior only."
+    },
+    {
+      "case_id": "TLG-010",
+      "name": "Polling before creation",
+      "category": "creation-durability",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "poll", "task_id": "39f21d55a84746d7848c97fed15ecb2a", "requestor": "alice", "context": "auth-a", "at_ms": 0, "served": false}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["task_not_created"],
+      "claim_ceiling": "Local synthetic durable-creation ordering behavior only."
+    },
+    {
+      "case_id": "TLG-011",
+      "name": "Sensitive form elicitation nested in task",
+      "category": "elicitation-trust",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25", "MCP-ELICITATION-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": ["form", "url"], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "78e7507053ad44dc9f7f073725b082da", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "input_request", "task_id": "78e7507053ad44dc9f7f073725b082da", "requestor": "alice", "context": "auth-a", "related_task_id": "78e7507053ad44dc9f7f073725b082da", "kind": "elicitation", "mode": "form", "sensitive": true, "same_trust_model": true}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["sensitive_form_elicitation"],
+      "claim_ceiling": "Local synthetic elicitation policy behavior only; no user interaction was performed."
+    },
+    {
+      "case_id": "TLG-012",
+      "name": "Task input elicitation preserves trust",
+      "category": "elicitation-trust",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT", "MCP-ELICITATION-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": ["form", "url"], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "75c5e4c3f01941b8b5f3cdd57da5ae0a", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "input_request", "task_id": "75c5e4c3f01941b8b5f3cdd57da5ae0a", "requestor": "alice", "context": "auth-a", "related_task_id": "75c5e4c3f01941b8b5f3cdd57da5ae0a", "kind": "elicitation", "mode": "form", "sensitive": false, "same_trust_model": true}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic task-input trust routing only; no UI or user acceptance claim."
+    },
+    {
+      "case_id": "TLG-013",
+      "name": "Task sampling without declared capability",
+      "category": "sampling-trust",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25", "MCP-SAMPLING-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "f120465f60f54ec2b0600679b04f74ae", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "input_request", "task_id": "f120465f60f54ec2b0600679b04f74ae", "requestor": "alice", "context": "auth-a", "related_task_id": "f120465f60f54ec2b0600679b04f74ae", "kind": "sampling", "human_review_available": true, "same_trust_model": true}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["undeclared_nested_capability"],
+      "claim_ceiling": "Local synthetic legacy sampling-capability behavior only."
+    },
+    {
+      "case_id": "TLG-014",
+      "name": "Legacy task sampling preserves human review",
+      "category": "sampling-trust",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25", "MCP-SAMPLING-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": true},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "a90ecdebe35b4ec4a0b7d4d6dcdf251d", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "input_request", "task_id": "a90ecdebe35b4ec4a0b7d4d6dcdf251d", "requestor": "alice", "context": "auth-a", "related_task_id": "a90ecdebe35b4ec4a0b7d4d6dcdf251d", "kind": "sampling", "human_review_available": true, "same_trust_model": true}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic legacy sampling compatibility only; current sampling is deprecated."
+    },
+    {
+      "case_id": "TLG-015",
+      "name": "No-authorization transport with unguessable ID",
+      "category": "authorization-absence",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25", "MCP-AUTHORIZATION-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "0fd79d0c16f94c0193dabf462563672e", "id_issuer": "receiver", "auth_mode": "none", "requestor": "local-user", "context": null, "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 1000, "poll_interval_ms": 100}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic no-authorization fixture; caller identity and runtime access control remain unproved."
+    },
+    {
+      "case_id": "TLG-016",
+      "name": "No-authorization receiver exposes task listing",
+      "category": "authorization-absence",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": true,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "c3184b531d45428a90513770352602d8", "id_issuer": "receiver", "auth_mode": "none", "requestor": "local-user", "context": null, "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 1000, "poll_interval_ms": 100}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["unauthenticated_task_listing"],
+      "claim_ceiling": "Local synthetic legacy task-list exposure behavior only."
+    },
+    {
+      "case_id": "TLG-017",
+      "name": "Polling before suggested interval",
+      "category": "polling",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "31e7b09accb343ca81ed4ff64af87df8", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 1000},
+          {"op": "poll", "task_id": "31e7b09accb343ca81ed4ff64af87df8", "requestor": "alice", "context": "auth-a", "at_ms": 500, "served": true}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["poll_interval_ignored"],
+      "claim_ceiling": "Local synthetic polling-policy behavior only; server rate limiting was not exercised."
+    },
+    {
+      "case_id": "TLG-018",
+      "name": "Terminal result custody mismatch",
+      "category": "terminal-result-custody",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "8b04ba014e3947a9baf740094c2e2554", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "8b04ba014e3947a9baf740094c2e2554", "actor": "server", "status": "completed", "payload_digest": "expected-result"},
+          {"op": "result", "task_id": "8b04ba014e3947a9baf740094c2e2554", "requestor": "alice", "context": "auth-a", "delivery": "inline_tasks_get", "payload_digest": "forged-result"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["terminal_result_mismatch"],
+      "claim_ceiling": "Local synthetic terminal-payload binding behavior only."
+    },
+    {
+      "case_id": "TLG-019",
+      "name": "Legacy tool error reaches failed state",
+      "category": "failure-semantics",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "4bca7745425142c791de9f71a8ce6127", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "4bca7745425142c791de9f71a8ce6127", "actor": "receiver", "status": "failed", "failure_kind": "tool_result_is_error", "payload_digest": "tool-error"},
+          {"op": "result", "task_id": "4bca7745425142c791de9f71a8ce6127", "requestor": "alice", "context": "auth-a", "delivery": "tasks/result", "payload_digest": "tool-error", "related_task_id": "4bca7745425142c791de9f71a8ce6127"}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic legacy failure-state semantics only."
+    },
+    {
+      "case_id": "TLG-020",
+      "name": "Current tool error forged as failed task",
+      "category": "failure-semantics",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "4afcd54871094521a5e833876d4d51a4", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "4afcd54871094521a5e833876d4d51a4", "actor": "server", "status": "failed", "failure_kind": "tool_result_is_error", "payload_digest": "tool-error"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["failure_status_mismatch"],
+      "claim_ceiling": "Local synthetic current-extension failure-state semantics only."
+    },
+    {
+      "case_id": "TLG-021",
+      "name": "Current cooperative cancellation acknowledgement",
+      "category": "cancellation",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "589a0a88b5fe48bf98a2b47785060d2c", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "cancel", "task_id": "589a0a88b5fe48bf98a2b47785060d2c", "requestor": "alice", "context": "auth-a", "acknowledged": true},
+          {"op": "poll", "task_id": "589a0a88b5fe48bf98a2b47785060d2c", "requestor": "alice", "context": "auth-a", "at_ms": 500, "served": true}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic cooperative-cancellation semantics only; work stoppage is not proved."
+    },
+    {
+      "case_id": "TLG-022",
+      "name": "Legacy result method used with current extension",
+      "category": "terminal-result-custody",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "685ce1b40a5f4105a4e8ef8d9ec61666", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "685ce1b40a5f4105a4e8ef8d9ec61666", "actor": "server", "status": "completed", "payload_digest": "result"},
+          {"op": "result", "task_id": "685ce1b40a5f4105a4e8ef8d9ec61666", "requestor": "alice", "context": "auth-a", "delivery": "tasks/result", "payload_digest": "result"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["unsupported_result_retrieval"],
+      "claim_ceiling": "Local synthetic protocol-profile separation only."
+    },
+    {
+      "case_id": "TLG-023",
+      "name": "Legacy task created terminal",
+      "category": "lifecycle-integrity",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "1804cb662b2a4165b55251cb374d78ee", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "completed", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["invalid_initial_state"],
+      "claim_ceiling": "Local synthetic legacy creation-state behavior only."
+    },
+    {
+      "case_id": "TLG-024",
+      "name": "Terminal state mutates",
+      "category": "lifecycle-integrity",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "e2255ad073db4bf5a19691c6f2c3b24c", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "transition", "task_id": "e2255ad073db4bf5a19691c6f2c3b24c", "actor": "server", "status": "completed", "payload_digest": "result"},
+          {"op": "transition", "task_id": "e2255ad073db4bf5a19691c6f2c3b24c", "actor": "server", "status": "failed", "failure_kind": "json_rpc_error", "payload_digest": "error"}
+        ]
+      },
+      "expected_outcome": "FAIL",
+      "expected_reason_codes": ["terminal_state_mutation"],
+      "claim_ceiling": "Local synthetic terminal-state immutability behavior only."
+    },
+    {
+      "case_id": "TLG-025",
+      "name": "Same-requestor result after cancellation",
+      "category": "cancellation-and-custody",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": true, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "a7ddaff3b18f45eb89f54e56d0343856", "id_issuer": "receiver", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "cancel", "task_id": "a7ddaff3b18f45eb89f54e56d0343856", "requestor": "alice", "context": "auth-a", "response_status": "cancelled"},
+          {"op": "result", "task_id": "a7ddaff3b18f45eb89f54e56d0343856", "requestor": "alice", "context": "auth-a", "delivery": "tasks/result", "served": true, "payload_digest": "unbound", "related_task_id": "a7ddaff3b18f45eb89f54e56d0343856"}
+        ]
+      },
+      "expected_outcome": "UNKNOWN",
+      "expected_reason_codes": ["cancelled_result_custody_unspecified"],
+      "claim_ceiling": "Fixture lacks an underlying cancellation result binding; post-cancel custody is unknown."
+    },
+    {
+      "case_id": "TLG-026",
+      "name": "Caller change without authorization context",
+      "category": "authorization-absence",
+      "profile": "released-core-2025-11-25",
+      "protocol_status": "RELEASED_EXPERIMENTAL",
+      "spec_basis": ["MCP-TASKS-2025-11-25", "MCP-AUTHORIZATION-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "task_methods": ["tools/call"], "task_cancel": false, "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "request_task_augmented": true, "task_id": "eb8a7cfc32334c1684a3b64cba4c5912", "id_issuer": "receiver", "auth_mode": "none", "requestor": "local-user-a", "context": null, "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "poll", "task_id": "eb8a7cfc32334c1684a3b64cba4c5912", "requestor": "local-user-b", "context": null, "at_ms": 500, "served": true}
+        ]
+      },
+      "expected_outcome": "UNKNOWN",
+      "expected_reason_codes": ["requestor_binding_unavailable"],
+      "claim_ceiling": "A no-authorization fixture cannot prove authenticated caller identity or cross-requestor isolation."
+    },
+    {
+      "case_id": "TLG-027",
+      "name": "Quantitative entropy evidence below local policy",
+      "category": "task-id-security",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "FIXTURE_SECURITY_INVARIANT",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "2ff1e56774764bd8", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 64, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500}
+        ]
+      },
+      "expected_outcome": "UNKNOWN",
+      "expected_reason_codes": ["quantitative_entropy_threshold_unspecified"],
+      "claim_ceiling": "The protocol requires sufficient entropy but specifies no numeric threshold or UUID format."
+    },
+    {
+      "case_id": "TLG-028",
+      "name": "Expired task is rejected",
+      "category": "ttl-expiry",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "66c645483d2e4ae99ef7331e70830d2f", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 1000, "poll_interval_ms": 100},
+          {"op": "poll", "task_id": "66c645483d2e4ae99ef7331e70830d2f", "requestor": "alice", "context": "auth-a", "at_ms": 2000, "served": false}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic expiry rejection only; the protocol also permits other post-TTL handling."
+    },
+    {
+      "case_id": "TLG-029",
+      "name": "Current task sampling preserves deprecated trust model",
+      "category": "sampling-trust",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT", "MCP-SAMPLING-2026-07-28"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": true},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "95cb1ef3c8d5484ab040031e0f5d4cc8", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 5000, "poll_interval_ms": 500},
+          {"op": "input_request", "task_id": "95cb1ef3c8d5484ab040031e0f5d4cc8", "requestor": "alice", "context": "auth-a", "related_task_id": "95cb1ef3c8d5484ab040031e0f5d4cc8", "kind": "sampling", "human_review_available": true, "same_trust_model": true}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic current-extension sampling compatibility only; sampling remains deprecated."
+    },
+    {
+      "case_id": "TLG-030",
+      "name": "Changing polling interval is honored",
+      "category": "polling",
+      "profile": "current-extension-2026-07-28",
+      "protocol_status": "DRAFT_OR_EMERGING",
+      "spec_basis": ["MCP-TASKS-EXTENSION-CURRENT"],
+      "fixture": {
+        "declares_task_list": false,
+        "events": [
+          {"op": "negotiate", "elicitation_modes": [], "sampling": false},
+          {"op": "create", "method": "tools/call", "server_extension_discovered": true, "per_request_client_extension": true, "durably_created": true, "task_id": "5625364cbb5b4a9da221544a93f41072", "id_issuer": "server", "auth_mode": "context_bound", "requestor": "alice", "context": "auth-a", "crypto_random": true, "entropy_bits": 128, "status": "working", "at_ms": 0, "ttl_ms": 10000, "poll_interval_ms": 1000},
+          {"op": "poll", "task_id": "5625364cbb5b4a9da221544a93f41072", "requestor": "alice", "context": "auth-a", "at_ms": 1000, "served": true, "next_poll_interval_ms": 2000},
+          {"op": "poll", "task_id": "5625364cbb5b4a9da221544a93f41072", "requestor": "alice", "context": "auth-a", "at_ms": 3000, "served": true}
+        ]
+      },
+      "expected_outcome": "PASS",
+      "expected_reason_codes": ["all_applicable_checks_passed"],
+      "claim_ceiling": "Local synthetic handling of a changing advisory polling interval only."
+    }
+  ]
+}

@@ -14,5 +14,8 @@ Integrity Program.
 - Attack cases may run only after the containment qualification gate passes.
 - Missing or unverifiable evidence is `UNKNOWN`; invalid controls or cleanup are
   `ERROR`.
-- Do not publish, push, deploy, disclose, open issues, or create a remote.
+- Do not publish, push, disclose, open issues, or create a remote without
+  explicit current user authorization naming the repository, visibility,
+  branch, and operation. Publication authority never includes deployment,
+  runtime activation, force push, or target-repository mutation by implication.
 - Findings are evidence claims, never authorization to repair a target.

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/mhai/task-lease-guard-report.schema.json",
+  "title": "MCP Task Lease Guard report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "catalog_sha256",
+    "case_count",
+    "outcome_counts",
+    "expectation_mismatches",
+    "suite_result",
+    "proof_boundary",
+    "claim_ceiling",
+    "results"
+  ],
+  "properties": {
+    "schema_version": {"const": "TaskLeaseGuardReportV1"},
+    "catalog_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "case_count": {"type": "integer", "minimum": 1},
+    "outcome_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["PASS", "FAIL", "UNKNOWN"],
+      "properties": {
+        "PASS": {"type": "integer", "minimum": 0},
+        "FAIL": {"type": "integer", "minimum": 0},
+        "UNKNOWN": {"type": "integer", "minimum": 0}
+      }
+    },
+    "expectation_mismatches": {"type": "array", "items": {"type": "object"}},
+    "suite_result": {"enum": ["PASS", "FAIL"]},
+    "proof_boundary": {"const": "LOCAL_SYNTHETIC_FIXTURE"},
+    "claim_ceiling": {"type": "string", "minLength": 20},
+    "results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "outcome",
+          "reason_codes",
+          "profile",
+          "protocol_status",
+          "proof_boundary",
+          "checks",
+          "claim_ceiling"
+        ],
+        "properties": {
+          "case_id": {"type": "string", "pattern": "^TLG-[0-9]{3}$"},
+          "outcome": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+          "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "profile": {
+            "enum": ["released-core-2025-11-25", "current-extension-2026-07-28"]
+          },
+          "protocol_status": {
+            "enum": ["RELEASED_EXPERIMENTAL", "DRAFT_OR_EMERGING", "FIXTURE_SECURITY_INVARIANT"]
+          },
+          "proof_boundary": {"const": "LOCAL_SYNTHETIC_FIXTURE"},
+          "checks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["event_index", "code", "status", "detail"],
+              "properties": {
+                "event_index": {"type": "integer", "minimum": 0},
+                "code": {"type": "string", "minLength": 3},
+                "status": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+                "detail": {"type": "string", "minLength": 3}
+              }
+            }
+          },
+          "claim_ceiling": {"type": "string", "minLength": 20}
+        }
+      }
+    }
+  }
+}
